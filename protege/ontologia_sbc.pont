@@ -1,4 +1,4 @@
-; Sun May 03 22:50:43 CEST 2020
+; Sun May 03 23:58:28 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -10,7 +10,7 @@
 	(single-slot edad
 ;+		(comment "Edad en años.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ejercicio_a_repetir
@@ -21,7 +21,7 @@
 	(single-slot peso
 ;+		(comment "Peso en kilogramos.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot ej_miercoles
@@ -32,7 +32,7 @@
 	(single-slot pulsaciones_por_minuto
 ;+		(comment "Número de pulsaciones por minuto al hacer un ejercicio simple.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot cansacio
@@ -52,7 +52,6 @@
 	(single-slot duracion_max
 ;+		(comment "Duración máxima del ejercicio en minutos.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot repeticiones
@@ -76,7 +75,7 @@
 	(single-slot frecuencia
 ;+		(comment "Número de veces por semana.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot dificultad
@@ -87,7 +86,6 @@
 	(single-slot duracion_min
 ;+		(comment "Duración mínima del ejercicio en minutos.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot nombre_ejercicio
@@ -123,31 +121,28 @@
 	(single-slot presion_sanguinea_min
 ;+		(comment "Presión sanguínea mínima en mmHg (milímetros de mercurio).")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot tiempo_disponible
 		(type INTEGER)
+		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot nombre_habito
 		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot KB_309103_Class1
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot calorias
 ;+		(comment "Calorías consumidas en un minuto.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot presion_sanguinea_max
 ;+		(comment "Presión sanguínea máxima en mmHg (milímetros de mercurio).")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot parte_de
@@ -162,13 +157,12 @@
 	(single-slot repeticiones_min
 ;+		(comment "Número de repeticiones minimas.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot imc
 ;+		(comment "Indice de masa corporal en kg/m^2.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot quiere
@@ -182,7 +176,7 @@
 	(single-slot altura
 ;+		(comment "Altura en metros.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot habito_cubre_un
@@ -197,7 +191,6 @@
 	(single-slot repeticiones_max
 ;+		(comment "Numero de repeticiones máximas.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot ej_lunes
@@ -217,7 +210,7 @@
 	(single-slot duracion_habito
 ;+		(comment "Duración de la actividad en minutos.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot nombre_objetivo
@@ -251,13 +244,13 @@
 	(single-slot edad
 ;+		(comment "Edad en años.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot imc
 ;+		(comment "Indice de masa corporal en kg/m^2.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot quiere
@@ -271,23 +264,24 @@
 	(single-slot altura
 ;+		(comment "Altura en metros.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot presion_sanguinea_min
 ;+		(comment "Presión sanguínea mínima en mmHg (milímetros de mercurio).")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot peso
 ;+		(comment "Peso en kilogramos.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot tiempo_disponible
 		(type INTEGER)
+		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot hace
@@ -297,7 +291,7 @@
 	(single-slot pulsaciones_por_minuto
 ;+		(comment "Número de pulsaciones por minuto al hacer un ejercicio simple.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot cansacio
@@ -324,7 +318,7 @@
 	(single-slot presion_sanguinea_max
 ;+		(comment "Presión sanguínea máxima en mmHg (milímetros de mercurio).")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
@@ -334,19 +328,16 @@
 	(single-slot duracion_max
 ;+		(comment "Duración máxima del ejercicio en minutos.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot repeticiones_max
 ;+		(comment "Numero de repeticiones máximas.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot repeticiones_min
 ;+		(comment "Número de repeticiones minimas.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot dificultad
@@ -357,7 +348,6 @@
 	(single-slot duracion_min
 ;+		(comment "Duración mínima del ejercicio en minutos.")
 		(type INTEGER)
-		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot nombre_ejercicio
@@ -367,7 +357,7 @@
 	(single-slot calorias
 ;+		(comment "Calorías consumidas en un minuto.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot ejercicio_cubre_un
@@ -432,7 +422,7 @@
 	(single-slot frecuencia
 ;+		(comment "Número de veces por semana.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot nombre_habito
@@ -442,7 +432,7 @@
 	(single-slot duracion_habito
 ;+		(comment "Duración de la actividad en minutos.")
 		(type INTEGER)
-		(range 0 9999999)
+		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot habito_cubre_un
