@@ -1,4 +1,4 @@
-; Sun May 03 21:11:07 CEST 2020
+; Sun May 03 21:15:23 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -12,6 +12,11 @@
 		(type INTEGER)
 		(range 0 9999999)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot ejercicio_a_repetir
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot peso
 ;+		(comment "Peso en kilogramos.")
@@ -54,10 +59,9 @@
 		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot ejercicio_cubre_un
+	(multislot ejercicio_cubre_un
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot ej_martes
 		(type INSTANCE)
@@ -185,10 +189,9 @@
 ;+		(allowed-classes ejercicio_con_repeticiones)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot hace
+	(multislot hace
 		(type INSTANCE)
 ;+		(allowed-classes habito_personal)
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot ej_domingo
 		(type INSTANCE)
@@ -271,10 +274,9 @@
 		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot hace
+	(multislot hace
 		(type INSTANCE)
 ;+		(allowed-classes habito_personal)
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot pulsaciones_por_minuto
 ;+		(comment "Número de pulsaciones por minuto al hacer un ejercicio simple.")
@@ -352,10 +354,9 @@
 		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot ejercicio_cubre_un
+	(multislot ejercicio_cubre_un
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
-;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass objetivo
@@ -451,6 +452,11 @@
 	(role concrete)
 	(single-slot repeticiones
 		(type INTEGER)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot ejercicio_a_repetir
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot dificultad_ejercicio
