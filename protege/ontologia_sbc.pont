@@ -1,4 +1,4 @@
-; Sun May 03 21:15:23 CEST 2020
+; Sun May 03 22:50:43 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -94,6 +94,18 @@
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(single-slot ontologia_sbc_Class22
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot ontologia_sbc_Class20
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot ontologia_sbc_Class21
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(multislot ej_jueves
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio_con_repeticiones)
@@ -177,6 +189,10 @@
 ;+		(comment "Un hábito personal puede cubrir uno o más objetivos.")
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
+		(create-accessor read-write))
+	(multislot combina_con
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
 		(create-accessor read-write))
 	(single-slot repeticiones_max
 ;+		(comment "Numero de repeticiones máximas.")
@@ -357,6 +373,10 @@
 	(multislot ejercicio_cubre_un
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
+		(create-accessor read-write))
+	(multislot combina_con
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
 		(create-accessor read-write)))
 
 (defclass objetivo
