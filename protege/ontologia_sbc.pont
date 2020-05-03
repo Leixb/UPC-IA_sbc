@@ -1,4 +1,4 @@
-; Sun May 03 21:07:14 CEST 2020
+; Sun May 03 21:11:07 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -225,6 +225,10 @@
 (defclass persona
 	(is-a USER)
 	(role concrete)
+	(multislot tiene
+		(type INSTANCE)
+;+		(allowed-classes probelma_musculo-esqueletico)
+		(create-accessor read-write))
 	(single-slot edad
 ;+		(comment "Edad en años.")
 		(type INTEGER)
@@ -240,6 +244,10 @@
 	(multislot quiere
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
+		(create-accessor read-write))
+	(multislot sigue_una
+		(type INSTANCE)
+;+		(allowed-classes dieta)
 		(create-accessor read-write))
 	(single-slot altura
 ;+		(comment "Altura en metros.")
@@ -317,10 +325,6 @@
 		(range 0 9999999)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot tiene
-		(type INSTANCE)
-;+		(allowed-classes probelma_musculo-esqueletico)
-		(create-accessor read-write))
 	(single-slot repeticiones_min
 ;+		(comment "Número de repeticiones minimas.")
 		(type INTEGER)
@@ -352,10 +356,6 @@
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot sigue_una
-		(type INSTANCE)
-;+		(allowed-classes dieta)
 		(create-accessor read-write)))
 
 (defclass objetivo
