@@ -1,7 +1,7 @@
 (clear)
 
-(load ontologia_sbc.pont)
-(load ontologia_sbc.pins)
+(load protege/ontologia_sbc.pont)
+(load protege/ontologia_sbc.pins)
 
 (reset)
 
