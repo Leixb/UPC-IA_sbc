@@ -1,9 +1,7 @@
 (clear)
 
 (load protege/ontologia_sbc.pont)
-(definstances instancias
-    (load protege/ontologia_sbc.pins)
-)
+(load protege/ontologia_sbc.pins.clp)
 
 (reset)
 

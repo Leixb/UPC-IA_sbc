@@ -1,3 +1,4 @@
+(definstances instancias
 ; Fri May 15 21:46:24 CEST 2020
 ; 
 ;+ (version "3.5")
@@ -11,11 +12,7 @@
 
 	(nombre_objetivo "Ganar resistencia"))
 
-([ontologia_sbc_Class11] of  %3AINSTANCE-ANNOTATION
 
-	(%3AANNOTATED-INSTANCE [ontologia_sbc_Class1])
-	(%3ACREATION-TIMESTAMP "2020.05.03 22:34:20.905 CEST")
-	(%3ACREATOR "PC"))
 
 ([ontologia_sbc_Class13] of  probelma_musculo-esqueletico
 
@@ -121,3 +118,4 @@
 ([ontologia_sbc_Class9] of  objetivo
 
 	(nombre_objetivo "Ganar flexibilidad"))
+)
