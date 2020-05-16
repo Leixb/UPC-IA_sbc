@@ -15,9 +15,10 @@
 (defrule recopilacion-persona::establecer-info "Establece la info de la persona"
 	(not (persona))
 	=>
-	(bind ?peso (pregunta-numerica "¿Cuánto pesas (en kilos)? " 1 300))
-	(bind ?altura (pregunta-numerica "¿Cuánto mides (en metros)? " 1 3))
-	(bind ?imc (/ ?peso (* ?altura ?altura)))
+	(bind ?peso (pregunta-numerica "¿Cuánto pesas (en kilos)? " 20 300))
+	(bind ?altura (pregunta-numerica "¿Cuánto mides (en centimetros)? " 50 300))
+    (bind ?alturaMetros (/ ?altura 100.0))
+	(bind ?imc (/ ?peso (* ?alturaMetros ?alturaMetros)))
 	(bind ?edad (pregunta-numerica "¿Cuantos años tienes? " 14 110))
 	(bind ?p_sang_min (pregunta-numerica "¿Que presión sanguínea mínima tienes (en mmHg)? " 60 100))
 	(bind ?p_sang_max (pregunta-numerica "¿Que presión sanguínea máxima tienes (en mmHg)? " 100 150))
