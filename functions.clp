@@ -21,13 +21,19 @@
 	(import MAIN ?ALL)
 	(export ?ALL)
 )
+
+(defmodule next-step
+	(import MAIN ?ALL)
+	(import recopilacion-persona ?ALL)
+	(export ?ALL)
+)
 ;;; Fin declaracion de modulos ------------------------
 
 
 ;;; Declaracion de funciones --------------------------
 
 ;;; Funcion para hacer una pregunta con respuesta cualquiera
-(deffunction pregunta-general (?pregunta)
+(deffunction MAIN::pregunta-general (?pregunta)
     (format t "%s " ?pregunta)
 	(bind ?respuesta (read))
 	(while (not (lexemep ?respuesta)) do
