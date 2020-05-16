@@ -46,13 +46,22 @@
         (send ?p put-tirantez_muscular ?tirantez_muscular)
 	)
 )
-
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
 (defmessage-handler persona escribe-persona()
-    (printout t "Peso: " ?self:peso crlf "Altura: " ?self:altura crlf "Imc: " ?self:imc crlf "Edad: " ?self:edad crlf "P_sang_min: " ?self:presion_sanguinea_min crlf "P_sang_max: " ?self:presion_sanguinea_max crlf)
-;;;    (if (neq ?self:pulsaciones_por_minuto -1) then
-        (printout t "Pulsaciones por minuto: " ?self:pulsaciones_por_minuto crlf "Mareo: " ?self:mareo crlf "Cansancio: " ?self:cansancio crlf "Tirantez muscular: " ?self:tirantez_muscular crlf)
-;;;    )
-    (exit)
+    (printout t 
+        "Peso: " ?self:peso crlf
+        "Altura: " ?self:altura crlf
+        "Imc: " ?self:imc crlf
+        "Edad: " ?self:edad crlf
+        "P_sang_min: " ?self:presion_sanguinea_min crlf
+        "P_sang_max: " ?self:presion_sanguinea_max crlf
+    )
+    (printout t
+      "Pulsaciones por minuto: " ?self:pulsaciones_por_minuto crlf
+      "Mareo: " ?self:mareo crlf
+      "Cansancio: " ?self:cansancio crlf
+      "Tirantez muscular: " ?self:tirantez_muscular crlf
+    )
+	(exit)
 )
 
