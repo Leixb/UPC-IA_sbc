@@ -9,14 +9,14 @@
 		(create-accessor read-write))
 )
 
-(deftemplate MAIN::Usuario
-	(slot minimo (type INTEGER))
-	(slot maximo (type INTEGER))
-    (slot nombre (type STRING))
-	(slot sexo (type SYMBOL) (default desconocido))
-	(slot edad (type INTEGER) (default -1))
-	(slot familia (type SYMBOL) (default desconocido))
-)
+;(deftemplate MAIN::Usuario
+;	(slot minimo (type INTEGER))
+;	(slot maximo (type INTEGER))
+;    (slot nombre (type STRING))
+;	(slot sexo (type SYMBOL) (default desconocido))
+;	(slot edad (type INTEGER) (default -1))
+;	(slot familia (type SYMBOL) (default desconocido))
+;)
 
 ;;; Fin de declaracion de clases propias --------------
 

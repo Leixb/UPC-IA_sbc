@@ -5,8 +5,8 @@
 
 (reset)
 
-(load ontologia_sbc_functions.clp)
-(load ontologia_sbc_rules.clp)
+(load functions.clp)
+(load rules.clp)
 
 (run)
 (exit)
