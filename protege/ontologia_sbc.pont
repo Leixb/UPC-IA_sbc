@@ -1,4 +1,4 @@
-; Sat May 16 11:46:03 CEST 2020
+; Sun May 17 00:19:58 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -127,6 +127,11 @@
 	(single-slot tiempo_disponible
 		(type INTEGER)
 		(default -1)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot tipo_habito
+		(type SYMBOL)
+		(allowed-values actividad_fisica_trabajo actividad_domestica desplazamientos actividad_estatica)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot nombre_habito
@@ -419,6 +424,11 @@
 (defclass habito_personal
 	(is-a USER)
 	(role concrete)
+	(single-slot tipo_habito
+		(type SYMBOL)
+		(allowed-values actividad_fisica_trabajo actividad_domestica desplazamientos actividad_estatica)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot frecuencia
 ;+		(comment "Número de veces por semana.")
 		(type INTEGER)
