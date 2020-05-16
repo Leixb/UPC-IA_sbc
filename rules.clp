@@ -25,7 +25,9 @@
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max))
 )
 
+;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
 (defmessage-handler persona escribe-persona()
     (printout t "Peso: " ?self:peso crlf "Altura: " ?self:altura crlf "Imc: " ?self:imc crlf "Edad: " ?self:edad crlf "P_sang_min: " ?self:presion_sanguinea_min crlf "P_sang_max: " ?self:presion_sanguinea_max crlf)   
 	(exit)
 )
+
