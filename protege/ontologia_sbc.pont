@@ -1,4 +1,4 @@
-; Sat May 16 20:51:28 CEST 2020
+; Sun May 17 00:19:58 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -35,7 +35,7 @@
 		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot cansacio
+	(single-slot cansancio
 ;+		(comment "Sensación de cansancio al hacer un ejercicio simple.")
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
@@ -131,8 +131,8 @@
 		(create-accessor read-write))
 	(single-slot tipo_habito
 		(type SYMBOL)
-		(allowed-values actividad_fisica_trabajo desplazamiento tarea_domestica actividad_estatica)
-;+		(cardinality 1 1)
+		(allowed-values actividad_fisica_trabajo actividad_domestica desplazamientos actividad_estatica)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot nombre_habito
 		(type STRING)
@@ -287,7 +287,7 @@
 	(single-slot tiempo_disponible
 		(type INTEGER)
 		(default -1)
-;+		(cardinality 0 1)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot hace
 		(type INSTANCE)
@@ -299,25 +299,25 @@
 		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot cansacio
+	(single-slot cansancio
 ;+		(comment "Sensación de cansancio al hacer un ejercicio simple.")
 		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+		(allowed-values NULL FALSE TRUE)
+		(default NULL)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot tirantez_muscular
 ;+		(comment "Sensación de tirantez muscular al hacer un ejercicio simple.")
 		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+		(allowed-values NULL FALSE TRUE)
+		(default NULL)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot mareo
 ;+		(comment "Sensación de mareo al hacer un ejercicio simple.")
 		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+		(allowed-values NULL FALSE TRUE)
+		(default NULL)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot presion_sanguinea_max
@@ -426,8 +426,8 @@
 	(role concrete)
 	(single-slot tipo_habito
 		(type SYMBOL)
-		(allowed-values actividad_fisica_trabajo desplazamiento tarea_domestica actividad_estatica)
-;+		(cardinality 1 1)
+		(allowed-values actividad_fisica_trabajo actividad_domestica desplazamientos actividad_estatica)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot frecuencia
 ;+		(comment "Número de veces por semana.")
