@@ -24,7 +24,6 @@
 	(bind ?p_sang_max (pregunta-numerica "¿Que presión sanguínea máxima tienes (en mmHg)? " 100 150))
 	
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max))
-    (focus next-step)
 )
 
 (defrule next-step::print-input
@@ -54,6 +53,7 @@
         (bind ?tirantez_muscular (pregunta-si-no "¿Has tenido sensación de tirantez muscular? "))
         (send ?p put-tirantez_muscular ?tirantez_muscular)
 	)
+    (focus next-step)
 )
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
 (defmessage-handler persona escribe-persona()
