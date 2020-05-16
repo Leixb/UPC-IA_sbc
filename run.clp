@@ -1,12 +1,11 @@
 (clear)
 
 (load protege/ontologia_sbc.pont)
-
-(load functions.clp)
-(load rules.clp)
+(load-instances protege/ontologia_sbc.pins)
 
 (reset)
 
-(load-instances protege/ontologia_sbc.pins)
+(load functions.clp)
+(load rules.clp)
 
 (run)

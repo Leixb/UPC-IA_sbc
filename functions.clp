@@ -1,20 +1,49 @@
-(deffunction MAIN::is-num (?num)
-  (or (eq (type ?num) INTEGER) (eq (type ?num) FLOAT))
-)
+;;; Declaracion de clases propias ----------------------
 
-(deffunction MAIN::num-between (?num ?min ?max)
-  (and (is-num ?num) (>= ?num ?min) (<= ?num ?max))
+(deftemplate MAIN::Usuario
+	(slot minimo (type INTEGER))
+	(slot maximo (type INTEGER))
+    (slot nombre (type STRING))
+	(slot sexo (type SYMBOL) (default desconocido))
+	(slot edad (type INTEGER) (default -1))
+	(slot familia (type SYMBOL) (default desconocido))
 )
+;;; Fin de declaracion de clases propias --------------
 
-(deffunction MAIN::pregunta-numerica (?question ?min ?max)
-  (while TRUE do ;return function will exit this loop
-    (printout t " -> " ?question ": ")
-    (bind ?answer (read))
-    (if (num-between ?answer ?min ?max) then
-      (return ?answer)
-	  else 
-      (format t " ! Error: Entrada invalida! rango: %d, %d" ?min ?max)
-      (printout t crlf)
+
+;;; Declaracion de modulos ----------------------------
+
+;;; Modulo principal de utilidades, indicamos que exportamos todo
+(defmodule MAIN (export ?ALL))
+
+;;; Modulo de recopilacion de los datos de la persona
+(defmodule recopilacion-persona
+	(import MAIN ?ALL)
+	(export ?ALL)
+)
+;;; Fin declaracion de modulos ------------------------
+
+
+;;; Declaracion de funciones --------------------------
+
+;;; Funcion para hacer una pregunta con respuesta cualquiera
+(deffunction pregunta-general (?pregunta)
+    (format t "%s " ?pregunta)
+	(bind ?respuesta (read))
+	(while (not (lexemep ?respuesta)) do
+		(format t "%s " ?pregunta)
+		(bind ?respuesta (read))
     )
-  )
+	?respuesta
+)
+
+;;; Funcion para hacer una pregunta con respuesta numerica unica
+(deffunction MAIN::pregunta-numerica (?pregunta ?rangini ?rangfi)
+	(format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)
+	(bind ?respuesta (read))
+	(while (not(and(>= ?respuesta ?rangini)(<= ?respuesta ?rangfi))) do
+		(format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)
+		(bind ?respuesta (read))
+	)
+	?respuesta
 )

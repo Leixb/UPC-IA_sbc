@@ -1,11 +1,3 @@
-;;; Modulo principal de utilidades, indicamos que exportamos todo
-(defmodule MAIN (export ?ALL))
-
-;;; Modulo de recopilacion de los datos del usuario
-(defmodule recopilacion-persona
-	(import MAIN ?ALL)
-	(export ?ALL)
-)
 ;;; Declaracion de reglas y hechos ---------------------
 
 (defrule MAIN::initialRule "Regla inicial"
@@ -20,22 +12,20 @@
 	(focus recopilacion-persona)
 )
 
-(deftemplate MAIN::entrada
-    (slot peso (type INTEGER))
+(defrule recopilacion-persona::establecer-info "Establece la info de la persona"
+	(not (persona))
+	=>
+	(bind ?peso (pregunta-numerica "¿Cuánto pesas (en kilos)? " 1 300))
+	(bind ?altura (pregunta-numerica "¿Cuánto mides (en metros)? " 1 3))
+	(bind ?imc (/ ?peso (* ?altura ?altura)))
+	(bind ?edad (pregunta-numerica "¿Cuantos años tienes? " 14 110))
+	(bind ?p_sang_min (pregunta-numerica "¿Que presión sanguínea mínima tienes (en mmHg)? " 60 100))
+	(bind ?p_sang_max (pregunta-numerica "¿Que presión sanguínea máxima tienes (en mmHg)? " 100 150))
+	
+	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max))
 )
 
-(deffacts MAIN::init
-    (entrada)
-)
-
-
-;;; Modulo recopilacion
-
-(defrule recopilacion-persona::peso
-  (not (got-peso))
-  ?user <- (entrada)
-  =>
-    (bind ?num (pregunta-numerica "Peso (kg)" 1 400))
-    (modify ?user (peso ?num))
-    (assert (got-peso))
+(defmessage-handler persona escribe-persona()
+    (printout t "Peso: " ?self:peso crlf "Altura: " ?self:altura crlf "Imc: " ?self:imc crlf "Edad: " ?self:edad crlf "P_sang_min: " ?self:presion_sanguinea_min crlf "P_sang_max: " ?self:presion_sanguinea_max crlf)   
+	(exit)
 )
