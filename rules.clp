@@ -66,8 +66,116 @@
         (bind ?tirantez_muscular (pregunta-si-no "¿Has tenido sensación de tirantez muscular? "))
         (send ?p put-tirantez_muscular ?tirantez_muscular)
 	)
-    (focus inferencia)
+	(assert (objetivos ASK))
 )
+
+(defrule recopilacion-persona::establecer-objetivos "Establece los objetivos de la persona"
+	?aux <- (objetivos ASK)
+	?p <- (object (is-a persona))
+	=>
+	(bind $?list-objetivos (find-all-instances ((?inst objetivo)) TRUE))
+	(bind $?nom-obj (create$ ))
+	(loop-for-count (?i 1 (length$ $?list-objetivos)) do
+		(bind ?curr-obj (nth$ ?i ?list-objetivos))
+		(bind ?curr-nom (send ?curr-obj get-nombre_objetivo))
+		(bind $?nom-obj(insert$ $?nom-obj (+ (length$ $?nom-obj) 1) ?curr-nom))
+	)
+	(bind ?escogido (pregunta-multi "¿Que objetivos quieres alcanzar? " $?nom-obj))
+	
+	(bind $?respuesta (create$ ))
+	(loop-for-count (?i 1 (length$ ?escogido)) do
+		(bind ?curr-index (nth$ ?i ?escogido))
+		(bind ?curr-resp (nth$ ?curr-index ?list-objetivos))
+		(bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
+	)
+	(send ?p put-quiere $?respuesta)
+	
+	(retract ?aux)
+	(assert (problemas ASK))
+)
+
+(defrule recopilacion-persona::establecer-probelmas "Establece los probelmas musculo-esqueleticos de la persona"
+	?aux <- (problemas ASK)
+	?p <- (object (is-a persona))
+	=>
+	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esqueletico? "))
+	(if (eq ?probs TRUE) then	
+        (bind $?list-probelmas (find-all-instances ((?inst probelma_musculo-esqueletico)) TRUE))
+        (bind $?nom-prob (create$ ))
+        (loop-for-count (?i 1 (length$ $?list-probelmas)) do
+            (bind ?curr-prob (nth$ ?i ?list-probelmas))
+            (bind ?curr-nom (send ?curr-prob get-nombre_problema))
+            (bind $?nom-prob(insert$ $?nom-prob (+ (length$ $?nom-prob) 1) ?curr-nom))
+        )
+        (bind ?escogido (pregunta-multi "Selecciona uno o más: " $?nom-prob))
+        
+        (bind $?respuesta (create$ ))
+        (loop-for-count (?i 1 (length$ ?escogido)) do
+            (bind ?curr-index (nth$ ?i ?escogido))
+            (bind ?curr-resp (nth$ ?curr-index ?list-probelmas))
+            (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
+        )
+        (send ?p put-tiene $?respuesta)
+	)
+	
+	(retract ?aux)
+	(assert (dieta ASK))
+)
+
+(defrule recopilacion-persona::establecer-dieta "Establece la dieta de la persona"
+	?aux <- (dieta ASK)
+	?p <- (object (is-a persona))
+	=>
+	(bind $?list-dietas (find-all-instances ((?inst dieta)) TRUE))
+    (bind $?nom-dieta (create$ ))
+    (loop-for-count (?i 1 (length$ $?list-dietas)) do
+        (bind ?curr-dieta (nth$ ?i ?list-dietas))
+        (bind ?curr-nom (send ?curr-dieta get-nombre_dieta))
+        (bind $?nom-dieta(insert$ $?nom-dieta (+ (length$ $?nom-dieta) 1) ?curr-nom))
+    )
+    (bind ?escogido (pregunta-multi "Selecciona una o más de las siguientes opciones relacionadas con tu dieta: " $?nom-dieta))
+    
+    (bind $?respuesta (create$ ))
+    (loop-for-count (?i 1 (length$ ?escogido)) do
+        (bind ?curr-index (nth$ ?i ?escogido))
+        (bind ?curr-resp (nth$ ?curr-index ?list-dietas))
+        (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
+    )
+    (send ?p put-sigue_una $?respuesta)
+	
+	(retract ?aux)
+	(assert (habitos ASK))
+)
+
+(defrule recopilacion-persona::establecer-habitos "Establece los habitos de la persona"
+	?aux <- (habitos ASK)
+	?p <- (object (is-a persona))
+	=>
+    (bind $?nom-hab (slot-allowed-values habito_personal tipo_habito))
+    (bind ?escogido (pregunta-multi "¿Haces alguno de los siguientes hábitos personales? " $?nom-hab))
+    
+    (bind $?respuesta (create$ ))
+    (loop-for-count (?i 1 (length$ ?escogido)) do
+        (bind ?curr-index (nth$ ?i ?escogido))
+        (bind ?curr-resp (nth$ ?curr-index ?nom-hab))
+        (printout t ?curr-resp ":" crlf)
+        
+        (bind ?frecuencia (pregunta-numerica "   ¿Cuantas veces a la semana realizas esta actividad? " 1 30))
+        (bind ?duracion (pregunta-numerica "   ¿Cuanto tiempo le dedicas cada vez (en minutos)? " 1 180))
+        
+        (bind ?hab (implode$ (create$ ?curr-resp ?frecuencia ?duracion)))
+        (make-instance ?hab of habito_personal (tipo_habito ?curr-resp) (frecuencia ?frecuencia) (duracion_habito ?duracion))
+    
+        (bind ?curr-index (nth$ ?i ?escogido))
+        (bind ?curr-resp (nth$ ?curr-index ?list-habitos))
+        (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
+    )
+    (send ?p put-hace $?respuesta)
+	
+	(retract ?aux)
+	(focus inferencia)
+)
+
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
 (defmessage-handler persona escribe-persona()
     (printout t 
@@ -83,6 +191,11 @@
       "Mareo: " ?self:mareo crlf
       "Cansancio: " ?self:cansancio crlf
       "Tirantez muscular: " ?self:tirantez_muscular crlf
+    )
+    (printout t
+      "Objetivos: " $?self:quiere crlf
+      "Problemas: " $?self:tiene crlf
+      "Dietas: " $?self:sigue_una crlf
     )
 )
 

@@ -92,3 +92,32 @@
 	)
 	?respuesta
 )
+
+;;; Funcion para hacer una pregunta multi-respuesta con indices
+(deffunction pregunta-multi (?pregunta $?valores-posibles)
+    (bind ?linea (format nil "%s" ?pregunta))
+    (printout t ?linea crlf)
+    (progn$ (?var ?valores-posibles) 
+            (bind ?linea (format nil "  %d. %s" ?var-index ?var))
+            (printout t ?linea crlf)
+    )
+    (format t "%s" "Indica los números separados por un espacio: ")
+    (bind ?resp (readline))
+    (bind ?numeros (str-explode ?resp))
+    
+    (while (not (> (length$ ?numeros) 0)) do
+        (bind ?resp (readline))
+        (bind ?numeros (str-explode ?resp))
+    )
+    
+    (bind $?lista (create$ ))
+    (progn$ (?var ?numeros) 
+        (if (and (integerp ?var) (and (>= ?var 1) (<= ?var (length$ ?valores-posibles))))
+            then 
+                (if (not (member$ ?var ?lista))
+                    then (bind ?lista (insert$ ?lista (+ (length$ ?lista) 1) ?var))
+                )
+        ) 
+    )
+    ?lista
+)
