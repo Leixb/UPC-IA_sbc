@@ -37,6 +37,36 @@
 	?respuesta
 )
 
+;;; Funcion para hacer una pregunta general con una serie de respuestas admitidas
+(deffunction MAIN::pregunta-opciones (?question $?allowed-values)
+   (format t "%s "?question)
+   (progn$ (?curr-value $?allowed-values)
+		(format t "[%s]" ?curr-value)
+	)
+   (printout t ": ")
+   (bind ?answer (read))
+   (if (lexemep ?answer) 
+       then (bind ?answer (lowcase ?answer)))
+   (while (not (member ?answer ?allowed-values)) do
+      (format t "%s "?question)
+	  (progn$ (?curr-value $?allowed-values)
+		(format t "[%s]" ?curr-value)
+	  )
+	  (printout t ": ")
+      (bind ?answer (read))
+      (if (lexemep ?answer) 
+          then (bind ?answer (lowcase ?answer))))
+   ?answer
+)
+
+;;; Funcion para hacer una pregunta de tipo si/no
+(deffunction MAIN::pregunta-si-no (?question)
+   (bind ?response (pregunta-opciones ?question si no))
+   (if (or (eq ?response si) (eq ?response s))
+       then TRUE 
+       else FALSE)
+)
+
 ;;; Funcion para hacer una pregunta con respuesta numerica unica
 (deffunction MAIN::pregunta-numerica (?pregunta ?rangini ?rangfi)
 	(format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)

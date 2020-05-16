@@ -35,7 +35,7 @@
 		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot cansacio
+	(single-slot cansancio
 ;+		(comment "Sensación de cansancio al hacer un ejercicio simple.")
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
@@ -282,7 +282,7 @@
 	(single-slot tiempo_disponible
 		(type INTEGER)
 		(default -1)
-;+		(cardinality 0 1)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot hace
 		(type INSTANCE)
@@ -294,25 +294,25 @@
 		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot cansacio
+	(single-slot cansancio
 ;+		(comment "Sensación de cansancio al hacer un ejercicio simple.")
 		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+		(allowed-values NULL FALSE TRUE)
+		(default NULL)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot tirantez_muscular
 ;+		(comment "Sensación de tirantez muscular al hacer un ejercicio simple.")
 		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+		(allowed-values NULL FALSE TRUE)
+		(default NULL)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot mareo
 ;+		(comment "Sensación de mareo al hacer un ejercicio simple.")
 		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+		(allowed-values NULL FALSE TRUE)
+		(default NULL)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot presion_sanguinea_max
