@@ -26,10 +26,23 @@
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max))
 )
 
-(defrule next-step::print-input
-    ?pers <- (object (is-a persona))
+(defrule inferencia::skip
+    ?p <- (object (is-a persona))
+    => 
+    (send ?p escribe-persona)
+    (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
+    (focus generar-resultado)
+)
+
+(defrule generar-resultado::skip
+    => 
+    (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
+    (focus print-resultado)
+)
+
+(defrule print-resultado::print-res
     =>
-    (send ?pers escribe-persona)
+    (printout t "DONE" crlf)
     (exit)
 )
 
@@ -53,7 +66,7 @@
         (bind ?tirantez_muscular (pregunta-si-no "¿Has tenido sensación de tirantez muscular? "))
         (send ?p put-tirantez_muscular ?tirantez_muscular)
 	)
-    (focus next-step)
+    (focus inferencia)
 )
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
 (defmessage-handler persona escribe-persona()

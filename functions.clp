@@ -22,9 +22,24 @@
 	(export ?ALL)
 )
 
-(defmodule next-step
+(defmodule inferencia
 	(import MAIN ?ALL)
 	(import recopilacion-persona ?ALL)
+	(export ?ALL)
+)
+
+(defmodule generar-resultado
+	(import MAIN ?ALL)
+	(import recopilacion-persona ?ALL)
+	(import inferencia ?ALL)
+	(export ?ALL)
+)
+
+(defmodule print-resultado
+	(import MAIN ?ALL)
+	(import recopilacion-persona ?ALL)
+	(import inferencia ?ALL)
+	(import generar-resultado ?ALL)
 	(export ?ALL)
 )
 ;;; Fin declaracion de modulos ------------------------
