@@ -1,13 +1,4 @@
 ;;; Declaracion de clases propias ----------------------
-
-(deftemplate MAIN::Usuario
-	(slot minimo (type INTEGER))
-	(slot maximo (type INTEGER))
-    (slot nombre (type STRING))
-	(slot sexo (type SYMBOL) (default desconocido))
-	(slot edad (type INTEGER) (default -1))
-	(slot familia (type SYMBOL) (default desconocido))
-)
 ;;; Fin de declaracion de clases propias --------------
 
 
@@ -22,12 +13,14 @@
 	(export ?ALL)
 )
 
+;;; Modulo de inferencia de los datos de la persona
 (defmodule inferencia
 	(import MAIN ?ALL)
 	(import recopilacion-persona ?ALL)
 	(export ?ALL)
 )
 
+;;; Modulo de generacion de la solucion
 (defmodule generar-resultado
 	(import MAIN ?ALL)
 	(import recopilacion-persona ?ALL)
@@ -35,6 +28,7 @@
 	(export ?ALL)
 )
 
+;;; Modulo de escritura del resultado
 (defmodule print-resultado
 	(import MAIN ?ALL)
 	(import recopilacion-persona ?ALL)
