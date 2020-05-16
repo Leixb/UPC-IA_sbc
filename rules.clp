@@ -165,10 +165,10 @@
         (bind ?duracion (pregunta-numerica "   ¿Cuanto tiempo le dedicas cada vez (en minutos)? " 1 180))
         
         (bind ?hab (implode$ (create$ ?curr-resp ?frecuencia ?duracion)))
-        (make-instance ?hab of habito_personal (tipo_habito ?curr-resp) (frecuencia ?frecuencia) (duracion_habito ?duracion))
+        (make-instance of habito_personal (tipo_habito ?curr-resp) (frecuencia ?frecuencia) (duracion_habito ?duracion))
     
         (bind ?curr-index (nth$ ?i ?escogido))
-        (bind ?curr-resp (nth$ ?curr-index ?list-habitos))
+        (bind ?curr-resp (nth$ ?curr-index ?nom-hab))
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
     (send ?p put-hace $?respuesta)
