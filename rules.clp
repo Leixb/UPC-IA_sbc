@@ -3,9 +3,9 @@
 (defrule MAIN::initialRule "Regla inicial"
 	(declare (salience 10))
 	=>
-	(printout t "====================================================================" crlf)
+	(printout t "==============================================================================================" crlf)
   	(printout t "=         Sistema de recomendacion de programas de entrenamiento de Coaching Potato          =" crlf)
-	(printout t "====================================================================" crlf)
+	(printout t "==============================================================================================" crlf)
   	(printout t crlf)  	
 	(printout t "¡Bienvenido al sistema de Coaching Potato! A continuación se le formularán una serie de preguntas para poder recomendarle contenidos." crlf)
 	(printout t crlf)
