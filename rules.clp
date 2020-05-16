@@ -22,8 +22,9 @@
 	(bind ?edad (pregunta-numerica "¿Cuantos años tienes? " 14 110))
 	(bind ?p_sang_min (pregunta-numerica "¿Que presión sanguínea mínima tienes (en mmHg)? " 60 100))
 	(bind ?p_sang_max (pregunta-numerica "¿Que presión sanguínea máxima tienes (en mmHg)? " 100 150))
+	(bind ?t_disponible (pregunta-numerica "¿Cuanto tiempo disponible tienes a diario (en minutos)? " 30 300))
 	
-	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max))
+	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max) (tiempo_disponible ?t_disponible))
 )
 
 (defrule inferencia::skip
@@ -185,6 +186,7 @@
         "Edad: " ?self:edad crlf
         "P_sang_min: " ?self:presion_sanguinea_min crlf
         "P_sang_max: " ?self:presion_sanguinea_max crlf
+        "Tiempo disponible: " ?self:tiempo_disponible crlf
     )
     (printout t
       "Pulsaciones por minuto: " ?self:pulsaciones_por_minuto crlf
