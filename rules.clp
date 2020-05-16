@@ -24,6 +24,14 @@
 	(bind ?p_sang_max (pregunta-numerica "¿Que presión sanguínea máxima tienes (en mmHg)? " 100 150))
 	
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max))
+    (focus next-step)
+)
+
+(defrule next-step::print-input
+    ?pers <- (object (is-a persona))
+    =>
+    (send ?pers escribe-persona)
+    (exit)
 )
 
 (defrule recopilacion-persona::establecer-info-extra "Establece la info extra de la persona"
