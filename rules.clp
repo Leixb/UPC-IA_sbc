@@ -164,7 +164,6 @@
         (bind ?frecuencia (pregunta-numerica "   ¿Cuantas veces a la semana realizas esta actividad? " 1 30))
         (bind ?duracion (pregunta-numerica "   ¿Cuanto tiempo le dedicas cada vez (en minutos)? " 1 180))
         
-        (bind ?hab (implode$ (create$ ?curr-resp ?frecuencia ?duracion)))
         (make-instance of habito_personal (tipo_habito ?curr-resp) (frecuencia ?frecuencia) (duracion_habito ?duracion))
     
         (bind ?curr-index (nth$ ?i ?escogido))
