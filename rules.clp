@@ -84,6 +84,5 @@
       "Cansancio: " ?self:cansancio crlf
       "Tirantez muscular: " ?self:tirantez_muscular crlf
     )
-	(exit)
 )
 
