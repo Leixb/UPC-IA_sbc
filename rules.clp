@@ -177,7 +177,7 @@ más a tu estado fisico actual? "))
     )
     (slot presion_sanguinea
         (type SYMBOL)
-        (allowed-values baja media alta)
+        (allowed-values baja media alta inestable)
     )
     (slot estamina
         (type SYMBOL)
@@ -211,7 +211,7 @@ más a tu estado fisico actual? "))
 
 (defrule inferencia::imc
     (not (IMC_done))
-    ?p <- (object (is-a persona) (imc ?imc))
+    (object (is-a persona) (imc ?imc))
     ?c <- (condiciones_fisicas)
     =>
     (printout ?*debug-print* "Inferencia de IMC: " ?imc crlf)
@@ -227,7 +227,7 @@ más a tu estado fisico actual? "))
 
 (defrule inferencia::edad
     (not (EDAD_done))
-    ?p <- (object (is-a persona) (edad ?edad))
+    (object (is-a persona) (edad ?edad))
     ?c <- (condiciones_fisicas)
     =>
     (printout ?*debug-print* "Inferencia de edad: " ?edad crlf)
@@ -243,7 +243,7 @@ más a tu estado fisico actual? "))
 
 (defrule inferencia::estamina
     (not (ESTAMINA_done))
-    ?p <- (object (is-a persona)
+    (object (is-a persona)
         (pulsaciones_por_minuto ?pulsaciones)
         (mareo ?mareo)
         (cansancio ?cansancio)
@@ -273,12 +273,34 @@ más a tu estado fisico actual? "))
     (assert (DIETA_done))
 )
 
-; TODO
-(defrule inferencia::pression_sanguinea
+(defrule inferencia::presion_sanguinea
     (not (PRESSION_done))
     (EDAD_done)
+    (object (is-a persona)
+        (presion_sanguinea_min ?p_min)
+        (presion_sanguinea_max ?p_max)
+    )
     ?c <- (condiciones_fisicas (edad ?edad))
     =>
+    (printout ?*debug-print* "Inferencia de presion sanguínea: "
+        ?edad ?p_min ?p_max crlf)
+    
+    (bind ?diff (- ?p_max ?p_min))
+    (if (> ?diff 70)            then (modify ?c (presion_sanguinea inestable))
+    else
+        (switch ?edad
+            (case joven then (bind ?aux1 90) (bind ?aux2 140))
+            (case adulto-joven then (progn (bind ?aux1 80) (bind ?aux2 130)))
+            (case adulto-medio then (progn (bind ?aux1 70) (bind ?aux2 120)))
+            (case adulto-mayor then (progn (bind ?aux1 60) (bind ?aux2 110)))
+            (default none)
+        )
+        (bind ?p_mean (/ (+ ?p_min ?p_max) 2))
+        
+        (if (< ?p_mean ?aux1) then (modify ?c (presion_sanguinea baja))
+        else (if (< ?p_mean ?aux2) then (modify ?c (presion_sanguinea media))
+        else (modify ?c (presion_sanguinea alta))
+    )))
     (assert (PRESSION_done))
 )
 
