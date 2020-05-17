@@ -1,4 +1,4 @@
-; Sun May 03 22:50:43 CEST 2020
+; Sun May 17 14:50:22 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -10,6 +10,253 @@
 ([ontologia_sbc_Class10] of  objetivo
 
 	(nombre_objetivo "Ganar resistencia"))
+
+([ontologia_sbc_Class10001] of  ejercicio
+
+	(calorias 280)
+	(dificultad 4)
+	(duracion_max 4)
+	(duracion_min 2)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10007])
+	(nombre_ejercicio "Extensiones de tríceps sentado")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10004] of  ejercicio
+
+	(calorias 300)
+	(combina_con [ontologia_sbc_Class10001])
+	(dificultad 6)
+	(duracion_max 4)
+	(duracion_min 2)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10007])
+	(nombre_ejercicio "Press francés con barra")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10005] of  ejercicio
+
+	(calorias 265)
+	(combina_con
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class10004])
+	(dificultad 4)
+	(duracion_max 3)
+	(duracion_min 1)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10007])
+	(nombre_ejercicio "Patada de burro de tríceps")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10006] of  ejercicio
+
+	(calorias 330)
+	(combina_con
+		[ontologia_sbc_Class2]
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class3])
+	(dificultad 5)
+	(duracion_max 1)
+	(duracion_min 3)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10007])
+	(nombre_ejercicio "Curl martillo")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10007] of  objetivo
+
+	(nombre_objetivo "Hipertrofia"))
+
+([ontologia_sbc_Class10008] of  ejercicio
+
+	(calorias 327)
+	(combina_con
+		[ontologia_sbc_Class10006]
+		[ontologia_sbc_Class2]
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class3])
+	(dificultad 3)
+	(duracion_max 3)
+	(duracion_min 1)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Curl de bíceps")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10009] of  ejercicio
+
+	(calorias 333)
+	(combina_con
+		[ontologia_sbc_Class10008]
+		[ontologia_sbc_Class10006]
+		[ontologia_sbc_Class2]
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class3])
+	(dificultad 3)
+	(duracion_max 3)
+	(duracion_min 1)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Curl con barra z")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10010] of  ejercicio
+
+	(calorias 280)
+	(combina_con
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class10004]
+		[ontologia_sbc_Class10001])
+	(dificultad 6)
+	(duracion_max 3)
+	(duracion_min 2)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Elevaciones laterales")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10011] of  ejercicio
+
+	(calorias 380)
+	(combina_con
+		[ontologia_sbc_Class10010]
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class10004])
+	(dificultad 7)
+	(duracion_max 5)
+	(duracion_min 2)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10007])
+	(nombre_ejercicio "Press militar")
+	(repeticiones_max 12)
+	(repeticiones_min 3))
+
+([ontologia_sbc_Class10012] of  ejercicio
+
+	(calorias 388)
+	(combina_con
+		[ontologia_sbc_Class10010]
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class10004]
+		[ontologia_sbc_Class10011])
+	(dificultad 8)
+	(duracion_max 12)
+	(duracion_min 4)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Press de banca")
+	(repeticiones_max 12)
+	(repeticiones_min 3))
+
+([ontologia_sbc_Class10013] of  ejercicio
+
+	(calorias 395)
+	(combina_con
+		[ontologia_sbc_Class10010]
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class10012]
+		[ontologia_sbc_Class10004]
+		[ontologia_sbc_Class10011])
+	(dificultad 8)
+	(duracion_max 12)
+	(duracion_min 4)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Press de banca inclinado")
+	(repeticiones_max 12)
+	(repeticiones_min 3))
+
+([ontologia_sbc_Class10014] of  ejercicio
+
+	(calorias 400)
+	(combina_con
+		[ontologia_sbc_Class10010]
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class10012]
+		[ontologia_sbc_Class10013]
+		[ontologia_sbc_Class10004]
+		[ontologia_sbc_Class10011]
+		[ontologia_sbc_Class5])
+	(dificultad 7)
+	(duracion_max 12)
+	(duracion_min 4)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Press de banca declinado")
+	(repeticiones_max 12)
+	(repeticiones_min 3))
+
+([ontologia_sbc_Class10015] of  ejercicio
+
+	(calorias 250)
+	(combina_con
+		[ontologia_sbc_Class10010]
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class10012]
+		[ontologia_sbc_Class10014]
+		[ontologia_sbc_Class10013]
+		[ontologia_sbc_Class10004]
+		[ontologia_sbc_Class10011])
+	(dificultad 5)
+	(duracion_max 5)
+	(duracion_min 2)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10007])
+	(nombre_ejercicio "Aberturas con mancuerna en banco inclinado")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class10016] of  dieta
+
+	(nombre_dieta "Dieta equilibrada"))
+
+([ontologia_sbc_Class10018] of  dieta
+
+	(nombre_dieta "Dieta basada en el consumo de comida basura"))
+
+([ontologia_sbc_Class10019] of  probelma_musculo-esqueletico
+
+	(nombre_problema "Lesión del brazo"))
+
+([ontologia_sbc_Class10020] of  probelma_musculo-esqueletico
+
+	(nombre_problema "Lesión del pecho"))
+
+([ontologia_sbc_Class10022] of  probelma_musculo-esqueletico
+
+	(nombre_problema "Lesión de la pierna"))
+
+([ontologia_sbc_Class10023] of  probelma_musculo-esqueletico
+
+	(nombre_problema "Lesión abdominal"))
 
 ([ontologia_sbc_Class11] of  %3AINSTANCE-ANNOTATION
 
@@ -48,11 +295,12 @@
 		[ontologia_sbc_Class4]
 		[ontologia_sbc_Class3])
 	(dificultad 4)
-	(duracion_max 1)
-	(duracion_min 3)
+	(duracion_max 3)
+	(duracion_min 1)
 	(ejercicio_cubre_un
 		[ontologia_sbc_Class1]
-		[ontologia_sbc_Class8])
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10007])
 	(nombre_ejercicio "Dominadas")
 	(repeticiones_max 20)
 	(repeticiones_min 4))
@@ -66,7 +314,9 @@
 	(dificultad 7)
 	(duracion_max 4)
 	(duracion_min 1)
-	(ejercicio_cubre_un [ontologia_sbc_Class1])
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10007])
 	(nombre_ejercicio "Remo 90")
 	(repeticiones_max 14)
 	(repeticiones_min 4))
@@ -80,7 +330,9 @@
 	(dificultad 9)
 	(duracion_max 12)
 	(duracion_min 4)
-	(ejercicio_cubre_un [ontologia_sbc_Class1])
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10007])
 	(nombre_ejercicio "Peso muerto")
 	(repeticiones_max 12)
 	(repeticiones_min 4))
@@ -106,6 +358,7 @@
 ([ontologia_sbc_Class7] of  ejercicio
 
 	(calorias 150)
+	(combina_con [ontologia_sbc_Class5])
 	(dificultad 3)
 	(duracion_max 5)
 	(duracion_min 2)

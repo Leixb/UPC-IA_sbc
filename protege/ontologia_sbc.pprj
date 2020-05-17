@@ -1,4 +1,4 @@
-; Sun May 03 22:50:43 CEST 2020
+; Sun May 17 14:50:22 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -21,13 +21,13 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_sbc_ProjectKB_Class20099]
-		[ontologia_sbc_ProjectKB_Class20100]
-		[ontologia_sbc_ProjectKB_Class20101]
-		[ontologia_sbc_ProjectKB_Class20102]
-		[ontologia_sbc_ProjectKB_Class20103]
-		[ontologia_sbc_ProjectKB_Class20104]
-		[ontologia_sbc_ProjectKB_Class20105]))
+		[ontologia_sbc_ProjectKB_Class10086]
+		[ontologia_sbc_ProjectKB_Class10087]
+		[ontologia_sbc_ProjectKB_Class10088]
+		[ontologia_sbc_ProjectKB_Class10089]
+		[ontologia_sbc_ProjectKB_Class10090]
+		[ontologia_sbc_ProjectKB_Class10091]
+		[ontologia_sbc_ProjectKB_Class10092]))
 
 ([CLSES_TAB] of  Widget
 
@@ -72,9 +72,6 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_298190_Class3] of  Map
-)
-
 ([KB_512248_Class0] of  String
 
 	(name "factory_class_name")
@@ -83,11 +80,11 @@
 ([KB_512248_Class1] of  Map
 
 	(entries
-		[ontologia_sbc_ProjectKB_Class20106]
-		[ontologia_sbc_ProjectKB_Class20109]
-		[ontologia_sbc_ProjectKB_Class20110]
-		[ontologia_sbc_ProjectKB_Class20111])
-	(referenced_maps [ontologia_sbc_ProjectKB_Class20107]))
+		[ontologia_sbc_ProjectKB_Class10093]
+		[ontologia_sbc_ProjectKB_Class10096]
+		[ontologia_sbc_ProjectKB_Class10097]
+		[ontologia_sbc_ProjectKB_Class10098])
+	(referenced_maps [ontologia_sbc_ProjectKB_Class10094]))
 
 ([KB_512248_Class100] of  String
 
@@ -181,6 +178,9 @@
 	(name "classes_file_name")
 	(string_value "ontologia_sbc.pont"))
 
+([KB_703789_Class6] of  Map
+)
+
 ([LAYOUT_PROPERTIES] of  Property_List
 
 	(name "layout properties")
@@ -194,6 +194,80 @@
 
 ([ontologia_sbc_ProjectKB_Class10] of  Property_List
 )
+
+([ontologia_sbc_ProjectKB_Class10086] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([ontologia_sbc_ProjectKB_Class10087] of  String
+
+	(name "ejercicio")
+	(string_value "nombre_ejercicio"))
+
+([ontologia_sbc_ProjectKB_Class10088] of  String
+
+	(name "dieta")
+	(string_value "nombre_dieta"))
+
+([ontologia_sbc_ProjectKB_Class10089] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([ontologia_sbc_ProjectKB_Class10090] of  String
+
+	(name "probelma_musculo-esqueletico")
+	(string_value "nombre_problema"))
+
+([ontologia_sbc_ProjectKB_Class10091] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([ontologia_sbc_ProjectKB_Class10092] of  String
+
+	(name "objetivo")
+	(string_value "nombre_objetivo"))
+
+([ontologia_sbc_ProjectKB_Class10093] of  Map_Entry
+
+	(key "suppress_instance_counting")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([ontologia_sbc_ProjectKB_Class10094] of  Map
+
+	(entries [ontologia_sbc_ProjectKB_Class10095]))
+
+([ontologia_sbc_ProjectKB_Class10095] of  Map_Entry
+
+	(key "ontologia_sbc_Class11")
+	(key_class "edu.stanford.smi.protege.model.Frame")
+	(value "565 140 162 97")
+	(value_class "java.awt.Rectangle"))
+
+([ontologia_sbc_ProjectKB_Class10096] of  Map_Entry
+
+	(key "InstanceDisplay.yellow_stickies")
+	(key_class "java.lang.String")
+	(value "ontologia_sbc_ProjectKB_Class10094")
+	(value_class "java.util.Map"))
+
+([ontologia_sbc_ProjectKB_Class10097] of  Map_Entry
+
+	(key "add_name_on_instance_form")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([ontologia_sbc_ProjectKB_Class10098] of  Map_Entry
+
+	(key "change_tracking_active")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
 
 ([ontologia_sbc_ProjectKB_Class101] of  String
 
@@ -253,177 +327,6 @@
 
 ([ontologia_sbc_ProjectKB_Class20031] of  Property_List
 )
-
-([ontologia_sbc_ProjectKB_Class20042] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "combina_con")
-	(property_list [ontologia_sbc_ProjectKB_Class20043])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 120))
-
-([ontologia_sbc_ProjectKB_Class20043] of  Property_List
-)
-
-([ontologia_sbc_ProjectKB_Class20044] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "ontologia_sbc_Class20")
-	(property_list [ontologia_sbc_ProjectKB_Class20045])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 180))
-
-([ontologia_sbc_ProjectKB_Class20045] of  Property_List
-)
-
-([ontologia_sbc_ProjectKB_Class20046] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "ontologia_sbc_Class21")
-	(property_list [ontologia_sbc_ProjectKB_Class20047])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 180))
-
-([ontologia_sbc_ProjectKB_Class20047] of  Property_List
-)
-
-([ontologia_sbc_ProjectKB_Class20048] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "ontologia_sbc_Class22")
-	(property_list [ontologia_sbc_ProjectKB_Class20049])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 120))
-
-([ontologia_sbc_ProjectKB_Class20049] of  Property_List
-)
-
-([ontologia_sbc_ProjectKB_Class20050] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "combina_con")
-	(property_list [ontologia_sbc_ProjectKB_Class20051])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 180))
-
-([ontologia_sbc_ProjectKB_Class20051] of  Property_List
-)
-
-([ontologia_sbc_ProjectKB_Class20052] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "combina_con")
-	(property_list [ontologia_sbc_ProjectKB_Class20053])
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
-	(width 200)
-	(x 0)
-	(y 120))
-
-([ontologia_sbc_ProjectKB_Class20053] of  Property_List
-
-	(properties
-		[ontologia_sbc_ProjectKB_Class20054]
-		[ontologia_sbc_ProjectKB_Class20055]))
-
-([ontologia_sbc_ProjectKB_Class20054] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-View References to Value"))
-
-([ontologia_sbc_ProjectKB_Class20055] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-Delete Instance"))
-
-([ontologia_sbc_ProjectKB_Class20099] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([ontologia_sbc_ProjectKB_Class20100] of  String
-
-	(name "ejercicio")
-	(string_value "nombre_ejercicio"))
-
-([ontologia_sbc_ProjectKB_Class20101] of  String
-
-	(name "dieta")
-	(string_value "nombre_dieta"))
-
-([ontologia_sbc_ProjectKB_Class20102] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([ontologia_sbc_ProjectKB_Class20103] of  String
-
-	(name "probelma_musculo-esqueletico")
-	(string_value "nombre_problema"))
-
-([ontologia_sbc_ProjectKB_Class20104] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([ontologia_sbc_ProjectKB_Class20105] of  String
-
-	(name "objetivo")
-	(string_value "nombre_objetivo"))
-
-([ontologia_sbc_ProjectKB_Class20106] of  Map_Entry
-
-	(key "suppress_instance_counting")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([ontologia_sbc_ProjectKB_Class20107] of  Map
-
-	(entries [ontologia_sbc_ProjectKB_Class20108]))
-
-([ontologia_sbc_ProjectKB_Class20108] of  Map_Entry
-
-	(key "ontologia_sbc_Class11")
-	(key_class "edu.stanford.smi.protege.model.Frame")
-	(value "565 140 162 97")
-	(value_class "java.awt.Rectangle"))
-
-([ontologia_sbc_ProjectKB_Class20109] of  Map_Entry
-
-	(key "InstanceDisplay.yellow_stickies")
-	(key_class "java.lang.String")
-	(value "ontologia_sbc_ProjectKB_Class20107")
-	(value_class "java.util.Map"))
-
-([ontologia_sbc_ProjectKB_Class20110] of  Map_Entry
-
-	(key "add_name_on_instance_form")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([ontologia_sbc_ProjectKB_Class20111] of  Map_Entry
-
-	(key "change_tracking_active")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
 
 ([ontologia_sbc_ProjectKB_Class21] of  Widget
 
