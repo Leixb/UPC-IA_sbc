@@ -1,14 +1,16 @@
 (clear)
 
-(defglobal ?*debug* = FALSE)
+(defglobal ?*debug* = TRUE)
 (defglobal ?*debug-print* = (if ?*debug* then t else nil))
+
+(if ?*debug* then
+    (printout t "=> !!! Running in DEBUG mode" crlf)
+)
 
 (load protege/ontologia_sbc.pont)
 
 (load functions.clp)
 (load rules.clp)
-
-(printout ?*debug-print* "test" crlf)
 
 (reset)
 
