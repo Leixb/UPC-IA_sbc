@@ -1,4 +1,4 @@
-; Sun May 17 14:50:22 CEST 2020
+; Sun May 17 16:52:42 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -94,18 +94,6 @@
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot ontologia_sbc_Class22
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot ontologia_sbc_Class20
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot ontologia_sbc_Class21
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(multislot ej_jueves
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio_con_repeticiones)
@@ -175,6 +163,10 @@
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
 		(create-accessor read-write))
+	(multislot impide
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
+		(create-accessor read-write))
 	(multislot sigue_una
 		(type INSTANCE)
 ;+		(allowed-classes dieta)
@@ -208,6 +200,10 @@
 	(multislot hace
 		(type INSTANCE)
 ;+		(allowed-classes habito_personal)
+		(create-accessor read-write))
+	(single-slot ontologia_sbc_Class20005
+		(type STRING)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot ej_domingo
 		(type INSTANCE)
@@ -454,6 +450,10 @@
 (defclass probelma_musculo-esqueletico
 	(is-a USER)
 	(role concrete)
+	(multislot impide
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
+		(create-accessor read-write))
 	(single-slot nombre_problema
 		(type STRING)
 ;+		(cardinality 0 1)
