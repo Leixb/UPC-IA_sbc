@@ -3,11 +3,13 @@
 (defrule MAIN::initialRule "Regla inicial"
 	(declare (salience 10))
 	=>
-	(printout t "================================================================================" crlf)
-  	(printout t "=  Sistema de recomendacion de programas de entrenamiento de Coaching Potato   =" crlf)
-	(printout t "================================================================================" crlf)
+	(printout t "╔═════════════════════════════════════════════════════════════════════════════╗" crlf)
+  	(printout t "║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║" crlf)
+	(printout t "╚═════════════════════════════════════════════════════════════════════════════╝" crlf)
   	(printout t crlf)  	
-	(printout t "¡Bienvenido al sistema de Coaching Potato! A continuación se le formularán una serie de preguntas para poder recomendarle contenidos." crlf)
+	(printout t "¡Bienvenido al sistema de Coaching Potato!" crlf)
+	(printout t "A continuación se te harán una serie de preguntas para poder recomendarte el" crlf)
+	(printout t "programa de entrenamiento que se adapte más a ti." crlf)
 	(printout t crlf)
 	(focus recopilacion-persona)
 )
@@ -27,35 +29,18 @@
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max) (tiempo_disponible ?t_disponible))
 )
 
-(defrule inferencia::skip
-    ?p <- (object (is-a persona))
-    => 
-    (send ?p escribe-persona)
-    (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
-    (focus generar-resultado)
-)
-
-(defrule generar-resultado::skip
-    => 
-    (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
-    (focus print-resultado)
-)
-
-(defrule print-resultado::print-res
-    =>
-    (printout t "DONE" crlf)
-    (exit)
-)
+;;; Recopilacion persona
 
 (defrule recopilacion-persona::establecer-info-extra "Establece la info extra de la persona"
     ?p <- (object (is-a persona))
     =>
-    (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendacion que se adapte más a tu estado fisico actual? "))
+    (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendacion que se adapte
+más a tu estado fisico actual? "))
 	(if (eq ?ejercicio TRUE) then
         (assert (extra))
-        (printout t crlf "Haz una carrera sostenida durante 1 minuto y responde a las siguientes preguntas." crlf)
+        (printout t crlf "Haz una carrera sostenida durante 1 minuto." crlf)
         
-        (bind ?pulsaciones_por_minuto (pregunta-numerica "Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en pulsaciones por minuto)? " 50 250))
+        (bind ?pulsaciones_por_minuto (pregunta-numerica "Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en ppm)? " 50 250))
         (send ?p put-pulsaciones_por_minuto ?pulsaciones_por_minuto)
         
         (bind ?mareo (pregunta-si-no "¿Has tenido sensación de mareo? "))
@@ -165,6 +150,81 @@
 	
 	(retract ?aux)
 	(focus inferencia)
+)
+
+(defrule inferencia::skip
+    ?p <- (object (is-a persona))
+    => 
+    (send ?p escribe-persona)
+    (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
+    (focus generar-resultado)
+)
+
+(defrule generar-resultado::skip
+    => 
+    (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
+    (focus print-resultado)
+)
+
+(defrule print-resultado::print-res
+    =>
+    (printout t "DONE" crlf)
+    ;(exit)
+)
+
+;;; Muestra ejercicio
+(deffunction MAIN::separador ()
+    (printout t "╞═══════════════════════════════════════════════════════════════════════════════" crlf)
+)
+
+(deffunction MAIN::separador_corto ()
+    (printout t "├───────────────────────────────────────" crlf)
+)
+
+(deffunction MAIN::print-ejercicios-dia (?dia ?ejercicios)
+    (separador)
+    (printout t "╞ " ?dia crlf)
+    (foreach ?ej ?ejercicios
+        (separador_corto)
+        (send (instance-address ?ej) imprimir)
+    )
+)
+
+(defmessage-handler programa_de_entrenamiento imprimir()
+    (print-ejercicios-dia "Lunes" ?self:ej_lunes)
+    (print-ejercicios-dia "Martes" ?self:ej_martes)
+    (print-ejercicios-dia "Miercoles" ?self:ej_miercoles)
+    (print-ejercicios-dia "Jueves" ?self:ej_jueves)
+    (print-ejercicios-dia "Viernes" ?self:ej_viernes)
+    (print-ejercicios-dia "Sabado" ?self:ej_sabado)
+    (print-ejercicios-dia "Domingo" ?self:ej_domingo)
+)
+
+(defmessage-handler ejercicio_con_repeticiones imprimir()
+    (bind ?nombre_ej (send ?self:ejercicio_a_repetir get-nombre_ejercicio))
+    (printout t
+        "│ Ejercicio: " ?nombre_ej crlf
+        "│ Repeticiones: " ?self:repeticiones crlf
+        "│ Dificultad: " ?self:dificultad_ejercicio crlf
+    )
+    (send ?self:ejercicio_a_repetir imprimir)
+)
+
+(defmessage-handler ejercicio imprimir()
+    (printout t
+        "│ Calorias: " ?self:calorias crlf
+        "│ Duracion: de " ?self:duracion_min " a " ?self:duracion_max " minutos." crlf
+    )
+    (printout t "│ Combina con: ")
+    (foreach ?ej ?self:combina_con
+        (printout t (send ?ej get-nombre_ejercicio) ", ")
+    )
+    (printout t crlf)
+;dificultad
+;ejercicio_cubre_un
+;nombre_ejercicio
+;repeticiones_max
+;repeticiones_min
 )
 
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
