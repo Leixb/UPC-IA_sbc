@@ -108,7 +108,7 @@
 	(ejercicio_cubre_un
 		[ontologia_sbc_Class10007]
 		[ontologia_sbc_Class8])
-	(nombre_ejercicio "Curl con barra z")
+	(nombre_ejercicio "Curl con barra")
 	(repeticiones_max 20)
 	(repeticiones_min 10))
 
@@ -278,7 +278,6 @@
 	(nombre_problema "Lesión de la pierna"))
 
 ([ontologia_sbc_Class10023] of  probelma_musculo-esqueletico
-
 	(impide
 		[ontologia_sbc_Class4]
 		[ontologia_sbc_Class20004]
@@ -286,12 +285,6 @@
 		[ontologia_sbc_Class20001]
 		[ontologia_sbc_Class20002])
 	(nombre_problema "Lesión abdominal"))
-
-([ontologia_sbc_Class11] of  %3AINSTANCE-ANNOTATION
-
-	(%3AANNOTATED-INSTANCE [ontologia_sbc_Class1])
-	(%3ACREATION-TIMESTAMP "2020.05.03 22:34:20.905 CEST")
-	(%3ACREATOR "PC"))
 
 ([ontologia_sbc_Class13] of  probelma_musculo-esqueletico
 
@@ -311,7 +304,6 @@
 	(nombre_problema "Dolor de articulaciones"))
 
 ([ontologia_sbc_Class15] of  probelma_musculo-esqueletico
-
 	(impide
 		[ontologia_sbc_Class5]
 		[ontologia_sbc_Class3]
@@ -349,7 +341,6 @@
 	(nombre_ejercicio "Dominadas")
 	(repeticiones_max 20)
 	(repeticiones_min 4))
-
 ([ontologia_sbc_Class20001] of  ejercicio
 
 	(calorias 480)
