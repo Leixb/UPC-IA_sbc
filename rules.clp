@@ -154,6 +154,7 @@ más a tu estado fisico actual? "))
 
 (defrule inferencia::skip
     (IMC_done)
+    (EDAD_done)
     ?p <- (object (is-a persona))
     => 
 
@@ -169,7 +170,7 @@ más a tu estado fisico actual? "))
 (defrule inferencia::imc
     ?p <- (object (is-a persona) (imc ?imc))
     =>
-    (printout ?*debug-print* ?imc crlf)
+    (printout ?*debug-print* "Inferencia de IMC: " ?imc crlf)
 
     (     if (< ?imc 18.5 ) then (assert (peso_bajo))
     else (if (< ?imc 25   ) then (assert (peso_normal))
@@ -178,6 +179,20 @@ más a tu estado fisico actual? "))
     )))
 
     (assert (IMC_done))
+)
+
+(defrule inferencia::edad
+    ?p <- (object (is-a persona) (edad ?edad))
+    =>
+    (printout ?*debug-print* "Inferencia de edad: " ?edad crlf)
+
+    (     if (< ?edad 30   ) then (assert (joven))
+    else (if (< ?edad 45   ) then (assert (adulto))
+    else (if (< ?edad 60   ) then (assert (mediana_edad))
+    else                          (assert (viejo))
+    )))
+
+    (assert (EDAD_done))
 )
 
 (defrule generar-resultado::skip
