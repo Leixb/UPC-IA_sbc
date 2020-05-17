@@ -183,10 +183,12 @@ más a tu estado fisico actual? "))
     (assert (condiciones_fisicas))
 )
 
-(defrule inferencia::skip
+(defrule inferencia::next
     (IMC_done)
     (EDAD_done)
     (ESTAMINA_done)
+    (PRESSION_done)
+    (DIETA_done)
     ?p <- (object (is-a persona))
     => 
 
@@ -253,6 +255,23 @@ más a tu estado fisico actual? "))
     )
 
     (assert (ESTAMINA_done))
+)
+
+; TODO
+(defrule inferencia::dieta
+    (not (DIETA_done))
+    ?c <- (condiciones_fisicas)
+    =>
+    (assert (DIETA_done))
+)
+
+; TODO
+(defrule inferencia::pression_sanguinea
+    (not (PRESSION_done))
+    (EDAD_done)
+    ?c <- (condiciones_fisicas (edad ?edad))
+    =>
+    (assert (PRESSION_done))
 )
 
 (defrule generar-resultado::skip
