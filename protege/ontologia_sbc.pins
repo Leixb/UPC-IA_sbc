@@ -1,4 +1,4 @@
-; Sun May 17 15:17:47 CEST 2020
+; Sun May 17 17:57:08 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -244,30 +244,75 @@
 
 ([ontologia_sbc_Class10019] of  probelma_musculo-esqueletico
 
+	(impide
+		[ontologia_sbc_Class10015]
+		[ontologia_sbc_Class10009]
+		[ontologia_sbc_Class10008]
+		[ontologia_sbc_Class10006]
+		[ontologia_sbc_Class2]
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class10012]
+		[ontologia_sbc_Class10014]
+		[ontologia_sbc_Class10013]
+		[ontologia_sbc_Class3])
 	(nombre_problema "Lesión del brazo"))
 
 ([ontologia_sbc_Class10020] of  probelma_musculo-esqueletico
 
+	(impide
+		[ontologia_sbc_Class10012]
+		[ontologia_sbc_Class10014]
+		[ontologia_sbc_Class10015]
+		[ontologia_sbc_Class10013])
 	(nombre_problema "Lesión del pecho"))
 
 ([ontologia_sbc_Class10022] of  probelma_musculo-esqueletico
 
+	(impide
+		[ontologia_sbc_Class20001]
+		[ontologia_sbc_Class20002]
+		[ontologia_sbc_Class20003]
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class5])
 	(nombre_problema "Lesión de la pierna"))
 
 ([ontologia_sbc_Class10023] of  probelma_musculo-esqueletico
 
+	(impide
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class20004]
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class20001]
+		[ontologia_sbc_Class20002])
 	(nombre_problema "Lesión abdominal"))
 
 ([ontologia_sbc_Class13] of  probelma_musculo-esqueletico
 
+	(impide
+		[ontologia_sbc_Class2]
+		[ontologia_sbc_Class3]
+		[ontologia_sbc_Class4])
 	(nombre_problema "Dolor de espalda"))
 
 ([ontologia_sbc_Class14] of  probelma_musculo-esqueletico
 
+	(impide
+		[ontologia_sbc_Class3]
+		[ontologia_sbc_Class10011]
+		[ontologia_sbc_Class20001]
+		[ontologia_sbc_Class20004])
 	(nombre_problema "Dolor de articulaciones"))
 
 ([ontologia_sbc_Class15] of  probelma_musculo-esqueletico
 
+	(impide
+		[ontologia_sbc_Class5]
+		[ontologia_sbc_Class3]
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class20004]
+		[ontologia_sbc_Class20002]
+		[ontologia_sbc_Class20001])
 	(nombre_problema "Dolor de cervicales"))
 
 ([ontologia_sbc_Class16] of  dieta
@@ -298,6 +343,76 @@
 	(nombre_ejercicio "Dominadas")
 	(repeticiones_max 20)
 	(repeticiones_min 4))
+
+([ontologia_sbc_Class20001] of  ejercicio
+
+	(calorias 480)
+	(combina_con
+		[ontologia_sbc_Class20002]
+		[ontologia_sbc_Class20003]
+		[ontologia_sbc_Class20004])
+	(dificultad 8)
+	(duracion_max 14)
+	(duracion_min 4)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Sentadilla")
+	(repeticiones_max 12)
+	(repeticiones_min 3))
+
+([ontologia_sbc_Class20002] of  ejercicio
+
+	(calorias 403)
+	(combina_con
+		[ontologia_sbc_Class20001]
+		[ontologia_sbc_Class20003]
+		[ontologia_sbc_Class20004])
+	(dificultad 6)
+	(duracion_max 8)
+	(duracion_min 2)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Zancadas")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class20003] of  ejercicio
+
+	(calorias 399)
+	(combina_con
+		[ontologia_sbc_Class20002]
+		[ontologia_sbc_Class20001]
+		[ontologia_sbc_Class20003])
+	(dificultad 4)
+	(duracion_max 6)
+	(duracion_min 2)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Hip thrust")
+	(repeticiones_max 20)
+	(repeticiones_min 10))
+
+([ontologia_sbc_Class20004] of  ejercicio
+
+	(calorias 323)
+	(combina_con
+		[ontologia_sbc_Class20003]
+		[ontologia_sbc_Class20001]
+		[ontologia_sbc_Class20002])
+	(dificultad 3)
+	(duracion_max 11)
+	(duracion_min 4)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10007]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Prensa")
+	(repeticiones_max 12)
+	(repeticiones_min 3))
 
 ([ontologia_sbc_Class3] of  ejercicio
 
