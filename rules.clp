@@ -3,9 +3,9 @@
 (defrule MAIN::initialRule "Regla inicial"
 	(declare (salience 10))
 	=>
-	(printout t "================================================================================" crlf)
-  	(printout t "=  Sistema de recomendacion de programas de entrenamiento de Coaching Potato   =" crlf)
-	(printout t "================================================================================" crlf)
+	(printout t "╔═════════════════════════════════════════════════════════════════════════════╗" crlf)
+  	(printout t "║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║" crlf)
+	(printout t "╚═════════════════════════════════════════════════════════════════════════════╝" crlf)
   	(printout t crlf)  	
 	(printout t "¡Bienvenido al sistema de Coaching Potato! A continuación se le formularán una serie de preguntas para poder recomendarle contenidos." crlf)
 	(printout t crlf)
@@ -180,16 +180,16 @@
 
 ;;; Muestra ejercicio
 (deffunction MAIN::separador ()
-    (printout t "================================================================================" crlf)
+    (printout t "╞═══════════════════════════════════════════════════════════════════════════════" crlf)
 )
 
 (deffunction MAIN::separador_corto ()
-    (printout t "----------------------------------------" crlf)
+    (printout t "├───────────────────────────────────────" crlf)
 )
 
 (deffunction MAIN::print-ejercicios-dia (?dia ?ejercicios)
     (separador)
-    (printout t "= " ?dia crlf)
+    (printout t "╞ " ?dia crlf)
     (foreach ?ej ?ejercicios
         (separador_corto)
         (send (instance-address ?ej) imprimir)
@@ -209,19 +209,19 @@
 (defmessage-handler ejercicio_con_repeticiones imprimir()
     (bind ?nombre_ej (send ?self:ejercicio_a_repetir get-nombre_ejercicio))
     (printout t
-        "Ejercicio: " ?nombre_ej crlf
-        "Repeticiones: " ?self:repeticiones crlf
-        "Dificultad: " ?self:dificultad_ejercicio crlf
+        "│ Ejercicio: " ?nombre_ej crlf
+        "│ Repeticiones: " ?self:repeticiones crlf
+        "│ Dificultad: " ?self:dificultad_ejercicio crlf
     )
     (send ?self:ejercicio_a_repetir imprimir)
 )
 
 (defmessage-handler ejercicio imprimir()
     (printout t
-        "Calorias: " ?self:calorias crlf
-        "Duracion: de " ?self:duracion_min " a " ?self:duracion_max " minutos." crlf
+        "│ Calorias: " ?self:calorias crlf
+        "│ Duracion: de " ?self:duracion_min " a " ?self:duracion_max " minutos." crlf
     )
-    (printout t "Combina con: ")
+    (printout t "│ Combina con: ")
     (foreach ?ej ?self:combina_con
         (printout t (send ?ej get-nombre_ejercicio) ", ")
     )
