@@ -149,8 +149,8 @@ más a tu estado fisico actual? "))
         (bind ?frecuencia (pregunta-numerica "   ¿Cuantas veces a la semana realizas esta actividad? " 1 30))
         (bind ?duracion (pregunta-numerica "   ¿Cuanto tiempo le dedicas cada vez (en minutos)? " 1 180))
         
-        (send ?curr-resp put-frecuencia ?frecuencia))
-        (send ?curr-resp put-duracion_habito ?duracion))
+        (send ?curr-resp put-frecuencia ?frecuencia)
+        (send ?curr-resp put-duracion_habito ?duracion)
     
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
