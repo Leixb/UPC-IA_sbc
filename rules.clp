@@ -7,7 +7,7 @@
   	(printout t "║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║" crlf)
 	(printout t "╚═════════════════════════════════════════════════════════════════════════════╝" crlf)
   	(printout t crlf)  	
-	(printout t "¡Bienvenido al sistema de Coaching Potato! A continuación se le formularán una serie de preguntas para poder recomendarle contenidos." crlf)
+	(printout t "¡Bienvenido al sistema de Coaching Potato! A continuación se te formularán una serie de preguntas para recomendarte un programa de entrenamiento que se adapte a ti." crlf)
 	(printout t crlf)
 	(focus recopilacion-persona)
 )
