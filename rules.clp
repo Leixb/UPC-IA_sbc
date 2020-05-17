@@ -153,11 +153,31 @@ más a tu estado fisico actual? "))
 )
 
 (defrule inferencia::skip
+    (IMC_done)
     ?p <- (object (is-a persona))
     => 
-    (send ?p escribe-persona)
+
+    (if ?*debug* then
+        (send ?p escribe-persona)
+        (facts)
+    )
     (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
+
     (focus generar-resultado)
+)
+
+(defrule inferencia::imc
+    ?p <- (object (is-a persona) (imc ?imc))
+    =>
+    (printout ?*debug-print* ?imc crlf)
+
+    (     if (< ?imc 18.5 ) then (assert (peso_bajo))
+    else (if (< ?imc 25   ) then (assert (peso_normal))
+    else (if (< ?imc 30   ) then (assert (sobrepeso))
+    else                         (assert (obesidad))
+    )))
+
+    (assert (IMC_done))
 )
 
 (defrule generar-resultado::skip
