@@ -1,7 +1,14 @@
-; Sun May 17 18:46:39 CEST 2020
+; Sun May 17 20:07:44 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
+
+([ontologia_sbc_Class0] of  habito_personal
+
+	(duracion_habito -1)
+	(frecuencia -1)
+	(habito_cubre_un [ontologia_sbc_Class8])
+	(nombre_habito "Desplazamiento a pie"))
 
 ([ontologia_sbc_Class1] of  objetivo
 
@@ -434,6 +441,40 @@
 	(nombre_ejercicio "Remo 90")
 	(repeticiones_max 14)
 	(repeticiones_min 4))
+
+([ontologia_sbc_Class30002] of  habito_personal
+
+	(duracion_habito -1)
+	(frecuencia -1)
+	(habito_cubre_un [ontologia_sbc_Class10])
+	(nombre_habito "Estar de pie en el trabajo"))
+
+([ontologia_sbc_Class30003] of  habito_personal
+
+	(duracion_habito -1)
+	(frecuencia -1)
+	(habito_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10007])
+	(nombre_habito "Carga de peso en el trabajo"))
+
+([ontologia_sbc_Class30004] of  habito_personal
+
+	(duracion_habito -1)
+	(frecuencia -1)
+	(habito_cubre_un
+		[ontologia_sbc_Class8]
+		[ontologia_sbc_Class10])
+	(nombre_habito "Desplazamiento en bicicleta"))
+
+([ontologia_sbc_Class30009] of  habito_personal
+
+	(duracion_habito -1)
+	(frecuencia -1)
+	(habito_cubre_un
+		[ontologia_sbc_Class1]
+		[ontologia_sbc_Class10])
+	(nombre_habito "Hacer la compra a pie"))
 
 ([ontologia_sbc_Class4] of  ejercicio
 
