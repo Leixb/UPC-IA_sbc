@@ -193,13 +193,6 @@ más a tu estado fisico actual? "))
     )
 )
 
-(deftemplate inferencia::habitos_personales
-    (multislot lista-habitos
-        (type INSTANCE)
-        (allowed-classes habito_personal)
-    )
-)
-
 (defrule inferencia::init
     =>
     (assert (condiciones_fisicas))
@@ -307,24 +300,36 @@ más a tu estado fisico actual? "))
     (assert (PRESSION_done))
 )
 
+(defrule inferencia::habitos_alcanzan
+    (not (HABITOS_done))
+    (object (is-a persona) (hace $?habitos))
+    (objetivos_usuario (lista-objetivos $?objetivos))
+    =>
+    (foreach ?habito $?habitos
+        (bind ?frecuencia (send ?habito get-frecuencia))
+        (bind ?duracion_habito (send ?habito get-duracion_habito))
+        (bind ?alcanza (* ?frecuencia ?duracion_habito))
+        
+        (bind $?objetivos_cubiertos (send ?habito get-habito_cubre_un))
+        (foreach ?objetivo-cubierto $?objetivos_cubiertos
+            (if (member ?objetivo-cubierto $?objetivos) then
+                (bind ?alcanzado (send ?objetivo-cubierto get-alcanzado))
+                (send ?objetivo-cubierto put-alcanzado (+ ?alcanzado ?alcanza))
+            )
+        )
+    )
+    (assert (HABITOS_done))
+)
+
 (defrule inferencia::copia_objetivos
     (not (OBJETIVOS_done))
+    (HABITOS_done)
     (object (is-a persona) (quiere $?objetivos))
     ?o <- (objetivos_usuario)
     =>
     (printout ?*debug-print* "lista: " $?objetivos crlf)
     (modify ?o (lista-objetivos $?objetivos))
     (assert (OBJETIVOS_done))
-)
-
-(defrule inferencia::copia_habitos
-    (not (HABITOS_done))
-    (object (is-a persona) (hace $?habitos))
-    ?hp <- (habitos_personales)
-    =>
-    (printout ?*debug-print* "lista: " $?habitos crlf)
-    (modify ?hp (lista-habitos $?habitos))
-    (assert (HABITOS_done))
 )
 
 (defrule generar-resultado::skip
