@@ -1,4 +1,4 @@
-; Sun May 17 16:52:42 CEST 2020
+; Sun May 17 17:57:08 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -278,6 +278,7 @@
 	(nombre_problema "Lesión de la pierna"))
 
 ([ontologia_sbc_Class10023] of  probelma_musculo-esqueletico
+
 	(impide
 		[ontologia_sbc_Class4]
 		[ontologia_sbc_Class20004]
@@ -304,6 +305,7 @@
 	(nombre_problema "Dolor de articulaciones"))
 
 ([ontologia_sbc_Class15] of  probelma_musculo-esqueletico
+
 	(impide
 		[ontologia_sbc_Class5]
 		[ontologia_sbc_Class3]
@@ -341,6 +343,7 @@
 	(nombre_ejercicio "Dominadas")
 	(repeticiones_max 20)
 	(repeticiones_min 4))
+
 ([ontologia_sbc_Class20001] of  ejercicio
 
 	(calorias 480)
