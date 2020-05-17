@@ -76,16 +76,14 @@
 	=>
 	(bind $?list-objetivos (find-all-instances ((?inst objetivo)) TRUE))
 	(bind $?nom-obj (create$ ))
-	(loop-for-count (?i 1 (length$ $?list-objetivos)) do
-		(bind ?curr-obj (nth$ ?i ?list-objetivos))
+    (foreach ?curr-obj ?list-objetivos
 		(bind ?curr-nom (send ?curr-obj get-nombre_objetivo))
 		(bind $?nom-obj(insert$ $?nom-obj (+ (length$ $?nom-obj) 1) ?curr-nom))
 	)
 	(bind ?escogido (pregunta-multi "¿Que objetivos quieres alcanzar? " $?nom-obj))
 	
 	(bind $?respuesta (create$ ))
-	(loop-for-count (?i 1 (length$ ?escogido)) do
-		(bind ?curr-index (nth$ ?i ?escogido))
+    (foreach ?curr-index ?escogido
 		(bind ?curr-resp (nth$ ?curr-index ?list-objetivos))
 		(bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
 	)
@@ -95,25 +93,23 @@
 	(assert (problemas ASK))
 )
 
-(defrule recopilacion-persona::establecer-probelmas "Establece los probelmas musculo-esqueleticos de la persona"
+(defrule recopilacion-persona::establecer-problemas "Establece los problemas musculo-esqueleticos de la persona"
 	?aux <- (problemas ASK)
 	?p <- (object (is-a persona))
 	=>
 	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esqueletico? "))
 	(if (eq ?probs TRUE) then	
-        (bind $?list-probelmas (find-all-instances ((?inst probelma_musculo-esqueletico)) TRUE))
+        (bind $?list-problemas (find-all-instances ((?inst probelma_musculo-esqueletico)) TRUE))
         (bind $?nom-prob (create$ ))
-        (loop-for-count (?i 1 (length$ $?list-probelmas)) do
-            (bind ?curr-prob (nth$ ?i ?list-probelmas))
+        (foreach ?curr-prob ?list-problemas
             (bind ?curr-nom (send ?curr-prob get-nombre_problema))
             (bind $?nom-prob(insert$ $?nom-prob (+ (length$ $?nom-prob) 1) ?curr-nom))
         )
         (bind ?escogido (pregunta-multi "Selecciona uno o más: " $?nom-prob))
         
         (bind $?respuesta (create$ ))
-        (loop-for-count (?i 1 (length$ ?escogido)) do
-            (bind ?curr-index (nth$ ?i ?escogido))
-            (bind ?curr-resp (nth$ ?curr-index ?list-probelmas))
+        (foreach ?curr-index ?escogido
+            (bind ?curr-resp (nth$ ?curr-index ?list-problemas))
             (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
         )
         (send ?p put-tiene $?respuesta)
@@ -129,16 +125,14 @@
 	=>
 	(bind $?list-dietas (find-all-instances ((?inst dieta)) TRUE))
     (bind $?nom-dieta (create$ ))
-    (loop-for-count (?i 1 (length$ $?list-dietas)) do
-        (bind ?curr-dieta (nth$ ?i ?list-dietas))
+    (foreach ?curr-dieta ?list-dietas
         (bind ?curr-nom (send ?curr-dieta get-nombre_dieta))
         (bind $?nom-dieta(insert$ $?nom-dieta (+ (length$ $?nom-dieta) 1) ?curr-nom))
     )
     (bind ?escogido (pregunta-multi "Selecciona una o más de las siguientes opciones relacionadas con tu dieta: " $?nom-dieta))
     
     (bind $?respuesta (create$ ))
-    (loop-for-count (?i 1 (length$ ?escogido)) do
-        (bind ?curr-index (nth$ ?i ?escogido))
+    (foreach ?curr-index ?escogido
         (bind ?curr-resp (nth$ ?curr-index ?list-dietas))
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
@@ -156,8 +150,7 @@
     (bind ?escogido (pregunta-multi "¿Haces alguno de los siguientes hábitos personales? " $?nom-hab))
     
     (bind $?respuesta (create$ ))
-    (loop-for-count (?i 1 (length$ ?escogido)) do
-        (bind ?curr-index (nth$ ?i ?escogido))
+    (foreach ?curr-index ?escogido
         (bind ?curr-resp (nth$ ?curr-index ?nom-hab))
         (printout t ?curr-resp ":" crlf)
         
@@ -166,8 +159,6 @@
         
         (make-instance of habito_personal (tipo_habito ?curr-resp) (frecuencia ?frecuencia) (duracion_habito ?duracion))
     
-        (bind ?curr-index (nth$ ?i ?escogido))
-        (bind ?curr-resp (nth$ ?curr-index ?nom-hab))
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
     (send ?p put-hace $?respuesta)
@@ -197,6 +188,7 @@
       "Objetivos: " $?self:quiere crlf
       "Problemas: " $?self:tiene crlf
       "Dietas: " $?self:sigue_una crlf
+      "Habitos: " $?self:hace crlf
     )
 )
 
