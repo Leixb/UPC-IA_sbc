@@ -186,14 +186,14 @@ más a tu estado fisico actual? "))
     )
 )
 
-(deftemplate inferencia::objetivos
+(deftemplate inferencia::objetivos_usuario
     (multislot lista-objetivos
         (type INSTANCE)
         (allowed-classes objetivo)
     )
 )
 
-(deftemplate inferencia::habitos
+(deftemplate inferencia::habitos_personales
     (multislot lista-habitos
         (type INSTANCE)
         (allowed-classes habito_personal)
@@ -203,7 +203,8 @@ más a tu estado fisico actual? "))
 (defrule inferencia::init
     =>
     (assert (condiciones_fisicas))
-    (assert (objetivos))
+    (assert (objetivos_usuario))
+    (assert (habitos_personales))
 )
 
 (defrule inferencia::next
@@ -309,7 +310,7 @@ más a tu estado fisico actual? "))
 (defrule inferencia::copia_objetivos
     (not (OBJETIVOS_done))
     (object (is-a persona) (quiere $?objetivos))
-    ?o <- (objetivos)
+    ?o <- (objetivos_usuario)
     =>
     (printout ?*debug-print* "lista: " $?objetivos crlf)
     (modify ?o (lista-objetivos $?objetivos))
@@ -317,6 +318,13 @@ más a tu estado fisico actual? "))
 )
 
 (defrule inferencia::copia_habitos
+    (not (HABITOS_done))
+    (object (is-a persona) (hace $?habitos))
+    ?hp <- (habitos_personales)
+    =>
+    (printout ?*debug-print* "lista: " $?habitos crlf)
+    (modify ?hp (lista-habitos $?habitos))
+    (assert (HABITOS_done))
 )
 
 (defrule generar-resultado::skip
