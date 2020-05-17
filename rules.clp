@@ -302,8 +302,7 @@ más a tu estado fisico actual? "))
 
 (defrule inferencia::habitos_alcanzan
     (not (HABITOS_done))
-    (object (is-a persona) (hace $?habitos))
-    (objetivos_usuario (lista-objetivos $?objetivos))
+    (object (is-a persona) (hace $?habitos) (quiere $?objetivos))
     =>
     (foreach ?habito $?habitos
         (bind ?frecuencia (send ?habito get-frecuencia))
@@ -312,10 +311,30 @@ más a tu estado fisico actual? "))
         
         (bind $?objetivos_cubiertos (send ?habito get-habito_cubre_un))
         (foreach ?objetivo-cubierto $?objetivos_cubiertos
-            (if (member ?objetivo-cubierto $?objetivos) then
-                (bind ?alcanzado (send ?objetivo-cubierto get-alcanzado))
-                (send ?objetivo-cubierto put-alcanzado (+ ?alcanzado ?alcanza))
+            (printout ?*debug-print* "FOR cubierto " ?objetivo-cubierto crlf)
+            (printout ?*debug-print* ?objetivos crlf)
+            (printout ?*debug-print* (member$ ?objetivo-cubierto $?objetivos) crlf)
+            (foreach ?obj ?objetivos
+                (if (eq (send ?obj get-nombre_objetivo)
+                         (send ?objetivo-cubierto get-nombre_objetivo)) then
+                            (bind ?alcanzado (send ?objetivo-cubierto get-alcanzado))
+                            (printout ?*debug-print* "MODIFICANDO " ?objetivo-cubierto crlf)
+                            (send ?objetivo-cubierto put-alcanzado (+ ?alcanzado ?alcanza))
+                )
             )
+            ;(if (member$ ?objetivo-cubierto $?objetivos) then
+            ;    (bind ?alcanzado (send ?objetivo-cubierto get-alcanzado))
+            ;    (printout ?*debug-print* "MODIFICANDO " ?objetivo-cubierto crlf)
+            ;    (send ?objetivo-cubierto put-alcanzado (+ ?alcanzado ?alcanza))
+            ;)
+        )
+    )
+    (if ?*debug* then
+        (bind $?list-obj (find-all-instances ((?inst objetivo)) TRUE))
+        (foreach ?hab ?list-obj
+            (bind ?nom (send ?hab get-nombre_objetivo))
+            (bind ?alcan (send ?hab get-alcanzado))
+            (printout t ?nom " -> " ?alcan crlf)
         )
     )
     (assert (HABITOS_done))
