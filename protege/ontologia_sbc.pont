@@ -1,4 +1,4 @@
-; Sun May 17 18:46:39 CEST 2020
+; Sun May 17 20:07:44 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -41,16 +41,16 @@
 		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot tiempo_disponible
-		(type INTEGER)
-		(default -1)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot peso
 ;+		(comment "Peso en kilogramos.")
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot tiempo_disponible
+		(type INTEGER)
+		(default -1)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot ej_martes
 		(type INSTANCE)
@@ -82,29 +82,29 @@
 		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(single-slot nombre_ejercicio
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot calorias
 ;+		(comment "Calorías consumidas en un minuto.")
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot nombre_ejercicio
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(multislot quiere
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
-		(create-accessor read-write))
-	(single-slot saludable
-;+		(comment "Indica cuanto de saludable o perjudicial es la dieta.")
-		(type INTEGER)
-;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot frecuencia
 ;+		(comment "Número de veces por semana.")
 		(type INTEGER)
 		(default -1)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot saludable
+;+		(comment "Indica cuanto de saludable o perjudicial es la dieta.")
+		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot combina_con
@@ -134,15 +134,15 @@
 		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot habito_cubre_un
-;+		(comment "Un hábito personal puede cubrir uno o más objetivos.")
-		(type INSTANCE)
-;+		(allowed-classes objetivo)
-		(create-accessor read-write))
 	(multislot ej_jueves
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio_con_repeticiones)
 		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(multislot habito_cubre_un
+;+		(comment "Un hábito personal puede cubrir uno o más objetivos.")
+		(type INSTANCE)
+;+		(allowed-classes objetivo)
 		(create-accessor read-write))
 	(single-slot nombre_problema
 		(type STRING)
@@ -169,16 +169,6 @@
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio)
 		(create-accessor read-write))
-	(single-slot presion_sanguinea_max
-;+		(comment "Presión sanguínea máxima en mmHg (milímetros de mercurio).")
-		(type INTEGER)
-		(default -1)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot ejercicio_cubre_un
-		(type INSTANCE)
-;+		(allowed-classes objetivo)
-		(create-accessor read-write))
 	(single-slot mareo
 ;+		(comment "Sensación de mareo al hacer un ejercicio simple.")
 		(type SYMBOL)
@@ -186,15 +176,25 @@
 		(default FALSE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot tipo_habito
-		(type SYMBOL)
-		(allowed-values actividad_fisica_trabajo actividad_domestica desplazamientos actividad_estatica)
-;+		(cardinality 0 1)
+	(multislot ejercicio_cubre_un
+		(type INSTANCE)
+;+		(allowed-classes objetivo)
+		(create-accessor read-write))
+	(single-slot presion_sanguinea_max
+;+		(comment "Presión sanguínea máxima en mmHg (milímetros de mercurio).")
+		(type INTEGER)
+		(default -1)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot duracion_min
 ;+		(comment "Duración mínima del ejercicio en minutos.")
 		(type INTEGER)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot tipo_habito
+		(type SYMBOL)
+		(allowed-values actividad_fisica_trabajo actividad_domestica desplazamientos actividad_estatica)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot ontologia_sbc_Class22
 		(type STRING)
@@ -212,16 +212,16 @@
 		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(multislot ej_sabado
+		(type INSTANCE)
+;+		(allowed-classes ejercicio_con_repeticiones)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
 	(single-slot altura
 ;+		(comment "Altura en metros.")
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot ej_sabado
-		(type INSTANCE)
-;+		(allowed-classes ejercicio_con_repeticiones)
-		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot repeticiones_min
 ;+		(comment "Número de repeticiones minimas.")
@@ -239,30 +239,30 @@
 		(type INSTANCE)
 ;+		(allowed-classes programa_de_entrenamiento)
 		(create-accessor read-write))
+	(single-slot dificultad
+;+		(comment "Dificultad base del ejercicio, del 0 al 10.")
+		(type INTEGER)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot tirantez_muscular
 ;+		(comment "Sensación de tirantez muscular al hacer un ejercicio simple.")
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 		(default FALSE)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot dificultad
-;+		(comment "Dificultad base del ejercicio, del 0 al 10.")
-		(type INTEGER)
-;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass persona
 	(is-a USER)
 	(role concrete)
-	(single-slot presion_sanguinea_min
-;+		(comment "Presión sanguínea mínima en mmHg (milímetros de mercurio).")
+	(single-slot imc
+;+		(comment "Indice de masa corporal en kg/m^2.")
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot imc
-;+		(comment "Indice de masa corporal en kg/m^2.")
+	(single-slot presion_sanguinea_min
+;+		(comment "Presión sanguínea mínima en mmHg (milímetros de mercurio).")
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
@@ -284,18 +284,18 @@
 		(default -1)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot presion_sanguinea_max
-;+		(comment "Presión sanguínea máxima en mmHg (milímetros de mercurio).")
-		(type INTEGER)
-		(default -1)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot mareo
 ;+		(comment "Sensación de mareo al hacer un ejercicio simple.")
 		(type SYMBOL)
 		(allowed-values NULL FALSE TRUE)
 		(default NULL)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot presion_sanguinea_max
+;+		(comment "Presión sanguínea máxima en mmHg (milímetros de mercurio).")
+		(type INTEGER)
+		(default -1)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot hace
 		(type INSTANCE)
@@ -311,13 +311,13 @@
 		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot tiempo_disponible
+	(single-slot peso
+;+		(comment "Peso en kilogramos.")
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot peso
-;+		(comment "Peso en kilogramos.")
+	(single-slot tiempo_disponible
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
@@ -328,16 +328,16 @@
 		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(multislot quiere
+		(type INSTANCE)
+;+		(allowed-classes objetivo)
+		(create-accessor read-write))
 	(single-slot tirantez_muscular
 ;+		(comment "Sensación de tirantez muscular al hacer un ejercicio simple.")
 		(type SYMBOL)
 		(allowed-values NULL FALSE TRUE)
 		(default NULL)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot quiere
-		(type INSTANCE)
-;+		(allowed-classes objetivo)
 		(create-accessor read-write)))
 
 (defclass ejercicio
@@ -347,14 +347,14 @@
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio)
 		(create-accessor read-write))
+	(single-slot nombre_ejercicio
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot calorias
 ;+		(comment "Calorías consumidas en un minuto.")
 		(type INTEGER)
 		(default -1)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot nombre_ejercicio
-		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot repeticiones_max
@@ -398,12 +398,12 @@
 (defclass programa_de_entrenamiento
 	(is-a USER)
 	(role concrete)
-	(multislot ej_miercoles
+	(multislot ej_jueves
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio_con_repeticiones)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(multislot ej_jueves
+	(multislot ej_miercoles
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio_con_repeticiones)
 		(cardinality 1 ?VARIABLE)
@@ -457,23 +457,18 @@
 		(type INTEGER)
 		(default -1)
 ;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot tipo_habito
-		(type SYMBOL)
-		(allowed-values actividad_fisica_trabajo actividad_domestica desplazamientos actividad_estatica)
-;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass probelma_musculo-esqueletico
 	(is-a USER)
 	(role concrete)
-	(single-slot nombre_problema
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(multislot impide
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio)
+		(create-accessor read-write))
+	(single-slot nombre_problema
+		(type STRING)
+;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass dieta

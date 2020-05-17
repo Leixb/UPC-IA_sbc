@@ -1,4 +1,4 @@
-; Sun May 17 18:46:39 CEST 2020
+; Sun May 17 20:07:44 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -21,13 +21,13 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_sbc_ProjectKB_Class20025]
-		[ontologia_sbc_ProjectKB_Class20026]
-		[ontologia_sbc_ProjectKB_Class20027]
-		[ontologia_sbc_ProjectKB_Class20028]
-		[ontologia_sbc_ProjectKB_Class20029]
-		[ontologia_sbc_ProjectKB_Class30030]
-		[ontologia_sbc_ProjectKB_Class30031]))
+		[ontologia_sbc_ProjectKB_Class10073]
+		[ontologia_sbc_ProjectKB_Class10074]
+		[ontologia_sbc_ProjectKB_Class10075]
+		[ontologia_sbc_ProjectKB_Class10076]
+		[ontologia_sbc_ProjectKB_Class10077]
+		[ontologia_sbc_ProjectKB_Class10078]
+		[ontologia_sbc_ProjectKB_Class10079]))
 
 ([CLSES_TAB] of  Widget
 
@@ -80,11 +80,11 @@
 ([KB_512248_Class1] of  Map
 
 	(entries
-		[ontologia_sbc_ProjectKB_Class30032]
-		[ontologia_sbc_ProjectKB_Class30033]
-		[ontologia_sbc_ProjectKB_Class30035]
-		[ontologia_sbc_ProjectKB_Class30036])
-	(referenced_maps [ontologia_sbc_ProjectKB_Class30034]))
+		[ontologia_sbc_ProjectKB_Class10080]
+		[ontologia_sbc_ProjectKB_Class10081]
+		[ontologia_sbc_ProjectKB_Class10083]
+		[ontologia_sbc_ProjectKB_Class10084])
+	(referenced_maps [ontologia_sbc_ProjectKB_Class10082]))
 
 ([KB_512248_Class100] of  String
 
@@ -178,7 +178,7 @@
 	(name "classes_file_name")
 	(string_value "ontologia_sbc.pont"))
 
-([KB_679386_Class5] of  Map
+([KB_922344_Class5] of  Map
 )
 
 ([LAYOUT_PROPERTIES] of  Property_List
@@ -194,6 +194,72 @@
 
 ([ontologia_sbc_ProjectKB_Class10] of  Property_List
 )
+
+([ontologia_sbc_ProjectKB_Class10073] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([ontologia_sbc_ProjectKB_Class10074] of  String
+
+	(name "probelma_musculo-esqueletico")
+	(string_value "nombre_problema"))
+
+([ontologia_sbc_ProjectKB_Class10075] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([ontologia_sbc_ProjectKB_Class10076] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([ontologia_sbc_ProjectKB_Class10077] of  String
+
+	(name "ejercicio")
+	(string_value "nombre_ejercicio"))
+
+([ontologia_sbc_ProjectKB_Class10078] of  String
+
+	(name "objetivo")
+	(string_value "nombre_objetivo"))
+
+([ontologia_sbc_ProjectKB_Class10079] of  String
+
+	(name "dieta")
+	(string_value "nombre_dieta"))
+
+([ontologia_sbc_ProjectKB_Class10080] of  Map_Entry
+
+	(key "add_name_on_instance_form")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([ontologia_sbc_ProjectKB_Class10081] of  Map_Entry
+
+	(key "change_tracking_active")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([ontologia_sbc_ProjectKB_Class10082] of  Map
+)
+
+([ontologia_sbc_ProjectKB_Class10083] of  Map_Entry
+
+	(key "InstanceDisplay.yellow_stickies")
+	(key_class "java.lang.String")
+	(value "ontologia_sbc_ProjectKB_Class10082")
+	(value_class "java.util.Map"))
+
+([ontologia_sbc_ProjectKB_Class10084] of  Map_Entry
+
+	(key "suppress_instance_counting")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
 
 ([ontologia_sbc_ProjectKB_Class101] of  String
 
@@ -246,31 +312,6 @@
 
 ([ontologia_sbc_ProjectKB_Class20] of  Property_List
 )
-
-([ontologia_sbc_ProjectKB_Class20025] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([ontologia_sbc_ProjectKB_Class20026] of  String
-
-	(name "probelma_musculo-esqueletico")
-	(string_value "nombre_problema"))
-
-([ontologia_sbc_ProjectKB_Class20027] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([ontologia_sbc_ProjectKB_Class20028] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([ontologia_sbc_ProjectKB_Class20029] of  String
-
-	(name "ejercicio")
-	(string_value "nombre_ejercicio"))
 
 ([ontologia_sbc_ProjectKB_Class20030] of  Property_List
 
@@ -329,47 +370,6 @@
 
 ([ontologia_sbc_ProjectKB_Class30] of  Property_List
 )
-
-([ontologia_sbc_ProjectKB_Class30030] of  String
-
-	(name "objetivo")
-	(string_value "nombre_objetivo"))
-
-([ontologia_sbc_ProjectKB_Class30031] of  String
-
-	(name "dieta")
-	(string_value "nombre_dieta"))
-
-([ontologia_sbc_ProjectKB_Class30032] of  Map_Entry
-
-	(key "add_name_on_instance_form")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([ontologia_sbc_ProjectKB_Class30033] of  Map_Entry
-
-	(key "change_tracking_active")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([ontologia_sbc_ProjectKB_Class30034] of  Map
-)
-
-([ontologia_sbc_ProjectKB_Class30035] of  Map_Entry
-
-	(key "InstanceDisplay.yellow_stickies")
-	(key_class "java.lang.String")
-	(value "ontologia_sbc_ProjectKB_Class30034")
-	(value_class "java.util.Map"))
-
-([ontologia_sbc_ProjectKB_Class30036] of  Map_Entry
-
-	(key "suppress_instance_counting")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
 
 ([ontologia_sbc_ProjectKB_Class31] of  Widget
 
@@ -675,8 +675,8 @@
 	(browser_slot_names [BROWSER_SLOT_NAMES])
 	(customized_instance_widgets
 		[INSTANCE_ANNOTATION_FORM_WIDGET]
-		[STANDARD_FACET_FORM_WIDGET]
 		[STANDARD_SLOT_FORM_WIDGET]
+		[STANDARD_FACET_FORM_WIDGET]
 		[PAL_FORM_WIDGET]
 		[STANDARD_CLASS_FORM_WIDGET])
 	(default_cls_metaclass ":STANDARD-CLASS")

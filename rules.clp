@@ -133,18 +133,26 @@ más a tu estado fisico actual? "))
 	?aux <- (habitos ASK)
 	?p <- (object (is-a persona))
 	=>
-    (bind $?nom-hab (slot-allowed-values habito_personal tipo_habito))
-    (bind ?escogido (pregunta-multi "¿Haces alguno de los siguientes hábitos personales? " $?nom-hab))
+    (bind $?list-habitos (find-all-instances ((?inst habito_personal)) TRUE))
+    (bind $?nom-hab (create$ ))
+    (foreach ?curr-hab ?list-habitos
+        (bind ?curr-nom (send ?curr-hab get-nombre_habito))
+        (bind $?nom-hab(insert$ $?nom-hab (+ (length$ $?nom-hab) 1) ?curr-nom))
+    )
+    (bind ?escogido (pregunta-multi "¿Sigues alguno de los siguientes hábitos personales? " $?nom-hab))
     
     (bind $?respuesta (create$ ))
     (foreach ?curr-index ?escogido
-        (bind ?curr-resp (nth$ ?curr-index ?nom-hab))
-        (printout t ?curr-resp ":" crlf)
+        (bind ?curr-resp (nth$ ?curr-index ?list-habitos))
+        
+        (bind ?curr-resp-nom (send ?curr-resp get-nombre_habito))
+        (printout t ?curr-resp-nom ":" crlf)
         
         (bind ?frecuencia (pregunta-numerica "   ¿Cuantas veces a la semana realizas esta actividad? " 1 30))
         (bind ?duracion (pregunta-numerica "   ¿Cuanto tiempo le dedicas cada vez (en minutos)? " 1 180))
         
-        (make-instance of habito_personal (tipo_habito ?curr-resp) (frecuencia ?frecuencia) (duracion_habito ?duracion))
+        (send ?curr-resp put-frecuencia ?frecuencia)
+        (send ?curr-resp put-duracion_habito ?duracion)
     
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
