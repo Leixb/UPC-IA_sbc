@@ -222,8 +222,8 @@
         "Duracion: de " ?self:duracion_min " a " ?self:duracion_max " minutos." crlf
     )
     (printout t "Combina con: ")
-    (loop-for-count (?i 1 (length$ ?self:combina_con)) do
-        (printout t (send (nth$ ?i ?self:combina_con) get-nombre_ejercicio) ", ")
+    (foreach ?ej ?self:combina_con
+        (printout t (send ?ej get-nombre_ejercicio) ", ")
     )
     (printout t crlf)
 ;dificultad
