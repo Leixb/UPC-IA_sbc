@@ -31,6 +31,8 @@
 
 ;;; Recopilacion persona
 
+(deftemplate recopilacion-persona::extra)
+
 (defrule recopilacion-persona::establecer-info-extra "Establece la info extra de la persona"
     ?p <- (object (is-a persona))
     =>
@@ -152,6 +154,35 @@ más a tu estado fisico actual? "))
 	(focus inferencia)
 )
 
+(deftemplate inferencia::condiciones_fisicas
+    (slot imc
+        (type SYMBOL)
+        (allowed-values peso_bajo peso_normal sobrepeso obesidad)
+    )
+    (slot edad
+        (type SYMBOL)
+        (allowed-values joven adulto-joven adulto-medio adulto-mayor)
+    )
+    (slot dieta
+        (type SYMBOL)
+        (allowed-values buena correcta mala)
+    )
+    (slot presion_sanguinea
+        (type SYMBOL)
+        (allowed-values baja media alta)
+    )
+    (slot estamina
+        (type SYMBOL)
+        (default desconocida)
+        (allowed-values desconocida muy_baja baja media alta)
+    )
+)
+
+(defrule inferencia::init
+    =>
+    (assert (condiciones_fisicas))
+)
+
 (defrule inferencia::skip
     (IMC_done)
     (EDAD_done)
@@ -171,13 +202,14 @@ más a tu estado fisico actual? "))
 (defrule inferencia::imc
     (not (IMC_done))
     ?p <- (object (is-a persona) (imc ?imc))
+    ?c <- (condiciones_fisicas)
     =>
     (printout ?*debug-print* "Inferencia de IMC: " ?imc crlf)
 
-    (     if (< ?imc 18.5 ) then (assert (imc peso_bajo))
-    else (if (< ?imc 25   ) then (assert (imc peso_normal))
-    else (if (< ?imc 30   ) then (assert (imc sobrepeso))
-    else                         (assert (imc obesidad))
+    (     if (< ?imc 18.5 ) then (modify ?c (imc peso_bajo))
+    else (if (< ?imc 25   ) then (modify ?c (imc peso_normal))
+    else (if (< ?imc 30   ) then (modify ?c (imc sobrepeso))
+    else                         (modify ?c (imc obesidad))
     )))
 
     (assert (IMC_done))
@@ -186,13 +218,14 @@ más a tu estado fisico actual? "))
 (defrule inferencia::edad
     (not (EDAD_done))
     ?p <- (object (is-a persona) (edad ?edad))
+    ?c <- (condiciones_fisicas)
     =>
     (printout ?*debug-print* "Inferencia de edad: " ?edad crlf)
 
-    (     if (< ?edad 30   ) then (assert (edad joven))
-    else (if (< ?edad 45   ) then (assert (edad adulto))
-    else (if (< ?edad 60   ) then (assert (edad mediana))
-    else                          (assert (edad avanzada))
+    (     if (< ?edad 30   ) then (modify ?c (edad joven))
+    else (if (< ?edad 45   ) then (modify ?c (edad adulto-joven))
+    else (if (< ?edad 60   ) then (modify ?c (edad adulto-medio))
+    else                          (modify ?c (edad adulto-mayor))
     )))
 
     (assert (EDAD_done))
@@ -206,16 +239,18 @@ más a tu estado fisico actual? "))
         (cansancio ?cansancio)
         (tirantez_muscular ?tirantez)
     )
+    ?c <- (condiciones_fisicas)
     =>
     (printout ?*debug-print* "Inferencia de estamina: "
         ?pulsaciones ?mareo ?cansancio ?tirantez crlf)
-
-    (if (or ?mareo ?tirantez)     then (assert (estamina muy_baja))
-    else (if ?cansancio           then (assert (estamina baja))
-    else (if (> ?pulsaciones 120) then (assert (estamina baja))
-    else (if (> ?pulsaciones 90)  then (assert (estamina normal))
-    else                               (assert (estamina alta))
-    ))))
+    (if (neq ?pulsaciones -1) then
+        (if (or ?mareo ?tirantez)     then (modify ?c (estamina muy_baja))
+        else (if ?cansancio           then (modify ?c (estamina baja))
+        else (if (> ?pulsaciones 120) then (modify ?c (estamina baja))
+        else (if (> ?pulsaciones 90)  then (modify ?c (estamina media))
+        else                               (modify ?c (estamina alta))
+        ))))
+    )
 
     (assert (ESTAMINA_done))
 )
