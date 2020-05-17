@@ -203,6 +203,7 @@ más a tu estado fisico actual? "))
 (defrule inferencia::init
     =>
     (assert (condiciones_fisicas))
+    (assert (objetivos))
 )
 
 (defrule inferencia::next
@@ -308,11 +309,10 @@ más a tu estado fisico actual? "))
 (defrule inferencia::copia_objetivos
     (not (OBJETIVOS_done))
     (object (is-a persona) (quiere $?objetivos))
+    ?o <- (objetivos)
     =>
-    (printout ?*debug-print* "lista: " ?objetivos crlf)
-    ?o <- (assert (obetivos))
-    (modify ?o (lista-objetivos ?objetivos))
-    ;(assert (objetivos (lista-objetivos ?objetivos)))
+    (printout ?*debug-print* "lista: " $?objetivos crlf)
+    (modify ?o (lista-objetivos $?objetivos))
     (assert (OBJETIVOS_done))
 )
 
