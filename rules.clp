@@ -179,42 +179,31 @@
 )
 
 ;;; Muestra ejercicio
-(deffunction print-resultado::separador ()
+(deffunction MAIN::separador ()
     (printout t "================================================================================" crlf)
 )
 
-(deffunction print-resultado::separador_corto ()
+(deffunction MAIN::separador_corto ()
     (printout t "----------------------------------------" crlf)
 )
 
-(deffunction print-resultado::print-ejercicios-dia (?dia ?ejercicios)
+(deffunction MAIN::print-ejercicios-dia (?dia ?ejercicios)
     (separador)
     (printout t "= " ?dia crlf)
-    (separador_corto)
-    (printout t ?ejercicios)
-    (loop-for-count (?i 1 (length$ ?ejercicios)) do
-        (printout t (nth$ ?i ?ejercicios))
-        (send (nth$ ?i ?ejercicios) imprimir)
+    (foreach ?ej ?ejercicios
+        (separador_corto)
+        (send (instance-address ?ej) imprimir)
     )
 )
 
 (defmessage-handler programa_de_entrenamiento imprimir()
-    ;(print-ejercicios-dia "Lunes" ?self:ej_lunes)
-    ;(print-ejercicios-dia "Martes" ?self:ej_martes)
-    ;(print-ejercicios-dia "Miercoles" ?self:ej_miercoles)
-    ;(print-ejercicios-dia "Jueves" ?self:ej_jueves)
-    ;(print-ejercicios-dia "Viernes" ?self:ej_viernes)
-    ;(print-ejercicios-dia "Sabado" ?self:ej_sabado)
-    ;(print-ejercicios-dia "Domingo" ?self:ej_domingo)
-
-    (separador)
-    (printout t "= Lunes" crlf)
-    (separador_corto)
-    (printout t ?self:ej_lunes)
-    (loop-for-count (?i 1 (length$ ?self:ej_lunes)) do
-        (printout t (nth$ ?i ?self:ej_lunes))
-        (send (nth$ ?i ?self:ej_lunes) imprimir)
-    )
+    (print-ejercicios-dia "Lunes" ?self:ej_lunes)
+    (print-ejercicios-dia "Martes" ?self:ej_martes)
+    (print-ejercicios-dia "Miercoles" ?self:ej_miercoles)
+    (print-ejercicios-dia "Jueves" ?self:ej_jueves)
+    (print-ejercicios-dia "Viernes" ?self:ej_viernes)
+    (print-ejercicios-dia "Sabado" ?self:ej_sabado)
+    (print-ejercicios-dia "Domingo" ?self:ej_domingo)
 )
 
 (defmessage-handler ejercicio_con_repeticiones imprimir()
