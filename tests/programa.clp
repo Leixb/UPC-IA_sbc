@@ -44,4 +44,3 @@ no
     (ej_domingo)
 )
 (send [programa] imprimir)
-(exit)
