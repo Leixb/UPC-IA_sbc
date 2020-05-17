@@ -1,4 +1,4 @@
-; Sun May 17 17:57:08 CEST 2020
+; Sun May 17 18:46:39 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -236,11 +236,13 @@
 
 ([ontologia_sbc_Class10016] of  dieta
 
-	(nombre_dieta "Dieta equilibrada"))
+	(nombre_dieta "Dieta equilibrada")
+	(saludable 10))
 
 ([ontologia_sbc_Class10018] of  dieta
 
-	(nombre_dieta "Dieta basada en el consumo de comida basura"))
+	(nombre_dieta "Dieta basada en el consumo de comida basura")
+	(saludable -8))
 
 ([ontologia_sbc_Class10019] of  probelma_musculo-esqueletico
 
@@ -317,15 +319,18 @@
 
 ([ontologia_sbc_Class16] of  dieta
 
-	(nombre_dieta "Consumo de fruta diariamente"))
+	(nombre_dieta "Consumo de fruta diariamente")
+	(saludable 7))
 
 ([ontologia_sbc_Class17] of  dieta
 
-	(nombre_dieta "Abuso de sal"))
+	(nombre_dieta "Abuso de sal")
+	(saludable -4))
 
 ([ontologia_sbc_Class18] of  dieta
 
-	(nombre_dieta "Picar entre horas"))
+	(nombre_dieta "Picar entre horas")
+	(saludable -2))
 
 ([ontologia_sbc_Class2] of  ejercicio
 
