@@ -27,25 +27,7 @@
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max) (tiempo_disponible ?t_disponible))
 )
 
-(defrule inferencia::skip
-    ?p <- (object (is-a persona))
-    => 
-    (send ?p escribe-persona)
-    (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
-    (focus generar-resultado)
-)
-
-(defrule generar-resultado::skip
-    => 
-    (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
-    (focus print-resultado)
-)
-
-(defrule print-resultado::print-res
-    =>
-    (printout t "DONE" crlf)
-    (exit)
-)
+;;; Recopilacion persona
 
 (defrule recopilacion-persona::establecer-info-extra "Establece la info extra de la persona"
     ?p <- (object (is-a persona))
@@ -174,6 +156,92 @@
 	
 	(retract ?aux)
 	(focus inferencia)
+)
+
+(defrule inferencia::skip
+    ?p <- (object (is-a persona))
+    => 
+    (send ?p escribe-persona)
+    (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
+    (focus generar-resultado)
+)
+
+(defrule generar-resultado::skip
+    => 
+    (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
+    (focus print-resultado)
+)
+
+(defrule print-resultado::print-res
+    =>
+    (printout t "DONE" crlf)
+    ;(exit)
+)
+
+;;; Muestra ejercicio
+(deffunction print-resultado::separador ()
+    (printout t "================================================================================" crlf)
+)
+
+(deffunction print-resultado::separador_corto ()
+    (printout t "----------------------------------------" crlf)
+)
+
+(deffunction print-resultado::print-ejercicios-dia (?dia ?ejercicios)
+    (separador)
+    (printout t "= " ?dia crlf)
+    (separador_corto)
+    (printout t ?ejercicios)
+    (loop-for-count (?i 1 (length$ ?ejercicios)) do
+        (printout t (nth$ ?i ?ejercicios))
+        (send (nth$ ?i ?ejercicios) imprimir)
+    )
+)
+
+(defmessage-handler programa_de_entrenamiento imprimir()
+    ;(print-ejercicios-dia "Lunes" ?self:ej_lunes)
+    ;(print-ejercicios-dia "Martes" ?self:ej_martes)
+    ;(print-ejercicios-dia "Miercoles" ?self:ej_miercoles)
+    ;(print-ejercicios-dia "Jueves" ?self:ej_jueves)
+    ;(print-ejercicios-dia "Viernes" ?self:ej_viernes)
+    ;(print-ejercicios-dia "Sabado" ?self:ej_sabado)
+    ;(print-ejercicios-dia "Domingo" ?self:ej_domingo)
+
+    (separador)
+    (printout t "= Lunes" crlf)
+    (separador_corto)
+    (printout t ?self:ej_lunes)
+    (loop-for-count (?i 1 (length$ ?self:ej_lunes)) do
+        (printout t (nth$ ?i ?self:ej_lunes))
+        (send (nth$ ?i ?self:ej_lunes) imprimir)
+    )
+)
+
+(defmessage-handler ejercicio_con_repeticiones imprimir()
+    (bind ?nombre_ej (send ?self:ejercicio_a_repetir get-nombre_ejercicio))
+    (printout t
+        "Ejercicio: " ?nombre_ej crlf
+        "Repeticiones: " ?self:repeticiones crlf
+        "Dificultad: " ?self:dificultad_ejercicio crlf
+    )
+    (send ?self:ejercicio_a_repetir imprimir)
+)
+
+(defmessage-handler ejercicio imprimir()
+    (printout t
+        "Calorias: " ?self:calorias crlf
+        "Duracion: de " ?self:duracion_min " a " ?self:duracion_max " minutos." crlf
+    )
+    (printout t "Combina con: ")
+    (loop-for-count (?i 1 (length$ ?self:combina_con)) do
+        (printout t (send (nth$ ?i ?self:combina_con) get-nombre_ejercicio) ", ")
+    )
+    (printout t crlf)
+;dificultad
+;ejercicio_cubre_un
+;nombre_ejercicio
+;repeticiones_max
+;repeticiones_min
 )
 
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
