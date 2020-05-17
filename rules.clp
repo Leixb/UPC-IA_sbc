@@ -265,11 +265,20 @@ más a tu estado fisico actual? "))
     (assert (ESTAMINA_done))
 )
 
-; TODO
 (defrule inferencia::dieta
     (not (DIETA_done))
     ?c <- (condiciones_fisicas)
+    (object (is-a persona) (sigue_una $?dieta))
     =>
+    (bind ?suma 0)
+    (foreach ?elemento ?dieta
+        (bind ?suma (+ ?suma (send ?elemento get-saludable)))
+    )
+    (printout ?*debug-print* "Valor dieta: " ?suma crlf)
+    (if (< ?suma -5) then (modify ?c (dieta mala))
+    else (if (> ?suma 5) then (modify ?c (dieta buena))
+    else (modify ?c (dieta correcta)))
+    )
     (assert (DIETA_done))
 )
 
