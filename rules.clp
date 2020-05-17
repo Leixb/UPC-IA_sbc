@@ -7,7 +7,9 @@
   	(printout t "║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║" crlf)
 	(printout t "╚═════════════════════════════════════════════════════════════════════════════╝" crlf)
   	(printout t crlf)  	
-	(printout t "¡Bienvenido al sistema de Coaching Potato! A continuación se te formularán una serie de preguntas para recomendarte un programa de entrenamiento que se adapte a ti." crlf)
+	(printout t "¡Bienvenido al sistema de Coaching Potato!" crlf)
+	(printout t "A continuación se te harán una serie de preguntas para poder recomendarte el" crlf)
+	(printout t "programa de entrenamiento que se adapte más a ti." crlf)
 	(printout t crlf)
 	(focus recopilacion-persona)
 )
@@ -32,12 +34,13 @@
 (defrule recopilacion-persona::establecer-info-extra "Establece la info extra de la persona"
     ?p <- (object (is-a persona))
     =>
-    (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendacion que se adapte más a tu estado fisico actual? "))
+    (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendacion que se adapte
+más a tu estado fisico actual? "))
 	(if (eq ?ejercicio TRUE) then
         (assert (extra))
-        (printout t crlf "Haz una carrera sostenida durante 1 minuto y responde a las siguientes preguntas." crlf)
+        (printout t crlf "Haz una carrera sostenida durante 1 minuto." crlf)
         
-        (bind ?pulsaciones_por_minuto (pregunta-numerica "Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en pulsaciones por minuto)? " 50 250))
+        (bind ?pulsaciones_por_minuto (pregunta-numerica "Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en ppm)? " 50 250))
         (send ?p put-pulsaciones_por_minuto ?pulsaciones_por_minuto)
         
         (bind ?mareo (pregunta-si-no "¿Has tenido sensación de mareo? "))
