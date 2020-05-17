@@ -243,7 +243,7 @@ más a tu estado fisico actual? "))
     =>
     (printout ?*debug-print* "Inferencia de estamina: "
         ?pulsaciones ?mareo ?cansancio ?tirantez crlf)
-    (if (neq ?pulsaciones -1) then
+    (if (neq ?pulsaciones -1) then ; si no tenemos info, dejamos el default (desconocido)
         (if (or ?mareo ?tirantez)     then (modify ?c (estamina muy_baja))
         else (if ?cansancio           then (modify ?c (estamina baja))
         else (if (> ?pulsaciones 120) then (modify ?c (estamina baja))
