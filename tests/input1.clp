@@ -1,4 +1,4 @@
-input.clp(batch* run.clp)
+(batch* run.clp)
 75
 180
 23
