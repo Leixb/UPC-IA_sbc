@@ -481,12 +481,9 @@ más a tu estado fisico actual? "))
     (foreach ?ej ?self:combina_con
         (printout t (send ?ej get-nombre_ejercicio) ", ")
     )
+    (printout t crlf "│ Categorias: ")
+    (foreach ?obj ?self:ejercicio_cubre_un (printout t (send ?obj get-nombre_objetivo) ", "))
     (printout t crlf)
-;dificultad
-;ejercicio_cubre_un
-;nombre_ejercicio
-;repeticiones_max
-;repeticiones_min
 )
 
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] imprimir)
