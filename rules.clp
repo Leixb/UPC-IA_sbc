@@ -477,11 +477,11 @@ más a tu estado fisico actual? "))
                 TRUE
             ))
 
-            (if (eq nil ?ej-sel) then 
+            (if (eq nil ?ej-sel) then
                 (printout ?*debug-print* "No ejercicios encontrados" crlf)
                 (break)
             )
-            
+
             (bind ?min_rep (send ?ej-sel get-repeticiones_min))
             (bind ?max_rep (send ?ej-sel get-repeticiones_max))
             (bind ?diff_rep (- ?max_rep ?min_rep))
@@ -492,25 +492,27 @@ más a tu estado fisico actual? "))
                 (case muy_buena	then (bind ?repeticiones ?max_rep))
                 (default none)
             )
-            
+
             (bind ?dificultad_base (send ?ej-sel get-dificultad))
             (switch ?salud
-                (case mala		then (bind ?dificultad (+ ?dificultad_base 2)))
-                (case normal	then (bind ?dificultad (+ ?dificultad_base 1)))
-                (case buena		then (bind ?dificultad ?dificultad_base))
+                (case mala		then (bind ?n_dificultad (+ ?dificultad_base 2)))
+                (case normal	then (bind ?n_dificultad (+ ?dificultad_base 1)))
+                (case buena		then (bind ?n_dificultad ?dificultad_base))
                 (default none)
             )
-            (if (> ?dificultad 10) then (bind ?dificultad 10))
+						(if (< ?n_dificultad 5) 			then 	(bind ?dificultad moderada)
+						else (if (< ?n_dificultad 8) 	then 	(bind ?dificultad normal)
+						else 																(bind ?dificultad dificil)))
 
             (bind ?duracion (min (* ?repeticiones (send ?ej-sel get-duracion_max)) ?tiempo))
             (bind ?tiempo (- ?tiempo ?duracion))
 
-            (send ?ej-sel multiplica 0.75) 
+            (send ?ej-sel multiplica 0.75)
 	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
                 (ejercicio_a_repetir ?ej-sel)
                 (repeticiones ?repeticiones)
                 (dificultad_ejercicio ?dificultad)))
-                (if ?*debug* then 
+                (if ?*debug* then
                     (printout t "----------------------------" crlf)
                     (send ?instancia imprimir)
                 )
