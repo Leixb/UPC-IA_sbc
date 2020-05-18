@@ -353,6 +353,41 @@ más a tu estado fisico actual? "))
     (assert (OBJETIVOS_done))
 )
 
+(deftemplate associacion::condicion_fisica
+    (slot salud
+			(type SYMBOL)
+			(allowed-values mala normal buena)
+    )
+    (slot forma_fisica
+			(type SYMBOL)
+			(allowed-values muy_mala mala buena muy_buena)
+    )
+)
+
+(defrule associacion::condicion_fisica
+	(not (CONDICION_FISICA_done))
+	?c <- (condiciones_fisicas (imc ?imc) (edad ?edad) (dieta ?dieta) (presion_sanguinea ?p_sang) (estamina ?estamina))
+	=>
+	(if (or (or (eq ?imc obesidad) (eq ?p_sang inestable)) (eq ?dieta mala))
+		then (bind ?salud mala)
+	else (if (or (or (or (eq ?imc sobrepeso) (eq ?imc peso_bajo)) (or (eq ?p_sang baja) (eq ?p_sang alta))) (eq ?dieta correcta))
+		then (bind ?salud normal)
+	else (bind ?salud buena)
+	))
+
+	(if (or (eq ?imc obesidad) (eq ?estamina muy_baja))
+		then (bind ?forma_fisica muy_mala)
+	else (if (or (or (eq ?imc sobrepeso) (eq ?imc peso_bajo)) (or (eq ?estamina baja) (eq ?edad adulto-mayor)))
+		then (bind ?forma_fisica mala)
+	else (if (or (eq ?edad adulto-medio) (eq ?estamina media))
+		then (bind ?forma_fisica buena)
+	else (bind ?forma_fisica muy_buena)
+	)))
+
+	(assert (condicion_fisica (salud ?salud) (forma_fisica ?forma_fisica)))
+	(assert (CONDICION_FISICA_done))
+)
+
 (deffunction associacion::muestra_ej_puntuacion ()
     (do-for-all-instances ((?ejercicio ejercicio)) TRUE
         (bind ?name (send ?ejercicio get-nombre_ejercicio))
@@ -386,7 +421,6 @@ más a tu estado fisico actual? "))
     (if ?*debug* then (muestra_ej_puntuacion))
 )
 
-
 (defmessage-handler ejercicio cubre (?objetivo)
     (bind ?nombre-objetivo (send ?objetivo get-nombre_objetivo))
     (foreach ?obj ?self:ejercicio_cubre_un
@@ -405,7 +439,7 @@ más a tu estado fisico actual? "))
 )
 
 (defrule refinamiento::refinar-ejercicio-max-puntuacion
-
+	(condicion_fisica (salud ?salud) (forma_fisica ?forma_fisica))
 	=>
 	(bind ?max -1)
 	(bind ?ejercicio nil)
@@ -418,17 +452,31 @@ más a tu estado fisico actual? "))
 	)
 	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
     ; restamos puntos al ejercicio porque ya lo hemos seleccionado
-    (send ?ejercicio multiplica 0.75) 
+    (send ?ejercicio multiplica 0.75)
 
-	(bind ?repeticiones (algotohchungo1))
-	(bind ?dificultad (algotohchungo2))
+
+	(bind ?min_rep (send ?ejercicio get-repeticiones_min))
+	(bind ?max_rep (send ?ejercicio get-repeticiones_max))
+	(bind ?diff_rep (- ?max_rep ?min_rep))
+	(switch ?forma_fisica
+			(case muy_mala	then (bind ?repeticiones ?min_rep))
+			(case mala			then (bind ?repeticiones (+ ?min_rep (/ ?diff_rep 3))))
+			(case buena			then (bind ?repeticiones (+ ?min_rep (* (/ ?diff_rep 3) 2))))
+			(case muy_buena	then (bind ?repeticiones ?max_rep))
+			(default none)
+	)
+
+	(bind ?dificultad_base (send ?ejercicio get-dificultad))
+	(switch ?salud
+			(case mala		then (bind ?dificultad (+ ?dificultad_base 2)))
+			(case normal	then (bind ?dificultad (+ ?dificultad_base 1)))
+			(case buena		then (bind ?dificultad ?dificultad_base))
+			(default none)
+	)
+	(if (> ?dificultad 10) then (bind ?dificultad 10))
 
 	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
     ; la instance esta se tiene que meter en algun sitio..
-	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
-	(bind ?duracion (algochunguillo1))
-	(bind ?alcanza (* ?repeticiones ?duracion))
-	(send ?objetivo modifica-alcazado (?alcanza))
 )
 
 (defrule refinamiento::next
@@ -526,7 +574,7 @@ más a tu estado fisico actual? "))
     (separador)
     (printout t "│ Informacion entrada usuario" crlf)
     (separador)
-    (printout t 
+    (printout t
       "│ Peso: " ?self:peso crlf
       "│ Altura: " ?self:altura crlf
       "│ IMC: " ?self:imc crlf
