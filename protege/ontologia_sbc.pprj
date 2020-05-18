@@ -1,4 +1,4 @@
-; Sun May 17 23:52:26 CEST 2020
+; Mon May 18 15:08:15 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -21,13 +21,13 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_sbc_ProjectKB_Class10006]
-		[ontologia_sbc_ProjectKB_Class10007]
-		[ontologia_sbc_ProjectKB_Class10008]
-		[ontologia_sbc_ProjectKB_Class10009]
-		[ontologia_sbc_ProjectKB_Class10010]
-		[ontologia_sbc_ProjectKB_Class10011]
-		[ontologia_sbc_ProjectKB_Class10012]))
+		[ontologia_sbc_ProjectKB_Class10030]
+		[ontologia_sbc_ProjectKB_Class10031]
+		[ontologia_sbc_ProjectKB_Class10032]
+		[ontologia_sbc_ProjectKB_Class10033]
+		[ontologia_sbc_ProjectKB_Class10034]
+		[ontologia_sbc_ProjectKB_Class10035]
+		[ontologia_sbc_ProjectKB_Class10036]))
 
 ([CLSES_TAB] of  Widget
 
@@ -72,6 +72,9 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
+([KB_297512_Class5] of  Map
+)
+
 ([KB_512248_Class0] of  String
 
 	(name "factory_class_name")
@@ -80,11 +83,11 @@
 ([KB_512248_Class1] of  Map
 
 	(entries
-		[ontologia_sbc_ProjectKB_Class10014]
-		[ontologia_sbc_ProjectKB_Class10015]
-		[ontologia_sbc_ProjectKB_Class10016]
-		[ontologia_sbc_ProjectKB_Class10017])
-	(referenced_maps [ontologia_sbc_ProjectKB_Class10013]))
+		[ontologia_sbc_ProjectKB_Class10037]
+		[ontologia_sbc_ProjectKB_Class10038]
+		[ontologia_sbc_ProjectKB_Class10040]
+		[ontologia_sbc_ProjectKB_Class10041])
+	(referenced_maps [ontologia_sbc_ProjectKB_Class10039]))
 
 ([KB_512248_Class100] of  String
 
@@ -178,9 +181,6 @@
 	(name "classes_file_name")
 	(string_value "ontologia_sbc.pont"))
 
-([KB_540052_Class5] of  Map
-)
-
 ([LAYOUT_PROPERTIES] of  Property_List
 
 	(name "layout properties")
@@ -195,68 +195,68 @@
 ([ontologia_sbc_ProjectKB_Class10] of  Property_List
 )
 
-([ontologia_sbc_ProjectKB_Class10006] of  String
+([ontologia_sbc_ProjectKB_Class10030] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([ontologia_sbc_ProjectKB_Class10007] of  String
-
-	(name "ejercicio")
-	(string_value "nombre_ejercicio"))
-
-([ontologia_sbc_ProjectKB_Class10008] of  String
-
-	(name "dieta")
-	(string_value "nombre_dieta"))
-
-([ontologia_sbc_ProjectKB_Class10009] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([ontologia_sbc_ProjectKB_Class10010] of  String
+([ontologia_sbc_ProjectKB_Class10031] of  String
 
 	(name "probelma_musculo-esqueletico")
 	(string_value "nombre_problema"))
 
-([ontologia_sbc_ProjectKB_Class10011] of  String
+([ontologia_sbc_ProjectKB_Class10032] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([ontologia_sbc_ProjectKB_Class10012] of  String
+([ontologia_sbc_ProjectKB_Class10033] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([ontologia_sbc_ProjectKB_Class10034] of  String
+
+	(name "ejercicio")
+	(string_value "nombre_ejercicio"))
+
+([ontologia_sbc_ProjectKB_Class10035] of  String
 
 	(name "objetivo")
 	(string_value "nombre_objetivo"))
 
-([ontologia_sbc_ProjectKB_Class10013] of  Map
-)
+([ontologia_sbc_ProjectKB_Class10036] of  String
 
-([ontologia_sbc_ProjectKB_Class10014] of  Map_Entry
+	(name "dieta")
+	(string_value "nombre_dieta"))
 
-	(key "InstanceDisplay.yellow_stickies")
-	(key_class "java.lang.String")
-	(value "ontologia_sbc_ProjectKB_Class10013")
-	(value_class "java.util.Map"))
-
-([ontologia_sbc_ProjectKB_Class10015] of  Map_Entry
-
-	(key "suppress_instance_counting")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([ontologia_sbc_ProjectKB_Class10016] of  Map_Entry
+([ontologia_sbc_ProjectKB_Class10037] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([ontologia_sbc_ProjectKB_Class10017] of  Map_Entry
+([ontologia_sbc_ProjectKB_Class10038] of  Map_Entry
 
 	(key "change_tracking_active")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([ontologia_sbc_ProjectKB_Class10039] of  Map
+)
+
+([ontologia_sbc_ProjectKB_Class10040] of  Map_Entry
+
+	(key "InstanceDisplay.yellow_stickies")
+	(key_class "java.lang.String")
+	(value "ontologia_sbc_ProjectKB_Class10039")
+	(value_class "java.util.Map"))
+
+([ontologia_sbc_ProjectKB_Class10041] of  Map_Entry
+
+	(key "suppress_instance_counting")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
@@ -675,10 +675,10 @@
 	(browser_slot_names [BROWSER_SLOT_NAMES])
 	(customized_instance_widgets
 		[INSTANCE_ANNOTATION_FORM_WIDGET]
-		[STANDARD_CLASS_FORM_WIDGET]
-		[STANDARD_SLOT_FORM_WIDGET]
 		[STANDARD_FACET_FORM_WIDGET]
-		[PAL_FORM_WIDGET])
+		[STANDARD_SLOT_FORM_WIDGET]
+		[PAL_FORM_WIDGET]
+		[STANDARD_CLASS_FORM_WIDGET])
 	(default_cls_metaclass ":STANDARD-CLASS")
 	(default_facet_metaclass ":STANDARD-FACET")
 	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
