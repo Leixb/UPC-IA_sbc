@@ -6,15 +6,15 @@
 	(printout t "╔═════════════════════════════════════════════════════════════════════════════╗" crlf)
   	(printout t "║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║" crlf)
 	(printout t "╚═════════════════════════════════════════════════════════════════════════════╝" crlf)
-  	(printout t crlf)  	
+  	(printout t crlf)
 	(printout t "¡Bienvenido al sistema de Coaching Potato!" crlf)
 	(printout t "A continuación se te harán una serie de preguntas para poder recomendarte el" crlf)
 	(printout t "programa de entrenamiento que se adapte más a ti." crlf)
 	(printout t crlf)
-	(focus recopilacion-persona)
+	(focus entrada)
 )
 
-(defrule recopilacion-persona::establecer-info "Establece la info de la persona"
+(defrule entrada::establecer-info "Establece la info de la persona"
 	(not (persona))
 	=>
 	(bind ?peso (pregunta-numerica "¿Cuánto pesas (en kilos)? " 20 300))
@@ -25,15 +25,15 @@
 	(bind ?p_sang_min (pregunta-numerica "¿Que presión sanguínea mínima tienes (en mmHg)? " 60 100))
 	(bind ?p_sang_max (pregunta-numerica "¿Que presión sanguínea máxima tienes (en mmHg)? " 100 150))
 	(bind ?t_disponible (pregunta-numerica "¿Cuanto tiempo disponible tienes a diario (en minutos)? " 30 300))
-	
+
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max) (tiempo_disponible ?t_disponible))
 )
 
 ;;; Recopilacion persona
 
-(deftemplate recopilacion-persona::extra)
+(deftemplate entrada::extra)
 
-(defrule recopilacion-persona::establecer-info-extra "Establece la info extra de la persona"
+(defrule entrada::establecer-info-extra "Establece la info extra de la persona"
     ?p <- (object (is-a persona))
     =>
     (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendacion que se adapte
@@ -41,23 +41,23 @@ más a tu estado fisico actual? "))
 	(if (eq ?ejercicio TRUE) then
         (assert (extra))
         (printout t crlf "Haz una carrera sostenida durante 1 minuto." crlf)
-        
+
         (bind ?pulsaciones_por_minuto (pregunta-numerica "Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en ppm)? " 50 250))
         (send ?p put-pulsaciones_por_minuto ?pulsaciones_por_minuto)
-        
+
         (bind ?mareo (pregunta-si-no "¿Has tenido sensación de mareo? "))
         (send ?p put-mareo ?mareo)
-        
+
         (bind ?cansancio (pregunta-si-no "¿Has tenido sensación de cansancio? "))
         (send ?p put-cansancio ?cansancio)
-        
+
         (bind ?tirantez_muscular (pregunta-si-no "¿Has tenido sensación de tirantez muscular? "))
         (send ?p put-tirantez_muscular ?tirantez_muscular)
 	)
 	(assert (objetivos ASK))
 )
 
-(defrule recopilacion-persona::establecer-objetivos "Establece los objetivos de la persona"
+(defrule entrada::establecer-objetivos "Establece los objetivos de la persona"
 	?aux <- (objetivos ASK)
 	?p <- (object (is-a persona))
 	=>
@@ -68,24 +68,24 @@ más a tu estado fisico actual? "))
 		(bind $?nom-obj(insert$ $?nom-obj (+ (length$ $?nom-obj) 1) ?curr-nom))
 	)
 	(bind ?escogido (pregunta-multi "¿Que objetivos quieres alcanzar? " $?nom-obj))
-	
+
 	(bind $?respuesta (create$ ))
     (foreach ?curr-index ?escogido
 		(bind ?curr-resp (nth$ ?curr-index ?list-objetivos))
 		(bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
 	)
 	(send ?p put-quiere $?respuesta)
-	
+
 	(retract ?aux)
 	(assert (problemas ASK))
 )
 
-(defrule recopilacion-persona::establecer-problemas "Establece los problemas musculo-esqueleticos de la persona"
+(defrule entrada::establecer-problemas "Establece los problemas musculo-esqueleticos de la persona"
 	?aux <- (problemas ASK)
 	?p <- (object (is-a persona))
 	=>
 	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esqueletico? "))
-	(if (eq ?probs TRUE) then	
+	(if (eq ?probs TRUE) then
         (bind $?list-problemas (find-all-instances ((?inst probelma_musculo-esqueletico)) TRUE))
         (bind $?nom-prob (create$ ))
         (foreach ?curr-prob ?list-problemas
@@ -93,7 +93,7 @@ más a tu estado fisico actual? "))
             (bind $?nom-prob(insert$ $?nom-prob (+ (length$ $?nom-prob) 1) ?curr-nom))
         )
         (bind ?escogido (pregunta-multi "Selecciona uno o más: " $?nom-prob))
-        
+
         (bind $?respuesta (create$ ))
         (foreach ?curr-index ?escogido
             (bind ?curr-resp (nth$ ?curr-index ?list-problemas))
@@ -101,12 +101,12 @@ más a tu estado fisico actual? "))
         )
         (send ?p put-tiene $?respuesta)
 	)
-	
+
 	(retract ?aux)
 	(assert (dieta ASK))
 )
 
-(defrule recopilacion-persona::establecer-dieta "Establece la dieta de la persona"
+(defrule entrada::establecer-dieta "Establece la dieta de la persona"
 	?aux <- (dieta ASK)
 	?p <- (object (is-a persona))
 	=>
@@ -117,19 +117,19 @@ más a tu estado fisico actual? "))
         (bind $?nom-dieta(insert$ $?nom-dieta (+ (length$ $?nom-dieta) 1) ?curr-nom))
     )
     (bind ?escogido (pregunta-multi "Selecciona una o más de las siguientes opciones relacionadas con tu dieta: " $?nom-dieta))
-    
+
     (bind $?respuesta (create$ ))
     (foreach ?curr-index ?escogido
         (bind ?curr-resp (nth$ ?curr-index ?list-dietas))
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
     (send ?p put-sigue_una $?respuesta)
-	
+
 	(retract ?aux)
 	(assert (habitos ASK))
 )
 
-(defrule recopilacion-persona::establecer-habitos "Establece los habitos de la persona"
+(defrule entrada::establecer-habitos "Establece los habitos de la persona"
 	?aux <- (habitos ASK)
 	?p <- (object (is-a persona))
 	=>
@@ -140,29 +140,29 @@ más a tu estado fisico actual? "))
         (bind $?nom-hab(insert$ $?nom-hab (+ (length$ $?nom-hab) 1) ?curr-nom))
     )
     (bind ?escogido (pregunta-multi "¿Sigues alguno de los siguientes hábitos personales? " $?nom-hab))
-    
+
     (bind $?respuesta (create$ ))
     (foreach ?curr-index ?escogido
         (bind ?curr-resp (nth$ ?curr-index ?list-habitos))
-        
+
         (bind ?curr-resp-nom (send ?curr-resp get-nombre_habito))
         (printout t ?curr-resp-nom ":" crlf)
-        
+
         (bind ?frecuencia (pregunta-numerica "   ¿Cuantas veces a la semana realizas esta actividad? " 1 30))
         (bind ?duracion (pregunta-numerica "   ¿Cuanto tiempo le dedicas cada vez (en minutos)? " 1 180))
-        
+
         (send ?curr-resp put-frecuencia ?frecuencia)
         (send ?curr-resp put-duracion_habito ?duracion)
-    
+
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
     (send ?p put-hace $?respuesta)
-	
+
 	(retract ?aux)
-	(focus inferencia)
+	(focus abstraccion)
 )
 
-(deftemplate inferencia::condiciones_fisicas
+(deftemplate abstraccion::condiciones_fisicas
     (slot imc
         (type SYMBOL)
         (allowed-values peso_bajo peso_normal sobrepeso obesidad)
@@ -186,21 +186,21 @@ más a tu estado fisico actual? "))
     )
 )
 
-(deftemplate inferencia::objetivos_usuario
+(deftemplate abstraccion::objetivos_usuario
     (multislot lista-objetivos
         (type INSTANCE)
         (allowed-classes objetivo)
     )
 )
 
-(defrule inferencia::init
+(defrule abstraccion::init
     =>
     (assert (condiciones_fisicas))
     (assert (objetivos_usuario))
     (assert (habitos_personales))
 )
 
-(defrule inferencia::next
+(defrule abstraccion::next
     (IMC_done)
     (EDAD_done)
     (ESTAMINA_done)
@@ -209,23 +209,23 @@ más a tu estado fisico actual? "))
     (HABITOS_done)
     (OBJETIVOS_done)
     ?p <- (object (is-a persona))
-    => 
+    =>
 
     (if ?*debug* then
-        (send ?p escribe-persona)
+        (send ?p imprimir)
         (facts)
     )
-    (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
+    (printout ?*debug-print* "abstraccion -> associacion" crlf)
 
-    (focus generar-resultado)
+    (focus associacion)
 )
 
-(defrule inferencia::imc
+(defrule abstraccion::imc
     (not (IMC_done))
     (object (is-a persona) (imc ?imc))
     ?c <- (condiciones_fisicas)
     =>
-    (printout ?*debug-print* "Inferencia de IMC: " ?imc crlf)
+    (printout ?*debug-print* "abstraccion de IMC: " ?imc crlf)
 
     (     if (< ?imc 18.5 ) then (modify ?c (imc peso_bajo))
     else (if (< ?imc 25   ) then (modify ?c (imc peso_normal))
@@ -236,12 +236,12 @@ más a tu estado fisico actual? "))
     (assert (IMC_done))
 )
 
-(defrule inferencia::edad
+(defrule abstraccion::edad
     (not (EDAD_done))
     (object (is-a persona) (edad ?edad))
     ?c <- (condiciones_fisicas)
     =>
-    (printout ?*debug-print* "Inferencia de edad: " ?edad crlf)
+    (printout ?*debug-print* "abstraccion de edad: " ?edad crlf)
 
     (     if (< ?edad 30   ) then (modify ?c (edad joven))
     else (if (< ?edad 45   ) then (modify ?c (edad adulto-joven))
@@ -252,7 +252,7 @@ más a tu estado fisico actual? "))
     (assert (EDAD_done))
 )
 
-(defrule inferencia::estamina
+(defrule abstraccion::estamina
     (not (ESTAMINA_done))
     (object (is-a persona)
         (pulsaciones_por_minuto ?pulsaciones)
@@ -262,7 +262,7 @@ más a tu estado fisico actual? "))
     )
     ?c <- (condiciones_fisicas)
     =>
-    (printout ?*debug-print* "Inferencia de estamina: "
+    (printout ?*debug-print* "abstraccion de estamina: "
         ?pulsaciones ?mareo ?cansancio ?tirantez crlf)
     (if (neq ?pulsaciones -1) then ; si no tenemos info, dejamos el default (desconocido)
         (if (or ?mareo ?tirantez)     then (modify ?c (estamina muy_baja))
@@ -276,7 +276,7 @@ más a tu estado fisico actual? "))
     (assert (ESTAMINA_done))
 )
 
-(defrule inferencia::dieta
+(defrule abstraccion::dieta
     (not (DIETA_done))
     ?c <- (condiciones_fisicas)
     (object (is-a persona) (sigue_una $?dieta))
@@ -293,7 +293,7 @@ más a tu estado fisico actual? "))
     (assert (DIETA_done))
 )
 
-(defrule inferencia::presion_sanguinea
+(defrule abstraccion::presion_sanguinea
     (not (PRESSION_done))
     (EDAD_done)
     (object (is-a persona)
@@ -302,9 +302,9 @@ más a tu estado fisico actual? "))
     )
     ?c <- (condiciones_fisicas (edad ?edad))
     =>
-    (printout ?*debug-print* "Inferencia de presion sanguínea: "
+    (printout ?*debug-print* "abstraccion de presion sanguínea: "
         ?edad ?p_min ?p_max crlf)
-    
+
     (bind ?diff (- ?p_max ?p_min))
     (if (> ?diff 70)            then (modify ?c (presion_sanguinea inestable))
     else
@@ -316,7 +316,7 @@ más a tu estado fisico actual? "))
             (default none)
         )
         (bind ?p_mean (/ (+ ?p_min ?p_max) 2))
-        
+
         (if (< ?p_mean ?aux1) then (modify ?c (presion_sanguinea baja))
         else (if (< ?p_mean ?aux2) then (modify ?c (presion_sanguinea media))
         else (modify ?c (presion_sanguinea alta))
@@ -324,7 +324,7 @@ más a tu estado fisico actual? "))
     (assert (PRESSION_done))
 )
 
-(defrule inferencia::habitos_alcanzan
+(defrule abstraccion::habitos_alcanzan
     (not (HABITOS_done))
     (OBJETIVOS_done)
     (object (is-a persona) (hace $?habitos))
@@ -343,7 +343,7 @@ más a tu estado fisico actual? "))
     (assert (HABITOS_done))
 )
 
-(defrule inferencia::copia_objetivos
+(defrule abstraccion::copia_objetivos
     (not (OBJETIVOS_done))
     (object (is-a persona) (quiere $?objetivos))
     ?o <- (objetivos_usuario)
@@ -353,16 +353,114 @@ más a tu estado fisico actual? "))
     (assert (OBJETIVOS_done))
 )
 
-(defrule generar-resultado::skip
-    => 
-    (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
-    (focus print-resultado)
+(deffunction associacion::muestra_ej_puntuacion ()
+    (do-for-all-instances ((?ejercicio ejercicio)) TRUE
+        (bind ?name (send ?ejercicio get-nombre_ejercicio))
+        (bind ?punt (send ?ejercicio get-puntuacion))
+        (printout t ?name " -> " ?punt crlf)
+    )
 )
 
-(defrule print-resultado::print-res
+(deffunction associacion::get-max-objetivo-alcanzado()
+    (bind ?max -1.0)
+    (do-for-all-instances ((?obj objetivo)) TRUE
+        (bind ?alcan (send ?obj get-alcanzado))
+        (bind ?max (max ?max ?alcan))
+    )
+    ?max
+)
+
+(defrule associacion::puntua-ej-objetivos
+    (objetivos_usuario (lista-objetivos $?objetivos))
+    =>
+    (bind ?max (get-max-objetivo-alcanzado))
+    (foreach ?objetivo ?objetivos
+        (bind ?puntuacion (/ (send ?objetivo get-alcanzado) ?max))
+        (do-for-all-instances ((?ejercicio ejercicio))
+                (send ?ejercicio cubre ?objetivo)
+            (printout ?*debug-print* ?ejercicio " cubre objetivo " ?objetivo crlf)
+            (send ?ejercicio modifica-puntuacion (- 2 ?puntuacion))
+
+        )
+    )
+    (if ?*debug* then (muestra_ej_puntuacion))
+)
+
+
+(defmessage-handler ejercicio cubre (?objetivo)
+    (bind ?nombre-objetivo (send ?objetivo get-nombre_objetivo))
+    (foreach ?obj ?self:ejercicio_cubre_un
+        (if (eq ?nombre-objetivo (send ?obj get-nombre_objetivo)) then
+            (return TRUE)
+        )
+    )
+    FALSE
+)
+
+(defrule associacion::next
+	(declare (salience -10))
+    =>
+    (printout ?*debug-print* "associacion -> refinamiento" crlf)
+    (focus refinamiento)
+)
+
+(defrule refinamiento::refinar-ejercicio-max-puntuacion
+
+	=>
+	(bind ?max -1)
+	(bind ?ejercicio nil)
+	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
+		(bind ?curr-punt (send ?curr-ej get-puntuacion))
+		(if (> ?curr-punt ?max) then
+			(bind ?max ?curr-punt)
+			(bind ?ejercicio ?curr-ej)
+		)
+	)
+	?ejercicio
+
+	(bind ?repeticiones (algotohchungo1))
+	(bind ?dificultad (algotohchungo2))
+
+	(make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
+
+	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
+	(bind ?duracion (algochunguillo1))
+	(bind ?alcanza (* ?repeticiones ?duracion))
+	(send ?objetivo modifica-alcazado (?alcanza))
+)
+
+(defrule refinamiento::next
+    =>
+    (printout ?*debug-print* "refinamiento -> salida" crlf)
+    (focus salida)
+)
+
+(defrule salida::end
     =>
     (printout t "DONE" crlf)
-    ;(exit)
+    (if (not ?*debug*) then (exit))
+)
+
+(defmessage-handler habito_personal computa-alcanzado ()
+    (bind ?alcanza (* ?self:frecuencia ?self:duracion_habito))
+    (foreach ?objetivo ?self:habito_cubre_un
+        (printout ?*debug-print* "MODIFICANDO " ?objetivo crlf)
+        (bind ?alcanzado (send ?objetivo get-alcanzado))
+        (send ?objetivo put-alcanzado (+ ?alcanzado ?alcanza))
+    )
+)
+
+(defmessage-handler objetivo modifica-alcanzado (?alcanza)
+    (bind ?self:alcanzado (+ ?self:alcanzado ?alcanza))
+)
+
+(defmessage-handler ejercicio modifica-puntuacion (?puntos)
+    (bind ?self:puntuacion (+ ?self:puntuacion ?puntos))
+    (bind ?puntos-combinacion (/ ?puntos 4))
+    (foreach ?ejercicio ?self:combina_con
+        (bind ?puntuacion (+ ?puntos-combinacion (send ?ejercicio get-puntuacion)))
+        (send ?ejercicio put-puntuacion ?puntuacion)
+    )
 )
 
 ;;; Muestra ejercicio
@@ -380,15 +478,6 @@ más a tu estado fisico actual? "))
     (foreach ?ej ?ejercicios
         (separador_corto)
         (send (instance-address ?ej) imprimir)
-    )
-)
-
-(defmessage-handler habito_personal computa-alcanzado ()
-    (bind ?alcanza (* ?self:frecuencia ?self:duracion_habito))
-    (foreach ?objetivo ?self:habito_cubre_un
-        (printout ?*debug-print* "MODIFICANDO " ?objetivo crlf)
-        (bind ?alcanzado (send ?objetivo get-alcanzado))
-        (send ?objetivo put-alcanzado (+ ?alcanzado ?alcanza))
     )
 )
 
@@ -421,36 +510,40 @@ más a tu estado fisico actual? "))
     (foreach ?ej ?self:combina_con
         (printout t (send ?ej get-nombre_ejercicio) ", ")
     )
+    (printout t crlf "│ Categorias: ")
+    (foreach ?obj ?self:ejercicio_cubre_un (printout t (send ?obj get-nombre_objetivo) ", "))
     (printout t crlf)
-;dificultad
-;ejercicio_cubre_un
-;nombre_ejercicio
-;repeticiones_max
-;repeticiones_min
 )
 
-;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
-(defmessage-handler persona escribe-persona()
+;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] imprimir)
+(defmessage-handler persona imprimir()
+    (separador)
+    (printout t "│ Informacion entrada usuario" crlf)
+    (separador)
     (printout t 
-        "Peso: " ?self:peso crlf
-        "Altura: " ?self:altura crlf
-        "Imc: " ?self:imc crlf
-        "Edad: " ?self:edad crlf
-        "P_sang_min: " ?self:presion_sanguinea_min crlf
-        "P_sang_max: " ?self:presion_sanguinea_max crlf
-        "Tiempo disponible: " ?self:tiempo_disponible crlf
+      "│ Peso: " ?self:peso crlf
+      "│ Altura: " ?self:altura crlf
+      "│ IMC: " ?self:imc crlf
+      "│ Edad: " ?self:edad crlf
+      "│ Presión sanguínea: " ?self:presion_sanguinea_min "-" ?self:presion_sanguinea_min crlf
+      "│ Tiempo disponible: " ?self:tiempo_disponible crlf
     )
+    (separador_corto)
     (printout t
-      "Pulsaciones por minuto: " ?self:pulsaciones_por_minuto crlf
-      "Mareo: " ?self:mareo crlf
-      "Cansancio: " ?self:cansancio crlf
-      "Tirantez muscular: " ?self:tirantez_muscular crlf
+      "│ Pulsaciones por minuto: " ?self:pulsaciones_por_minuto crlf
+      "│ Mareo: " ?self:mareo crlf
+      "│ Cansancio: " ?self:cansancio crlf
+      "│ Tirantez muscular: " ?self:tirantez_muscular crlf
     )
-    (printout t
-      "Objetivos: " $?self:quiere crlf
-      "Problemas: " $?self:tiene crlf
-      "Dietas: " $?self:sigue_una crlf
-      "Habitos: " $?self:hace crlf
-    )
+    (separador_corto)
+    (printout t "│ Objetivos: ")
+    (foreach ?obj ?self:quiere (printout t (send ?obj get-nombre_objetivo) ", "))
+    (printout t crlf "│ Problemas: ")
+    (foreach ?prob ?self:tiene (printout t (send ?prob get-nombre_problema) ", "))
+    (printout t crlf "│ Dietas: ")
+    (foreach ?dieta ?self:sigue_una (printout t (send ?dieta get-nombre_dieta) ", "))
+    (printout t crlf "│ Habitos: ")
+    (foreach ?hab ?self:hace (printout t (send ?hab get-nombre_habito) ", "))
+    (printout t crlf)
+    (separador)
 )
-

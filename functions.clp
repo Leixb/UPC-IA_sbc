@@ -8,32 +8,42 @@
 (defmodule MAIN (export ?ALL))
 
 ;;; Modulo de recopilacion de los datos de la persona
-(defmodule recopilacion-persona
+(defmodule entrada
 	(import MAIN ?ALL)
 	(export ?ALL)
 )
 
-;;; Modulo de inferencia de los datos de la persona
-(defmodule inferencia
+;;; Modulo de abstraccion de los datos de la persona
+(defmodule abstraccion
 	(import MAIN ?ALL)
-	(import recopilacion-persona ?ALL)
+	(import entrada ?ALL)
 	(export ?ALL)
 )
 
 ;;; Modulo de generacion de la solucion
-(defmodule generar-resultado
+(defmodule associacion
 	(import MAIN ?ALL)
-	(import recopilacion-persona ?ALL)
-	(import inferencia ?ALL)
+	(import entrada ?ALL)
+	(import abstraccion ?ALL)
+	(export ?ALL)
+)
+
+;;; Modulo de generacion de la solucion
+(defmodule refinamiento
+	(import MAIN ?ALL)
+	(import entrada ?ALL)
+	(import abstraccion ?ALL)
+	(import associacion ?ALL)
 	(export ?ALL)
 )
 
 ;;; Modulo de escritura del resultado
-(defmodule print-resultado
+(defmodule salida
 	(import MAIN ?ALL)
-	(import recopilacion-persona ?ALL)
-	(import inferencia ?ALL)
-	(import generar-resultado ?ALL)
+	(import entrada ?ALL)
+	(import abstraccion ?ALL)
+	(import associacion ?ALL)
+	(import refinamiento ?ALL)
 	(export ?ALL)
 )
 ;;; Fin declaracion de modulos ------------------------
@@ -60,7 +70,7 @@
 	)
    (printout t ": ")
    (bind ?answer (read))
-   (if (lexemep ?answer) 
+   (if (lexemep ?answer)
        then (bind ?answer (lowcase ?answer)))
    (while (not (member ?answer ?allowed-values)) do
       (format t "%s "?question)
@@ -69,7 +79,7 @@
 	  )
 	  (printout t ": ")
       (bind ?answer (read))
-      (if (lexemep ?answer) 
+      (if (lexemep ?answer)
           then (bind ?answer (lowcase ?answer))))
    ?answer
 )
@@ -78,7 +88,7 @@
 (deffunction MAIN::pregunta-si-no (?question)
    (bind ?response (pregunta-opciones ?question si no))
    (if (or (eq ?response si) (eq ?response s))
-       then TRUE 
+       then TRUE
        else FALSE)
 )
 
@@ -97,27 +107,42 @@
 (deffunction pregunta-multi (?pregunta $?valores-posibles)
     (bind ?linea (format nil "%s" ?pregunta))
     (printout t ?linea crlf)
-    (progn$ (?var ?valores-posibles) 
+    (progn$ (?var ?valores-posibles)
             (bind ?linea (format nil "  %d. %s" ?var-index ?var))
             (printout t ?linea crlf)
     )
     (format t "%s" "Indica los números separados por un espacio: ")
     (bind ?resp (readline))
     (bind ?numeros (str-explode ?resp))
-    
+
     (while (not (> (length$ ?numeros) 0)) do
         (bind ?resp (readline))
         (bind ?numeros (str-explode ?resp))
     )
-    
+
     (bind $?lista (create$ ))
-    (progn$ (?var ?numeros) 
+    (progn$ (?var ?numeros)
         (if (and (integerp ?var) (and (>= ?var 1) (<= ?var (length$ ?valores-posibles))))
-            then 
+            then
                 (if (not (member$ ?var ?lista))
                     then (bind ?lista (insert$ ?lista (+ (length$ ?lista) 1) ?var))
                 )
-        ) 
+        )
     )
     ?lista
+)
+
+;;; Funcion que retorna el ejercicio con puntuacion maxima
+(deffunction max-puntuacion ($?ejercicios)
+	(bind ?max -1)
+	(bind ?ejercicio nil)
+	(progn$ (?curr-ej $?ejercicios)
+		(bind ?curr-punt (send ?curr-ej get-puntuacion))
+		(if (> ?curr-punt ?max)
+			then
+			(bind ?max ?curr-punt)
+			(bind ?ejercicio ?curr-ej)
+		)
+	)
+	?ejercicio
 )

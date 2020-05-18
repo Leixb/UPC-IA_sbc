@@ -259,7 +259,39 @@
 		(default -1)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot ej_sabado
+	(multislot habito_cubre_un
+;+		(comment "Un hábito personal puede cubrir uno o más objetivos.")
+		(type INSTANCE)
+;+		(allowed-classes objetivo)
+		(create-accessor read-write))
+	(multislot combina_con
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
+		(create-accessor read-write))
+	(single-slot puntuacion
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot repeticiones_max
+;+		(comment "Numero de repeticiones máximas.")
+		(type INTEGER)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot ej_lunes
+		(type INSTANCE)
+;+		(allowed-classes ejercicio_con_repeticiones)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot ontologia_sbc_Class20005
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot hace
+		(type INSTANCE)
+;+		(allowed-classes habito_personal)
+		(create-accessor read-write))
+	(multislot ej_domingo
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio_con_repeticiones)
 		(cardinality 1 ?VARIABLE)
@@ -432,6 +464,19 @@
 ;+		(comment "Duración mínima del ejercicio en minutos.")
 		(type INTEGER)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot ejercicio_cubre_un
+		(type INSTANCE)
+;+		(allowed-classes objetivo)
+		(create-accessor read-write))
+	(multislot combina_con
+		(type INSTANCE)
+;+		(allowed-classes ejercicio)
+		(create-accessor read-write))
+	(single-slot puntuacion
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass objetivo
