@@ -1,4 +1,4 @@
-; Mon May 18 10:54:03 CEST 2020
+; Mon May 18 16:32:59 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -251,7 +251,7 @@
 	(nombre_dieta "Dieta basada en el consumo de comida basura")
 	(saludable -8))
 
-([ontologia_sbc_Class10019] of  probelma_musculo-esqueletico
+([ontologia_sbc_Class10019] of  problema_musculo-esqueletico
 
 	(impide
 		[ontologia_sbc_Class10015]
@@ -267,7 +267,7 @@
 		[ontologia_sbc_Class3])
 	(nombre_problema "Lesión del brazo"))
 
-([ontologia_sbc_Class10020] of  probelma_musculo-esqueletico
+([ontologia_sbc_Class10020] of  problema_musculo-esqueletico
 
 	(impide
 		[ontologia_sbc_Class10012]
@@ -276,7 +276,7 @@
 		[ontologia_sbc_Class10013])
 	(nombre_problema "Lesión del pecho"))
 
-([ontologia_sbc_Class10022] of  probelma_musculo-esqueletico
+([ontologia_sbc_Class10022] of  problema_musculo-esqueletico
 
 	(impide
 		[ontologia_sbc_Class20001]
@@ -286,7 +286,7 @@
 		[ontologia_sbc_Class5])
 	(nombre_problema "Lesión de la pierna"))
 
-([ontologia_sbc_Class10023] of  probelma_musculo-esqueletico
+([ontologia_sbc_Class10023] of  problema_musculo-esqueletico
 
 	(impide
 		[ontologia_sbc_Class4]
@@ -296,7 +296,7 @@
 		[ontologia_sbc_Class20002])
 	(nombre_problema "Lesión abdominal"))
 
-([ontologia_sbc_Class13] of  probelma_musculo-esqueletico
+([ontologia_sbc_Class13] of  problema_musculo-esqueletico
 
 	(impide
 		[ontologia_sbc_Class2]
@@ -304,7 +304,7 @@
 		[ontologia_sbc_Class4])
 	(nombre_problema "Dolor de espalda"))
 
-([ontologia_sbc_Class14] of  probelma_musculo-esqueletico
+([ontologia_sbc_Class14] of  problema_musculo-esqueletico
 
 	(impide
 		[ontologia_sbc_Class3]
@@ -313,7 +313,7 @@
 		[ontologia_sbc_Class20004])
 	(nombre_problema "Dolor de articulaciones"))
 
-([ontologia_sbc_Class15] of  probelma_musculo-esqueletico
+([ontologia_sbc_Class15] of  problema_musculo-esqueletico
 
 	(impide
 		[ontologia_sbc_Class5]

@@ -1,4 +1,4 @@
-; Mon May 18 10:54:03 CEST 2020
+; Mon May 18 16:32:59 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -72,7 +72,7 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_132358_Class5] of  Map
+([KB_090648_Class5] of  Map
 )
 
 ([KB_512248_Class0] of  String
@@ -217,7 +217,7 @@
 
 ([ontologia_sbc_ProjectKB_Class10010] of  String
 
-	(name "probelma_musculo-esqueletico")
+	(name "problema_musculo-esqueletico")
 	(string_value "nombre_problema"))
 
 ([ontologia_sbc_ProjectKB_Class10011] of  String

@@ -1,4 +1,4 @@
-; Mon May 18 10:54:03 CEST 2020
+; Mon May 18 16:32:59 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -97,6 +97,12 @@
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(single-slot apto
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot ontologia_sbc_Class22
 		(type STRING)
 ;+		(cardinality 0 1)
@@ -157,7 +163,7 @@
 		(create-accessor read-write))
 	(multislot tiene
 		(type INSTANCE)
-;+		(allowed-classes probelma_musculo-esqueletico)
+;+		(allowed-classes problema_musculo-esqueletico)
 		(create-accessor read-write))
 	(multislot parte_de
 ;+		(comment "Un programa de entrenamiento está compuesto por ejercicios.")
@@ -267,7 +273,7 @@
 	(role concrete)
 	(multislot tiene
 		(type INSTANCE)
-;+		(allowed-classes probelma_musculo-esqueletico)
+;+		(allowed-classes problema_musculo-esqueletico)
 		(create-accessor read-write))
 	(single-slot edad
 ;+		(comment "Edad en años.")
@@ -392,6 +398,12 @@
 		(type INSTANCE)
 ;+		(allowed-classes objetivo)
 		(create-accessor read-write))
+	(single-slot apto
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(multislot combina_con
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio)
@@ -479,7 +491,7 @@
 ;+		(allowed-classes objetivo)
 		(create-accessor read-write)))
 
-(defclass probelma_musculo-esqueletico
+(defclass problema_musculo-esqueletico
 	(is-a USER)
 	(role concrete)
 	(multislot impide
