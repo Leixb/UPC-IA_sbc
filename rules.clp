@@ -506,6 +506,7 @@ más a tu estado fisico actual? "))
 						else (if (< ?n_dificultad 8) 	then 	(bind ?dificultad normal)
 						else 																(bind ?dificultad dificil)))
 
+            (bind ?repeticiones (round ?repeticiones))
             (bind ?duracion (min (* ?repeticiones (send ?ej-sel get-duracion_max)) ?tiempo))
             (bind ?tiempo (- ?tiempo ?duracion))
 
