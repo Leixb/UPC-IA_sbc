@@ -1,4 +1,4 @@
-; Mon May 18 16:32:59 CEST 2020
+; Mon May 18 22:29:20 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -17,6 +17,19 @@
 ([ontologia_sbc_Class10] of  objetivo
 
 	(nombre_objetivo "Ganar resistencia"))
+
+([ontologia_sbc_Class10000] of  ejercicio
+
+	(apto TRUE)
+	(calorias 125)
+	(combina_con [ontologia_sbc_Class40002])
+	(dificultad 2)
+	(duracion_max 15)
+	(duracion_min 5)
+	(nombre_ejercicio "Yoga")
+	(puntuacion 0)
+	(repeticiones_max 6)
+	(repeticiones_min 1))
 
 ([ontologia_sbc_Class10001] of  ejercicio
 
@@ -264,7 +277,9 @@
 		[ontologia_sbc_Class10012]
 		[ontologia_sbc_Class10014]
 		[ontologia_sbc_Class10013]
-		[ontologia_sbc_Class3])
+		[ontologia_sbc_Class3]
+		[ontologia_sbc_Class10010]
+		[ontologia_sbc_Class10004])
 	(nombre_problema "Lesión del brazo"))
 
 ([ontologia_sbc_Class10020] of  problema_musculo-esqueletico
@@ -273,7 +288,8 @@
 		[ontologia_sbc_Class10012]
 		[ontologia_sbc_Class10014]
 		[ontologia_sbc_Class10015]
-		[ontologia_sbc_Class10013])
+		[ontologia_sbc_Class10013]
+		[ontologia_sbc_Class10010])
 	(nombre_problema "Lesión del pecho"))
 
 ([ontologia_sbc_Class10022] of  problema_musculo-esqueletico
@@ -283,7 +299,8 @@
 		[ontologia_sbc_Class20002]
 		[ontologia_sbc_Class20003]
 		[ontologia_sbc_Class4]
-		[ontologia_sbc_Class5])
+		[ontologia_sbc_Class5]
+		[ontologia_sbc_Class7])
 	(nombre_problema "Lesión de la pierna"))
 
 ([ontologia_sbc_Class10023] of  problema_musculo-esqueletico
@@ -491,6 +508,45 @@
 	(nombre_ejercicio "Peso muerto")
 	(repeticiones_max 12)
 	(repeticiones_min 4))
+
+([ontologia_sbc_Class40002] of  ejercicio
+
+	(apto TRUE)
+	(calorias 100)
+	(combina_con
+		[ontologia_sbc_Class10015]
+		[ontologia_sbc_Class5]
+		[ontologia_sbc_Class10009]
+		[ontologia_sbc_Class10008]
+		[ontologia_sbc_Class10006]
+		[ontologia_sbc_Class2]
+		[ontologia_sbc_Class10010]
+		[ontologia_sbc_Class7]
+		[ontologia_sbc_Class40002]
+		[ontologia_sbc_Class10001]
+		[ontologia_sbc_Class20003]
+		[ontologia_sbc_Class10005]
+		[ontologia_sbc_Class4]
+		[ontologia_sbc_Class20004]
+		[ontologia_sbc_Class10012]
+		[ontologia_sbc_Class10014]
+		[ontologia_sbc_Class10013]
+		[ontologia_sbc_Class10004]
+		[ontologia_sbc_Class10011]
+		[ontologia_sbc_Class3]
+		[ontologia_sbc_Class20001]
+		[ontologia_sbc_Class10000]
+		[ontologia_sbc_Class20002])
+	(dificultad 1)
+	(duracion_max 5)
+	(duracion_min 1)
+	(ejercicio_cubre_un
+		[ontologia_sbc_Class9]
+		[ontologia_sbc_Class8])
+	(nombre_ejercicio "Estiramientos")
+	(puntuacion 0)
+	(repeticiones_max 20)
+	(repeticiones_min 1))
 
 ([ontologia_sbc_Class5] of  ejercicio
 

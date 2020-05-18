@@ -1,4 +1,4 @@
-; Mon May 18 16:32:59 CEST 2020
+; Mon May 18 22:29:20 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -21,13 +21,13 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_sbc_ProjectKB_Class10006]
-		[ontologia_sbc_ProjectKB_Class10007]
-		[ontologia_sbc_ProjectKB_Class10008]
-		[ontologia_sbc_ProjectKB_Class10009]
-		[ontologia_sbc_ProjectKB_Class10010]
-		[ontologia_sbc_ProjectKB_Class10011]
-		[ontologia_sbc_ProjectKB_Class10012]))
+		[ontologia_sbc_ProjectKB_Class30080]
+		[ontologia_sbc_ProjectKB_Class30081]
+		[ontologia_sbc_ProjectKB_Class30082]
+		[ontologia_sbc_ProjectKB_Class30083]
+		[ontologia_sbc_ProjectKB_Class30084]
+		[ontologia_sbc_ProjectKB_Class30085]
+		[ontologia_sbc_ProjectKB_Class30086]))
 
 ([CLSES_TAB] of  Widget
 
@@ -72,9 +72,6 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_090648_Class5] of  Map
-)
-
 ([KB_512248_Class0] of  String
 
 	(name "factory_class_name")
@@ -83,11 +80,11 @@
 ([KB_512248_Class1] of  Map
 
 	(entries
-		[ontologia_sbc_ProjectKB_Class10014]
-		[ontologia_sbc_ProjectKB_Class10015]
-		[ontologia_sbc_ProjectKB_Class10016]
-		[ontologia_sbc_ProjectKB_Class10017])
-	(referenced_maps [ontologia_sbc_ProjectKB_Class10013]))
+		[ontologia_sbc_ProjectKB_Class30088]
+		[ontologia_sbc_ProjectKB_Class30089]
+		[ontologia_sbc_ProjectKB_Class30090]
+		[ontologia_sbc_ProjectKB_Class30091])
+	(referenced_maps [ontologia_sbc_ProjectKB_Class30087]))
 
 ([KB_512248_Class100] of  String
 
@@ -181,6 +178,9 @@
 	(name "classes_file_name")
 	(string_value "ontologia_sbc.pont"))
 
+([KB_539283_Class5] of  Map
+)
+
 ([LAYOUT_PROPERTIES] of  Property_List
 
 	(name "layout properties")
@@ -194,72 +194,6 @@
 
 ([ontologia_sbc_ProjectKB_Class10] of  Property_List
 )
-
-([ontologia_sbc_ProjectKB_Class10006] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([ontologia_sbc_ProjectKB_Class10007] of  String
-
-	(name "ejercicio")
-	(string_value "nombre_ejercicio"))
-
-([ontologia_sbc_ProjectKB_Class10008] of  String
-
-	(name "dieta")
-	(string_value "nombre_dieta"))
-
-([ontologia_sbc_ProjectKB_Class10009] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([ontologia_sbc_ProjectKB_Class10010] of  String
-
-	(name "problema_musculo-esqueletico")
-	(string_value "nombre_problema"))
-
-([ontologia_sbc_ProjectKB_Class10011] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([ontologia_sbc_ProjectKB_Class10012] of  String
-
-	(name "objetivo")
-	(string_value "nombre_objetivo"))
-
-([ontologia_sbc_ProjectKB_Class10013] of  Map
-)
-
-([ontologia_sbc_ProjectKB_Class10014] of  Map_Entry
-
-	(key "InstanceDisplay.yellow_stickies")
-	(key_class "java.lang.String")
-	(value "ontologia_sbc_ProjectKB_Class10013")
-	(value_class "java.util.Map"))
-
-([ontologia_sbc_ProjectKB_Class10015] of  Map_Entry
-
-	(key "suppress_instance_counting")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([ontologia_sbc_ProjectKB_Class10016] of  Map_Entry
-
-	(key "add_name_on_instance_form")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([ontologia_sbc_ProjectKB_Class10017] of  Map_Entry
-
-	(key "change_tracking_active")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
 
 ([ontologia_sbc_ProjectKB_Class101] of  String
 
@@ -370,6 +304,72 @@
 
 ([ontologia_sbc_ProjectKB_Class30] of  Property_List
 )
+
+([ontologia_sbc_ProjectKB_Class30080] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([ontologia_sbc_ProjectKB_Class30081] of  String
+
+	(name "ejercicio")
+	(string_value "nombre_ejercicio"))
+
+([ontologia_sbc_ProjectKB_Class30082] of  String
+
+	(name "dieta")
+	(string_value "nombre_dieta"))
+
+([ontologia_sbc_ProjectKB_Class30083] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([ontologia_sbc_ProjectKB_Class30084] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([ontologia_sbc_ProjectKB_Class30085] of  String
+
+	(name "objetivo")
+	(string_value "nombre_objetivo"))
+
+([ontologia_sbc_ProjectKB_Class30086] of  String
+
+	(name "problema_musculo-esqueletico")
+	(string_value "nombre_problema"))
+
+([ontologia_sbc_ProjectKB_Class30087] of  Map
+)
+
+([ontologia_sbc_ProjectKB_Class30088] of  Map_Entry
+
+	(key "InstanceDisplay.yellow_stickies")
+	(key_class "java.lang.String")
+	(value "ontologia_sbc_ProjectKB_Class30087")
+	(value_class "java.util.Map"))
+
+([ontologia_sbc_ProjectKB_Class30089] of  Map_Entry
+
+	(key "suppress_instance_counting")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([ontologia_sbc_ProjectKB_Class30090] of  Map_Entry
+
+	(key "add_name_on_instance_form")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([ontologia_sbc_ProjectKB_Class30091] of  Map_Entry
+
+	(key "change_tracking_active")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
 
 ([ontologia_sbc_ProjectKB_Class31] of  Widget
 
