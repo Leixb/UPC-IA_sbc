@@ -8,32 +8,42 @@
 (defmodule MAIN (export ?ALL))
 
 ;;; Modulo de recopilacion de los datos de la persona
-(defmodule recopilacion-persona
+(defmodule entrada
 	(import MAIN ?ALL)
 	(export ?ALL)
 )
 
-;;; Modulo de inferencia de los datos de la persona
-(defmodule inferencia
+;;; Modulo de abstraccion de los datos de la persona
+(defmodule abstraccion
 	(import MAIN ?ALL)
-	(import recopilacion-persona ?ALL)
+	(import entrada ?ALL)
 	(export ?ALL)
 )
 
 ;;; Modulo de generacion de la solucion
-(defmodule generar-resultado
+(defmodule associacion
 	(import MAIN ?ALL)
-	(import recopilacion-persona ?ALL)
-	(import inferencia ?ALL)
+	(import entrada ?ALL)
+	(import abstraccion ?ALL)
+	(export ?ALL)
+)
+
+;;; Modulo de generacion de la solucion
+(defmodule refinamiento
+	(import MAIN ?ALL)
+	(import entrada ?ALL)
+	(import abstraccion ?ALL)
+	(import associacion ?ALL)
 	(export ?ALL)
 )
 
 ;;; Modulo de escritura del resultado
-(defmodule print-resultado
+(defmodule salida
 	(import MAIN ?ALL)
-	(import recopilacion-persona ?ALL)
-	(import inferencia ?ALL)
-	(import generar-resultado ?ALL)
+	(import entrada ?ALL)
+	(import abstraccion ?ALL)
+	(import associacion ?ALL)
+	(import refinamiento ?ALL)
 	(export ?ALL)
 )
 ;;; Fin declaracion de modulos ------------------------
