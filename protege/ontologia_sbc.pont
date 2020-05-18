@@ -1,4 +1,4 @@
-; Sun May 17 23:52:26 CEST 2020
+; Mon May 18 10:54:03 CEST 2020
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -202,6 +202,11 @@
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio)
 		(create-accessor read-write))
+	(single-slot puntuacion
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot repeticiones_max
 ;+		(comment "Numero de repeticiones máximas.")
 		(type INTEGER)
@@ -390,6 +395,11 @@
 	(multislot combina_con
 		(type INSTANCE)
 ;+		(allowed-classes ejercicio)
+		(create-accessor read-write))
+	(single-slot puntuacion
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass objetivo
