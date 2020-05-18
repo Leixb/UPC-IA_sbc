@@ -494,10 +494,9 @@ más a tu estado fisico actual? "))
     (printout t 
       "│ Peso: " ?self:peso crlf
       "│ Altura: " ?self:altura crlf
-      "│ Imc: " ?self:imc crlf
+      "│ IMC: " ?self:imc crlf
       "│ Edad: " ?self:edad crlf
-      "│ P_sang_min: " ?self:presion_sanguinea_min crlf
-      "│ P_sang_max: " ?self:presion_sanguinea_max crlf
+      "│ Presión sanguínea: " ?self:presion_sanguinea_min "-" ?self:presion_sanguinea_min crlf
       "│ Tiempo disponible: " ?self:tiempo_disponible crlf
     )
     (separador_corto)
