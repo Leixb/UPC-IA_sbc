@@ -522,7 +522,7 @@ más a tu estado fisico actual? "))
             (printout ?*debug-print* "ejercicios: " $?lista-ejercicios crlf)
         )
         ; fin while dia
-        (send ?programa print)
+        (if ?*debug* then (send ?programa print))
         (printout ?*debug-print* $?lista-ejercicios crlf)
         (send ?programa 
             (switch ?cnt
