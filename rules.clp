@@ -450,6 +450,10 @@ más a tu estado fisico actual? "))
     )
 )
 
+(defmessage-handler objetivo modifica-alcanzado (?alcanza)
+    (bind ?self:alcanzado (+ ?self:alcanzado ?alcanza))
+)
+
 (defmessage-handler ejercicio modifica-puntuacion (?puntos)
     (bind ?self:puntuacion (+ ?self:puntuacion ?puntos))
     (bind ?puntos-combinacion (/ ?puntos 4))
