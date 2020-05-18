@@ -11,10 +11,10 @@
 	(printout t "A continuación se te harán una serie de preguntas para poder recomendarte el" crlf)
 	(printout t "programa de entrenamiento que se adapte más a ti." crlf)
 	(printout t crlf)
-	(focus recopilacion-persona)
+	(focus entrada)
 )
 
-(defrule recopilacion-persona::establecer-info "Establece la info de la persona"
+(defrule entrada::establecer-info "Establece la info de la persona"
 	(not (persona))
 	=>
 	(bind ?peso (pregunta-numerica "¿Cuánto pesas (en kilos)? " 20 300))
@@ -31,9 +31,9 @@
 
 ;;; Recopilacion persona
 
-(deftemplate recopilacion-persona::extra)
+(deftemplate entrada::extra)
 
-(defrule recopilacion-persona::establecer-info-extra "Establece la info extra de la persona"
+(defrule entrada::establecer-info-extra "Establece la info extra de la persona"
     ?p <- (object (is-a persona))
     =>
     (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendacion que se adapte
@@ -57,7 +57,7 @@ más a tu estado fisico actual? "))
 	(assert (objetivos ASK))
 )
 
-(defrule recopilacion-persona::establecer-objetivos "Establece los objetivos de la persona"
+(defrule entrada::establecer-objetivos "Establece los objetivos de la persona"
 	?aux <- (objetivos ASK)
 	?p <- (object (is-a persona))
 	=>
@@ -80,7 +80,7 @@ más a tu estado fisico actual? "))
 	(assert (problemas ASK))
 )
 
-(defrule recopilacion-persona::establecer-problemas "Establece los problemas musculo-esqueleticos de la persona"
+(defrule entrada::establecer-problemas "Establece los problemas musculo-esqueleticos de la persona"
 	?aux <- (problemas ASK)
 	?p <- (object (is-a persona))
 	=>
@@ -106,7 +106,7 @@ más a tu estado fisico actual? "))
 	(assert (dieta ASK))
 )
 
-(defrule recopilacion-persona::establecer-dieta "Establece la dieta de la persona"
+(defrule entrada::establecer-dieta "Establece la dieta de la persona"
 	?aux <- (dieta ASK)
 	?p <- (object (is-a persona))
 	=>
@@ -129,7 +129,7 @@ más a tu estado fisico actual? "))
 	(assert (habitos ASK))
 )
 
-(defrule recopilacion-persona::establecer-habitos "Establece los habitos de la persona"
+(defrule entrada::establecer-habitos "Establece los habitos de la persona"
 	?aux <- (habitos ASK)
 	?p <- (object (is-a persona))
 	=>
@@ -159,10 +159,10 @@ más a tu estado fisico actual? "))
     (send ?p put-hace $?respuesta)
 	
 	(retract ?aux)
-	(focus inferencia)
+	(focus abstraccion)
 )
 
-(deftemplate inferencia::condiciones_fisicas
+(deftemplate abstraccion::condiciones_fisicas
     (slot imc
         (type SYMBOL)
         (allowed-values peso_bajo peso_normal sobrepeso obesidad)
@@ -186,21 +186,21 @@ más a tu estado fisico actual? "))
     )
 )
 
-(deftemplate inferencia::objetivos_usuario
+(deftemplate abstraccion::objetivos_usuario
     (multislot lista-objetivos
         (type INSTANCE)
         (allowed-classes objetivo)
     )
 )
 
-(defrule inferencia::init
+(defrule abstraccion::init
     =>
     (assert (condiciones_fisicas))
     (assert (objetivos_usuario))
     (assert (habitos_personales))
 )
 
-(defrule inferencia::next
+(defrule abstraccion::next
     (IMC_done)
     (EDAD_done)
     (ESTAMINA_done)
@@ -212,20 +212,20 @@ más a tu estado fisico actual? "))
     => 
 
     (if ?*debug* then
-        (send ?p escribe-persona)
+        (send ?p imprimir)
         (facts)
     )
-    (printout ?*debug-print* "inferencia -> generar-resultado" crlf)
+    (printout ?*debug-print* "abstraccion -> associacion" crlf)
 
-    (focus generar-resultado)
+    (focus associacion)
 )
 
-(defrule inferencia::imc
+(defrule abstraccion::imc
     (not (IMC_done))
     (object (is-a persona) (imc ?imc))
     ?c <- (condiciones_fisicas)
     =>
-    (printout ?*debug-print* "Inferencia de IMC: " ?imc crlf)
+    (printout ?*debug-print* "abstraccion de IMC: " ?imc crlf)
 
     (     if (< ?imc 18.5 ) then (modify ?c (imc peso_bajo))
     else (if (< ?imc 25   ) then (modify ?c (imc peso_normal))
@@ -236,12 +236,12 @@ más a tu estado fisico actual? "))
     (assert (IMC_done))
 )
 
-(defrule inferencia::edad
+(defrule abstraccion::edad
     (not (EDAD_done))
     (object (is-a persona) (edad ?edad))
     ?c <- (condiciones_fisicas)
     =>
-    (printout ?*debug-print* "Inferencia de edad: " ?edad crlf)
+    (printout ?*debug-print* "abstraccion de edad: " ?edad crlf)
 
     (     if (< ?edad 30   ) then (modify ?c (edad joven))
     else (if (< ?edad 45   ) then (modify ?c (edad adulto-joven))
@@ -252,7 +252,7 @@ más a tu estado fisico actual? "))
     (assert (EDAD_done))
 )
 
-(defrule inferencia::estamina
+(defrule abstraccion::estamina
     (not (ESTAMINA_done))
     (object (is-a persona)
         (pulsaciones_por_minuto ?pulsaciones)
@@ -262,7 +262,7 @@ más a tu estado fisico actual? "))
     )
     ?c <- (condiciones_fisicas)
     =>
-    (printout ?*debug-print* "Inferencia de estamina: "
+    (printout ?*debug-print* "abstraccion de estamina: "
         ?pulsaciones ?mareo ?cansancio ?tirantez crlf)
     (if (neq ?pulsaciones -1) then ; si no tenemos info, dejamos el default (desconocido)
         (if (or ?mareo ?tirantez)     then (modify ?c (estamina muy_baja))
@@ -276,7 +276,7 @@ más a tu estado fisico actual? "))
     (assert (ESTAMINA_done))
 )
 
-(defrule inferencia::dieta
+(defrule abstraccion::dieta
     (not (DIETA_done))
     ?c <- (condiciones_fisicas)
     (object (is-a persona) (sigue_una $?dieta))
@@ -293,7 +293,7 @@ más a tu estado fisico actual? "))
     (assert (DIETA_done))
 )
 
-(defrule inferencia::presion_sanguinea
+(defrule abstraccion::presion_sanguinea
     (not (PRESSION_done))
     (EDAD_done)
     (object (is-a persona)
@@ -302,7 +302,7 @@ más a tu estado fisico actual? "))
     )
     ?c <- (condiciones_fisicas (edad ?edad))
     =>
-    (printout ?*debug-print* "Inferencia de presion sanguínea: "
+    (printout ?*debug-print* "abstraccion de presion sanguínea: "
         ?edad ?p_min ?p_max crlf)
     
     (bind ?diff (- ?p_max ?p_min))
@@ -324,7 +324,7 @@ más a tu estado fisico actual? "))
     (assert (PRESSION_done))
 )
 
-(defrule inferencia::habitos_alcanzan
+(defrule abstraccion::habitos_alcanzan
     (not (HABITOS_done))
     (OBJETIVOS_done)
     (object (is-a persona) (hace $?habitos))
@@ -343,7 +343,7 @@ más a tu estado fisico actual? "))
     (assert (HABITOS_done))
 )
 
-(defrule inferencia::copia_objetivos
+(defrule abstraccion::copia_objetivos
     (not (OBJETIVOS_done))
     (object (is-a persona) (quiere $?objetivos))
     ?o <- (objetivos_usuario)
@@ -353,16 +353,22 @@ más a tu estado fisico actual? "))
     (assert (OBJETIVOS_done))
 )
 
-(defrule generar-resultado::skip
+(defrule associacion::next
     => 
-    (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
-    (focus print-resultado)
+    (printout ?*debug-print* "associacion -> refinamiento" crlf)
+    (focus refinamiento)
 )
 
-(defrule print-resultado::print-res
+(defrule refinamiento::next
+    =>
+    (printout ?*debug-print* "refinamiento -> salida" crlf)
+    (focus salida)
+)
+
+(defrule salida::end
     =>
     (printout t "DONE" crlf)
-    ;(exit)
+    (if (not ?*debug*) then (exit))
 )
 
 (defmessage-handler habito_personal computa-alcanzado ()
@@ -438,8 +444,8 @@ más a tu estado fisico actual? "))
 ;repeticiones_min
 )
 
-;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] escribe-persona)
-(defmessage-handler persona escribe-persona()
+;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] imprimir)
+(defmessage-handler persona imprimir()
     (printout t 
         "Peso: " ?self:peso crlf
         "Altura: " ?self:altura crlf
