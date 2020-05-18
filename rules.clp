@@ -409,7 +409,7 @@ más a tu estado fisico actual? "))
 	=>
 	(bind ?max -1)
 	(bind ?ejercicio nil)
-	(do-for-all-instances (?curr-ej ejercicio)
+	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
 		(bind ?curr-punt (send ?curr-ej get-puntuacion))
 		(if (> ?curr-punt ?max) then
 			(bind ?max ?curr-punt)
