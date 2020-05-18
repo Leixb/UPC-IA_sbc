@@ -3,6 +3,7 @@
 (defrule MAIN::initialRule "Regla inicial"
 	(declare (salience 10))
 	=>
+	(printout t crlf)
 	(printout t "╔═════════════════════════════════════════════════════════════════════════════╗" crlf)
   	(printout t "║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║" crlf)
 	(printout t "╚═════════════════════════════════════════════════════════════════════════════╝" crlf)
@@ -159,6 +160,9 @@ más a tu estado fisico actual? "))
     (send ?p put-hace $?respuesta)
 
 	(retract ?aux)
+    (printout t crlf)
+    (send ?p imprimir)
+    (printout t crlf)
 	(focus abstraccion)
 )
 
@@ -211,10 +215,7 @@ más a tu estado fisico actual? "))
     ?p <- (object (is-a persona))
     =>
 
-    (if ?*debug* then
-        (send ?p imprimir)
-        (facts)
-    )
+    (if ?*debug* then (facts))
     (printout ?*debug-print* "abstraccion -> associacion" crlf)
 
     (focus associacion)
@@ -550,7 +551,7 @@ más a tu estado fisico actual? "))
     ?programa <- (object (is-a programa_de_entrenamiento))
     =>
     (send ?programa imprimir)
-    (printout ?*debug* "DONE" crlf)
+    (printout ?*debug-print* "DONE" crlf)
     (if (not ?*debug*) then (exit))
 )
 
