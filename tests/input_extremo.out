@@ -1,0 +1,285 @@
+         CLIPS (Quicksilver Beta 5/31/08)
+CLIPS> (batch* run.clp)
+Defining defclass: %3ACLIPS_TOP_LEVEL_SLOT_CLASS
+Defining defclass: persona
+Defining defclass: ejercicio
+Defining defclass: objetivo
+Defining defclass: programa_de_entrenamiento
+Defining defclass: habito_personal
+Defining defclass: problema_musculo-esqueletico
+Defining defclass: dieta
+Defining defclass: ejercicio_con_repeticiones
+
+[CSTRCPSR1] WARNING: Redefining defmodule: MAIN
+Defining defmodule: entrada
+Defining defmodule: abstraccion
+Defining defmodule: associacion
+Defining defmodule: refinamiento
+Defining defmodule: salida
+Defining deffunction: pregunta-general
+Defining deffunction: pregunta-opciones
+Defining deffunction: pregunta-si-no
+Defining deffunction: pregunta-numerica
+Defining deffunction: pregunta-multi
+Defining deffunction: max-puntuacion
+Defining defrule: initialRule +j+j
+Defining defrule: establecer-info +j+j
+Defining deftemplate: extra
+Defining defrule: establecer-info-extra +j+j
+Defining defrule: establecer-objetivos +j+j+j
+Defining defrule: establecer-problemas +j+j+j
+Defining defrule: establecer-dieta +j+j+j
+Defining defrule: establecer-habitos +j+j+j
+Defining deftemplate: condiciones_fisicas
+Defining deftemplate: objetivos_usuario
+Defining defrule: init +j
+Defining defrule: next +j+j+j+j+j+j+j+j+j
+Defining defrule: imc +j+j+j+j
+Defining defrule: edad +j+j+j+j
+Defining defrule: estamina +j+j+j+j
+Defining defrule: dieta +j+j+j+j
+Defining defrule: presion_sanguinea +j+j+j+j+j
+Defining defrule: habitos_alcanzan +j+j+j+j
+Defining defrule: copia_objetivos +j+j+j+j
+Defining deftemplate: condicion_fisica
+Defining defrule: condicion_fisica +j+j+j
+Defining deffunction: muestra_ej_puntuacion
+Defining deffunction: get-max-objetivo-alcanzado
+Defining defrule: puntua-ej-objetivos +j+j
+Defining defmessage-handler: ejercicio
+   Handler cubre primary defined.
+Defining defrule: next +j
+Defining defrule: init +j
+Defining defrule: descarta-problemas +j+j+j
+Defining defrule: seleccion-ejercicios +j+j+j+j+j
+Defining defrule: next +j
+Defining defrule: end +j+j
+Defining defmessage-handler: problema_musculo-esqueletico
+   Handler marca-no-aptos primary defined.
+Defining defmessage-handler: habito_personal
+   Handler computa-alcanzado primary defined.
+Defining defmessage-handler: objetivo
+   Handler modifica-alcanzado primary defined.
+Defining defmessage-handler: ejercicio
+   Handler modifica-puntuacion primary defined.
+Defining defmessage-handler: ejercicio
+   Handler multiplica primary defined.
+Defining deffunction: separador
+Defining deffunction: separador_corto
+Defining deffunction: print-ejercicios-dia
+Defining defmessage-handler: programa_de_entrenamiento
+   Handler imprimir primary defined.
+Defining defmessage-handler: ejercicio_con_repeticiones
+   Handler imprimir primary defined.
+Defining defmessage-handler: ejercicio
+   Handler imprimir primary defined.
+Defining defmessage-handler: persona
+   Handler imprimir primary defined.
+
+╔═════════════════════════════════════════════════════════════════════════════╗
+║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║
+╚═════════════════════════════════════════════════════════════════════════════╝
+
+¡Bienvenido al sistema de Coaching Potato!
+A continuación se te harán una serie de preguntas para poder recomendarte el
+programa de entrenamiento que se adapte más a ti.
+
+¿Cuánto pesas (en kilos)?  [20, 300] 200
+¿Cuánto mides (en centímetros)?  [50, 300] 170
+¿Cuantos años tienes?  [14, 110] 90
+¿Que presión sanguínea mínima tienes (en mmHg)?  [60, 100] 100
+¿Que presión sanguínea máxima tienes (en mmHg)?  [100, 150] 150
+¿Cuanto tiempo disponible tienes a diario (en minutos)?  [30, 300] 120
+¿Quieres hacer un ejercicio simple para tener una recomendación que se adapte
+más a tu estado fisico actual?  [si][no]: si
+
+Haz una carrera sostenida durante 1 minuto.
+Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en ppm)?  [50, 250] 220
+¿Has tenido sensación de mareo?  [si][no]: si
+¿Has tenido sensación de cansancio?  [si][no]: si
+¿Has tenido sensación de tirantez muscular?  [si][no]: si
+¿Que objetivos quieres alcanzar? 
+  1. Ganar fuerza
+  2. Ganar resistencia
+  3. Hipertrofia
+  4. Mantenerse en forma
+  5. Ganar flexibilidad
+Indica los números separados por un espacio: 1 2 3 4 5
+¿Tienes algún problema musculo-esquelético?  [si][no]: si
+Selecciona uno o más: 
+  1. Lesión del brazo
+  2. Lesión del pecho
+  3. Lesión de la pierna
+  4. Lesión abdominal
+  5. Dolor de espalda
+  6. Dolor de articulaciones
+  7. Dolor de cervicales
+Indica los números separados por un espacio: 1 2 3 4 5 6 7
+Selecciona una o más de las siguientes opciones relacionadas con tu dieta: 
+  1. Dieta equilibrada
+  2. Dieta basada en el consumo de comida basura
+  3. Consumo de fruta diariamente
+  4. Abuso de sal
+  5. Picar entre horas
+Indica los números separados por un espacio: 2 4 5
+¿Sigues alguno de los siguientes hábitos personales? 
+  1. Desplazamiento a pie
+  2. Estar de pie en el trabajo
+  3. Carga de peso en el trabajo
+  4. Desplazamiento en bicicleta
+  5. Hacer la compra a pie
+Indica los números separados por un espacio: 1
+Desplazamiento a pie:
+   ¿Cuantas veces a la semana realizas esta actividad?  [1, 30] 1
+   ¿Cuanto tiempo le dedicas cada vez (en minutos)?  [1, 180] 1
+
+╞═══════════════════════════════════════════════════════════════════════════════
+│ Información entrada usuario
+╞═══════════════════════════════════════════════════════════════════════════════
+│ Peso: 200
+│ Altura: 170
+│ IMC: 69.2041522491349
+│ Edad: 90
+│ Presión sanguínea: 100-150
+│ Tiempo disponible: 120
+├───────────────────────────────────────
+│ Pulsaciones por minuto: 220
+│ Mareo: TRUE
+│ Cansancio: TRUE
+│ Tirantez muscular: TRUE
+├───────────────────────────────────────
+│ Objetivos: Ganar fuerza, Ganar resistencia, Hipertrofia, Mantenerse en forma, Ganar flexibilidad, 
+│ Problemas: Lesión del brazo, Lesión del pecho, Lesión de la pierna, Lesión abdominal, Dolor de espalda, Dolor de articulaciones, Dolor de cervicales, 
+│ Dietas: Dieta basada en el consumo de comida basura, Abuso de sal, Picar entre horas, 
+│ Hábitos: Desplazamiento a pie, 
+╞═══════════════════════════════════════════════════════════════════════════════
+
+╞═══════════════════════════════════════════════════════════════════════════════
+│ Programa de entrenamiento
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Lunes
+├───────────────────────────────────────
+│ Ejercicio: Yoga
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 125
+│ Duración: de 5 a 15 minutos.
+│ Combina con: Estiramientos, 
+│ Categorías: 
+├───────────────────────────────────────
+│ Ejercicio: Estiramientos
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 100
+│ Duración: de 1 a 5 minutos.
+│ Combina con: Aberturas con mancuerna en banco inclinado, Cardio en cinta a velocidad media alta, Curl con barra, Curl de bíceps, Curl martillo, Dominadas, Elevaciones laterales, Estiramiento dinámico de piernas, Estiramientos, Extensiones de tríceps sentado, Hip thrust, Patada de burro de tríceps, Peso muerto, Prensa, Press de banca, Press de banca declinado, Press de banca inclinado, Press francés con barra, Press militar, Remo 90, Sentadilla, Yoga, Zancadas, 
+│ Categorías: Ganar flexibilidad, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Martes
+├───────────────────────────────────────
+│ Ejercicio: Yoga
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 125
+│ Duración: de 5 a 15 minutos.
+│ Combina con: Estiramientos, 
+│ Categorías: 
+├───────────────────────────────────────
+│ Ejercicio: Estiramientos
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 100
+│ Duración: de 1 a 5 minutos.
+│ Combina con: Aberturas con mancuerna en banco inclinado, Cardio en cinta a velocidad media alta, Curl con barra, Curl de bíceps, Curl martillo, Dominadas, Elevaciones laterales, Estiramiento dinámico de piernas, Estiramientos, Extensiones de tríceps sentado, Hip thrust, Patada de burro de tríceps, Peso muerto, Prensa, Press de banca, Press de banca declinado, Press de banca inclinado, Press francés con barra, Press militar, Remo 90, Sentadilla, Yoga, Zancadas, 
+│ Categorías: Ganar flexibilidad, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Miércoles
+├───────────────────────────────────────
+│ Ejercicio: Yoga
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 125
+│ Duración: de 5 a 15 minutos.
+│ Combina con: Estiramientos, 
+│ Categorías: 
+├───────────────────────────────────────
+│ Ejercicio: Estiramientos
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 100
+│ Duración: de 1 a 5 minutos.
+│ Combina con: Aberturas con mancuerna en banco inclinado, Cardio en cinta a velocidad media alta, Curl con barra, Curl de bíceps, Curl martillo, Dominadas, Elevaciones laterales, Estiramiento dinámico de piernas, Estiramientos, Extensiones de tríceps sentado, Hip thrust, Patada de burro de tríceps, Peso muerto, Prensa, Press de banca, Press de banca declinado, Press de banca inclinado, Press francés con barra, Press militar, Remo 90, Sentadilla, Yoga, Zancadas, 
+│ Categorías: Ganar flexibilidad, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Jueves
+├───────────────────────────────────────
+│ Ejercicio: Yoga
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 125
+│ Duración: de 5 a 15 minutos.
+│ Combina con: Estiramientos, 
+│ Categorías: 
+├───────────────────────────────────────
+│ Ejercicio: Estiramientos
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 100
+│ Duración: de 1 a 5 minutos.
+│ Combina con: Aberturas con mancuerna en banco inclinado, Cardio en cinta a velocidad media alta, Curl con barra, Curl de bíceps, Curl martillo, Dominadas, Elevaciones laterales, Estiramiento dinámico de piernas, Estiramientos, Extensiones de tríceps sentado, Hip thrust, Patada de burro de tríceps, Peso muerto, Prensa, Press de banca, Press de banca declinado, Press de banca inclinado, Press francés con barra, Press militar, Remo 90, Sentadilla, Yoga, Zancadas, 
+│ Categorías: Ganar flexibilidad, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Viernes
+├───────────────────────────────────────
+│ Ejercicio: Yoga
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 125
+│ Duración: de 5 a 15 minutos.
+│ Combina con: Estiramientos, 
+│ Categorías: 
+├───────────────────────────────────────
+│ Ejercicio: Estiramientos
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 100
+│ Duración: de 1 a 5 minutos.
+│ Combina con: Aberturas con mancuerna en banco inclinado, Cardio en cinta a velocidad media alta, Curl con barra, Curl de bíceps, Curl martillo, Dominadas, Elevaciones laterales, Estiramiento dinámico de piernas, Estiramientos, Extensiones de tríceps sentado, Hip thrust, Patada de burro de tríceps, Peso muerto, Prensa, Press de banca, Press de banca declinado, Press de banca inclinado, Press francés con barra, Press militar, Remo 90, Sentadilla, Yoga, Zancadas, 
+│ Categorías: Ganar flexibilidad, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Sábado
+├───────────────────────────────────────
+│ Ejercicio: Yoga
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 125
+│ Duración: de 5 a 15 minutos.
+│ Combina con: Estiramientos, 
+│ Categorías: 
+├───────────────────────────────────────
+│ Ejercicio: Estiramientos
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 100
+│ Duración: de 1 a 5 minutos.
+│ Combina con: Aberturas con mancuerna en banco inclinado, Cardio en cinta a velocidad media alta, Curl con barra, Curl de bíceps, Curl martillo, Dominadas, Elevaciones laterales, Estiramiento dinámico de piernas, Estiramientos, Extensiones de tríceps sentado, Hip thrust, Patada de burro de tríceps, Peso muerto, Prensa, Press de banca, Press de banca declinado, Press de banca inclinado, Press francés con barra, Press militar, Remo 90, Sentadilla, Yoga, Zancadas, 
+│ Categorías: Ganar flexibilidad, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Domingo
+├───────────────────────────────────────
+│ Ejercicio: Yoga
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 125
+│ Duración: de 5 a 15 minutos.
+│ Combina con: Estiramientos, 
+│ Categorías: 
+├───────────────────────────────────────
+│ Ejercicio: Estiramientos
+│ Repeticiones: 1
+│ Dificultad: moderada
+│ Calorías: 100
+│ Duración: de 1 a 5 minutos.
+│ Combina con: Aberturas con mancuerna en banco inclinado, Cardio en cinta a velocidad media alta, Curl con barra, Curl de bíceps, Curl martillo, Dominadas, Elevaciones laterales, Estiramiento dinámico de piernas, Estiramientos, Extensiones de tríceps sentado, Hip thrust, Patada de burro de tríceps, Peso muerto, Prensa, Press de banca, Press de banca declinado, Press de banca inclinado, Press francés con barra, Press militar, Remo 90, Sentadilla, Yoga, Zancadas, 
+│ Categorías: Ganar flexibilidad, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════

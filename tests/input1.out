@@ -1,0 +1,255 @@
+         CLIPS (Quicksilver Beta 5/31/08)
+CLIPS> (batch* run.clp)
+Defining defclass: %3ACLIPS_TOP_LEVEL_SLOT_CLASS
+Defining defclass: persona
+Defining defclass: ejercicio
+Defining defclass: objetivo
+Defining defclass: programa_de_entrenamiento
+Defining defclass: habito_personal
+Defining defclass: problema_musculo-esqueletico
+Defining defclass: dieta
+Defining defclass: ejercicio_con_repeticiones
+
+[CSTRCPSR1] WARNING: Redefining defmodule: MAIN
+Defining defmodule: entrada
+Defining defmodule: abstraccion
+Defining defmodule: associacion
+Defining defmodule: refinamiento
+Defining defmodule: salida
+Defining deffunction: pregunta-general
+Defining deffunction: pregunta-opciones
+Defining deffunction: pregunta-si-no
+Defining deffunction: pregunta-numerica
+Defining deffunction: pregunta-multi
+Defining deffunction: max-puntuacion
+Defining defrule: initialRule +j+j
+Defining defrule: establecer-info +j+j
+Defining deftemplate: extra
+Defining defrule: establecer-info-extra +j+j
+Defining defrule: establecer-objetivos +j+j+j
+Defining defrule: establecer-problemas +j+j+j
+Defining defrule: establecer-dieta +j+j+j
+Defining defrule: establecer-habitos +j+j+j
+Defining deftemplate: condiciones_fisicas
+Defining deftemplate: objetivos_usuario
+Defining defrule: init +j
+Defining defrule: next +j+j+j+j+j+j+j+j+j
+Defining defrule: imc +j+j+j+j
+Defining defrule: edad +j+j+j+j
+Defining defrule: estamina +j+j+j+j
+Defining defrule: dieta +j+j+j+j
+Defining defrule: presion_sanguinea +j+j+j+j+j
+Defining defrule: habitos_alcanzan +j+j+j+j
+Defining defrule: copia_objetivos +j+j+j+j
+Defining deftemplate: condicion_fisica
+Defining defrule: condicion_fisica +j+j+j
+Defining deffunction: muestra_ej_puntuacion
+Defining deffunction: get-max-objetivo-alcanzado
+Defining defrule: puntua-ej-objetivos +j+j
+Defining defmessage-handler: ejercicio
+   Handler cubre primary defined.
+Defining defrule: next +j
+Defining defrule: init +j
+Defining defrule: descarta-problemas +j+j+j
+Defining defrule: seleccion-ejercicios +j+j+j+j+j
+Defining defrule: next +j
+Defining defrule: end +j+j
+Defining defmessage-handler: problema_musculo-esqueletico
+   Handler marca-no-aptos primary defined.
+Defining defmessage-handler: habito_personal
+   Handler computa-alcanzado primary defined.
+Defining defmessage-handler: objetivo
+   Handler modifica-alcanzado primary defined.
+Defining defmessage-handler: ejercicio
+   Handler modifica-puntuacion primary defined.
+Defining defmessage-handler: ejercicio
+   Handler multiplica primary defined.
+Defining deffunction: separador
+Defining deffunction: separador_corto
+Defining deffunction: print-ejercicios-dia
+Defining defmessage-handler: programa_de_entrenamiento
+   Handler imprimir primary defined.
+Defining defmessage-handler: ejercicio_con_repeticiones
+   Handler imprimir primary defined.
+Defining defmessage-handler: ejercicio
+   Handler imprimir primary defined.
+Defining defmessage-handler: persona
+   Handler imprimir primary defined.
+
+╔═════════════════════════════════════════════════════════════════════════════╗
+║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║
+╚═════════════════════════════════════════════════════════════════════════════╝
+
+¡Bienvenido al sistema de Coaching Potato!
+A continuación se te harán una serie de preguntas para poder recomendarte el
+programa de entrenamiento que se adapte más a ti.
+
+¿Cuánto pesas (en kilos)?  [20, 300] 75
+¿Cuánto mides (en centímetros)?  [50, 300] 180
+¿Cuantos años tienes?  [14, 110] 23
+¿Que presión sanguínea mínima tienes (en mmHg)?  [60, 100] 75
+¿Que presión sanguínea máxima tienes (en mmHg)?  [100, 150] 120
+¿Cuanto tiempo disponible tienes a diario (en minutos)?  [30, 300] 60
+¿Quieres hacer un ejercicio simple para tener una recomendación que se adapte
+más a tu estado fisico actual?  [si][no]: si
+
+Haz una carrera sostenida durante 1 minuto.
+Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en ppm)?  [50, 250] 166
+¿Has tenido sensación de mareo?  [si][no]: no
+¿Has tenido sensación de cansancio?  [si][no]: si
+¿Has tenido sensación de tirantez muscular?  [si][no]: no
+¿Que objetivos quieres alcanzar? 
+  1. Ganar fuerza
+  2. Ganar resistencia
+  3. Hipertrofia
+  4. Mantenerse en forma
+  5. Ganar flexibilidad
+Indica los números separados por un espacio: 1 4 5
+¿Tienes algún problema musculo-esquelético?  [si][no]: no
+Selecciona una o más de las siguientes opciones relacionadas con tu dieta: 
+  1. Dieta equilibrada
+  2. Dieta basada en el consumo de comida basura
+  3. Consumo de fruta diariamente
+  4. Abuso de sal
+  5. Picar entre horas
+Indica los números separados por un espacio: 1 3
+¿Sigues alguno de los siguientes hábitos personales? 
+  1. Desplazamiento a pie
+  2. Estar de pie en el trabajo
+  3. Carga de peso en el trabajo
+  4. Desplazamiento en bicicleta
+  5. Hacer la compra a pie
+Indica los números separados por un espacio: 1 2
+Desplazamiento a pie:
+   ¿Cuantas veces a la semana realizas esta actividad?  [1, 30] 6
+   ¿Cuanto tiempo le dedicas cada vez (en minutos)?  [1, 180] 65
+Estar de pie en el trabajo:
+   ¿Cuantas veces a la semana realizas esta actividad?  [1, 30] 7
+   ¿Cuanto tiempo le dedicas cada vez (en minutos)?  [1, 180] 25
+
+╞═══════════════════════════════════════════════════════════════════════════════
+│ Información entrada usuario
+╞═══════════════════════════════════════════════════════════════════════════════
+│ Peso: 75
+│ Altura: 180
+│ IMC: 23.1481481481481
+│ Edad: 23
+│ Presión sanguínea: 75-120
+│ Tiempo disponible: 60
+├───────────────────────────────────────
+│ Pulsaciones por minuto: 166
+│ Mareo: FALSE
+│ Cansancio: TRUE
+│ Tirantez muscular: FALSE
+├───────────────────────────────────────
+│ Objetivos: Ganar fuerza, Mantenerse en forma, Ganar flexibilidad, 
+│ Problemas: 
+│ Dietas: Dieta equilibrada, Consumo de fruta diariamente, 
+│ Hábitos: Desplazamiento a pie, Estar de pie en el trabajo, 
+╞═══════════════════════════════════════════════════════════════════════════════
+
+╞═══════════════════════════════════════════════════════════════════════════════
+│ Programa de entrenamiento
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Lunes
+├───────────────────────────────────────
+│ Ejercicio: Extensiones de tríceps sentado
+│ Repeticiones: 13
+│ Dificultad: moderada
+│ Calorías: 3640
+│ Duración: de 26 a 52 minutos.
+│ Combina con: 
+│ Categorías: Mantenerse en forma, Hipertrofia, 
+├───────────────────────────────────────
+│ Ejercicio: Press militar
+│ Repeticiones: 6
+│ Dificultad: normal
+│ Calorías: 2280
+│ Duración: de 12 a 30 minutos.
+│ Combina con: Elevaciones laterales, Extensiones de tríceps sentado, Patada de burro de tríceps, Press francés con barra, 
+│ Categorías: Ganar fuerza, Mantenerse en forma, Hipertrofia, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Martes
+├───────────────────────────────────────
+│ Ejercicio: Press francés con barra
+│ Repeticiones: 13
+│ Dificultad: normal
+│ Calorías: 3900
+│ Duración: de 26 a 52 minutos.
+│ Combina con: Extensiones de tríceps sentado, 
+│ Categorías: Mantenerse en forma, Hipertrofia, 
+├───────────────────────────────────────
+│ Ejercicio: Dominadas
+│ Repeticiones: 9
+│ Dificultad: moderada
+│ Calorías: 4653
+│ Duración: de 9 a 27 minutos.
+│ Combina con: Peso muerto, Remo 90, 
+│ Categorías: Ganar fuerza, Mantenerse en forma, Hipertrofia, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Miércoles
+├───────────────────────────────────────
+│ Ejercicio: Press de banca
+│ Repeticiones: 6
+│ Dificultad: dificil
+│ Calorías: 2328
+│ Duración: de 24 a 72 minutos.
+│ Combina con: Elevaciones laterales, Extensiones de tríceps sentado, Patada de burro de tríceps, Press francés con barra, Press militar, 
+│ Categorías: Ganar fuerza, Hipertrofia, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Jueves
+├───────────────────────────────────────
+│ Ejercicio: Elevaciones laterales
+│ Repeticiones: 13
+│ Dificultad: normal
+│ Calorías: 3640
+│ Duración: de 26 a 39 minutos.
+│ Combina con: Patada de burro de tríceps, Press francés con barra, Extensiones de tríceps sentado, 
+│ Categorías: Hipertrofia, Mantenerse en forma, 
+├───────────────────────────────────────
+│ Ejercicio: Patada de burro de tríceps
+│ Repeticiones: 13
+│ Dificultad: moderada
+│ Calorías: 3445
+│ Duración: de 13 a 39 minutos.
+│ Combina con: Extensiones de tríceps sentado, Press francés con barra, 
+│ Categorías: Mantenerse en forma, Hipertrofia, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Viernes
+├───────────────────────────────────────
+│ Ejercicio: Sentadilla
+│ Repeticiones: 6
+│ Dificultad: dificil
+│ Calorías: 2880
+│ Duración: de 24 a 84 minutos.
+│ Combina con: Zancadas, Hip thrust, Prensa, 
+│ Categorías: Hipertrofia, Ganar fuerza, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Sábado
+├───────────────────────────────────────
+│ Ejercicio: Peso muerto
+│ Repeticiones: 7
+│ Dificultad: dificil
+│ Calorías: 3430
+│ Duración: de 28 a 84 minutos.
+│ Combina con: Remo 90, Dominadas, 
+│ Categorías: Ganar fuerza, Hipertrofia, 
+├───────────────────────────────────────
+│ Ejercicio: Remo 90
+│ Repeticiones: 7
+│ Dificultad: normal
+│ Calorías: 2240
+│ Duración: de 7 a 28 minutos.
+│ Combina con: Dominadas, Peso muerto, 
+│ Categorías: Ganar fuerza, Hipertrofia, 
+╞═══════════════════════════════════════════════════════════════════════════════
+╞ Domingo
+├───────────────────────────────────────
+│ Ejercicio: Press de banca inclinado
+│ Repeticiones: 6
+│ Dificultad: dificil
+│ Calorías: 2370
+│ Duración: de 24 a 72 minutos.
+│ Combina con: Elevaciones laterales, Extensiones de tríceps sentado, Patada de burro de tríceps, Press de banca, Press francés con barra, Press militar, 
+│ Categorías: Ganar fuerza, Hipertrofia, Mantenerse en forma, 
+╞═══════════════════════════════════════════════════════════════════════════════
