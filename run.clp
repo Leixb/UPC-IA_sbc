@@ -1,6 +1,6 @@
 (clear)
 
-(defglobal ?*debug* = TRUE)
+(defglobal ?*debug* = FALSE)
 (defglobal ?*debug-print* = (if ?*debug* then t else nil))
 
 (if ?*debug* then
