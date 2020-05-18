@@ -6,7 +6,7 @@
 	(printout t "╔═════════════════════════════════════════════════════════════════════════════╗" crlf)
   	(printout t "║  Sistema de recomendacion de programas de entrenamiento de Coaching Potato  ║" crlf)
 	(printout t "╚═════════════════════════════════════════════════════════════════════════════╝" crlf)
-  	(printout t crlf)  	
+  	(printout t crlf)
 	(printout t "¡Bienvenido al sistema de Coaching Potato!" crlf)
 	(printout t "A continuación se te harán una serie de preguntas para poder recomendarte el" crlf)
 	(printout t "programa de entrenamiento que se adapte más a ti." crlf)
@@ -25,7 +25,7 @@
 	(bind ?p_sang_min (pregunta-numerica "¿Que presión sanguínea mínima tienes (en mmHg)? " 60 100))
 	(bind ?p_sang_max (pregunta-numerica "¿Que presión sanguínea máxima tienes (en mmHg)? " 100 150))
 	(bind ?t_disponible (pregunta-numerica "¿Cuanto tiempo disponible tienes a diario (en minutos)? " 30 300))
-	
+
 	(make-instance pers of persona (peso ?peso) (altura ?altura) (imc ?imc) (edad ?edad) (presion_sanguinea_min ?p_sang_min) (presion_sanguinea_max ?p_sang_max) (tiempo_disponible ?t_disponible))
 )
 
@@ -41,16 +41,16 @@ más a tu estado fisico actual? "))
 	(if (eq ?ejercicio TRUE) then
         (assert (extra))
         (printout t crlf "Haz una carrera sostenida durante 1 minuto." crlf)
-        
+
         (bind ?pulsaciones_por_minuto (pregunta-numerica "Al acabar el ejercicio, ¿que frecuencia cardíaca tienes (en ppm)? " 50 250))
         (send ?p put-pulsaciones_por_minuto ?pulsaciones_por_minuto)
-        
+
         (bind ?mareo (pregunta-si-no "¿Has tenido sensación de mareo? "))
         (send ?p put-mareo ?mareo)
-        
+
         (bind ?cansancio (pregunta-si-no "¿Has tenido sensación de cansancio? "))
         (send ?p put-cansancio ?cansancio)
-        
+
         (bind ?tirantez_muscular (pregunta-si-no "¿Has tenido sensación de tirantez muscular? "))
         (send ?p put-tirantez_muscular ?tirantez_muscular)
 	)
@@ -68,14 +68,14 @@ más a tu estado fisico actual? "))
 		(bind $?nom-obj(insert$ $?nom-obj (+ (length$ $?nom-obj) 1) ?curr-nom))
 	)
 	(bind ?escogido (pregunta-multi "¿Que objetivos quieres alcanzar? " $?nom-obj))
-	
+
 	(bind $?respuesta (create$ ))
     (foreach ?curr-index ?escogido
 		(bind ?curr-resp (nth$ ?curr-index ?list-objetivos))
 		(bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
 	)
 	(send ?p put-quiere $?respuesta)
-	
+
 	(retract ?aux)
 	(assert (problemas ASK))
 )
@@ -85,7 +85,7 @@ más a tu estado fisico actual? "))
 	?p <- (object (is-a persona))
 	=>
 	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esqueletico? "))
-	(if (eq ?probs TRUE) then	
+	(if (eq ?probs TRUE) then
         (bind $?list-problemas (find-all-instances ((?inst probelma_musculo-esqueletico)) TRUE))
         (bind $?nom-prob (create$ ))
         (foreach ?curr-prob ?list-problemas
@@ -93,7 +93,7 @@ más a tu estado fisico actual? "))
             (bind $?nom-prob(insert$ $?nom-prob (+ (length$ $?nom-prob) 1) ?curr-nom))
         )
         (bind ?escogido (pregunta-multi "Selecciona uno o más: " $?nom-prob))
-        
+
         (bind $?respuesta (create$ ))
         (foreach ?curr-index ?escogido
             (bind ?curr-resp (nth$ ?curr-index ?list-problemas))
@@ -101,7 +101,7 @@ más a tu estado fisico actual? "))
         )
         (send ?p put-tiene $?respuesta)
 	)
-	
+
 	(retract ?aux)
 	(assert (dieta ASK))
 )
@@ -117,14 +117,14 @@ más a tu estado fisico actual? "))
         (bind $?nom-dieta(insert$ $?nom-dieta (+ (length$ $?nom-dieta) 1) ?curr-nom))
     )
     (bind ?escogido (pregunta-multi "Selecciona una o más de las siguientes opciones relacionadas con tu dieta: " $?nom-dieta))
-    
+
     (bind $?respuesta (create$ ))
     (foreach ?curr-index ?escogido
         (bind ?curr-resp (nth$ ?curr-index ?list-dietas))
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
     (send ?p put-sigue_una $?respuesta)
-	
+
 	(retract ?aux)
 	(assert (habitos ASK))
 )
@@ -140,24 +140,24 @@ más a tu estado fisico actual? "))
         (bind $?nom-hab(insert$ $?nom-hab (+ (length$ $?nom-hab) 1) ?curr-nom))
     )
     (bind ?escogido (pregunta-multi "¿Sigues alguno de los siguientes hábitos personales? " $?nom-hab))
-    
+
     (bind $?respuesta (create$ ))
     (foreach ?curr-index ?escogido
         (bind ?curr-resp (nth$ ?curr-index ?list-habitos))
-        
+
         (bind ?curr-resp-nom (send ?curr-resp get-nombre_habito))
         (printout t ?curr-resp-nom ":" crlf)
-        
+
         (bind ?frecuencia (pregunta-numerica "   ¿Cuantas veces a la semana realizas esta actividad? " 1 30))
         (bind ?duracion (pregunta-numerica "   ¿Cuanto tiempo le dedicas cada vez (en minutos)? " 1 180))
-        
+
         (send ?curr-resp put-frecuencia ?frecuencia)
         (send ?curr-resp put-duracion_habito ?duracion)
-    
+
         (bind $?respuesta(insert$ $?respuesta (+ (length$ $?respuesta) 1) ?curr-resp))
     )
     (send ?p put-hace $?respuesta)
-	
+
 	(retract ?aux)
 	(focus abstraccion)
 )
@@ -209,7 +209,7 @@ más a tu estado fisico actual? "))
     (HABITOS_done)
     (OBJETIVOS_done)
     ?p <- (object (is-a persona))
-    => 
+    =>
 
     (if ?*debug* then
         (send ?p imprimir)
@@ -304,7 +304,7 @@ más a tu estado fisico actual? "))
     =>
     (printout ?*debug-print* "abstraccion de presion sanguínea: "
         ?edad ?p_min ?p_max crlf)
-    
+
     (bind ?diff (- ?p_max ?p_min))
     (if (> ?diff 70)            then (modify ?c (presion_sanguinea inestable))
     else
@@ -316,7 +316,7 @@ más a tu estado fisico actual? "))
             (default none)
         )
         (bind ?p_mean (/ (+ ?p_min ?p_max) 2))
-        
+
         (if (< ?p_mean ?aux1) then (modify ?c (presion_sanguinea baja))
         else (if (< ?p_mean ?aux2) then (modify ?c (presion_sanguinea media))
         else (modify ?c (presion_sanguinea alta))
@@ -380,7 +380,7 @@ más a tu estado fisico actual? "))
                 (send ?ejercicio cubre ?objetivo)
             (printout ?*debug-print* ?ejercicio " cubre objetivo " ?objetivo crlf)
             (send ?ejercicio modifica-puntuacion (- 2 ?puntuacion))
-           
+
         )
     )
     (if ?*debug* then (muestra_ej_puntuacion))
@@ -399,9 +399,34 @@ más a tu estado fisico actual? "))
 
 (defrule associacion::next
 	(declare (salience -10))
-    => 
+    =>
     (printout ?*debug-print* "associacion -> refinamiento" crlf)
     (focus refinamiento)
+)
+
+(defrule refinamiento::refinar-ejercicio-max-puntuacion
+
+	=>
+	(bind ?max -1)
+	(bind ?ejercicio nil)
+	(do-for-all-instances (?curr-ej ejercicio)
+		(bind ?curr-punt (send ?curr-ej get-puntuacion))
+		(if (> ?curr-punt ?max) then
+			(bind ?max ?curr-punt)
+			(bind ?ejercicio ?curr-ej)
+		)
+	)
+	?ejercicio
+
+	(bind ?repeticiones (algotohchungo1))
+	(bind ?dificultad (algotohchungo2))
+
+	(make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
+
+	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
+	(bind ?duracion (algochunguillo1))
+	(bind ?alcanza (* ?repeticiones ?duracion))
+	(send ?objetivo modifica-alcazado (?alcanza))
 )
 
 (defrule refinamiento::next
