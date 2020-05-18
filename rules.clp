@@ -186,9 +186,18 @@ más a tu estado fisico actual? "))
     )
 )
 
+(deftemplate inferencia::objetivos_usuario
+    (multislot lista-objetivos
+        (type INSTANCE)
+        (allowed-classes objetivo)
+    )
+)
+
 (defrule inferencia::init
     =>
     (assert (condiciones_fisicas))
+    (assert (objetivos_usuario))
+    (assert (habitos_personales))
 )
 
 (defrule inferencia::next
@@ -265,11 +274,20 @@ más a tu estado fisico actual? "))
     (assert (ESTAMINA_done))
 )
 
-; TODO
 (defrule inferencia::dieta
     (not (DIETA_done))
     ?c <- (condiciones_fisicas)
+    (object (is-a persona) (sigue_una $?dieta))
     =>
+    (bind ?suma 0)
+    (foreach ?elemento ?dieta
+        (bind ?suma (+ ?suma (send ?elemento get-saludable)))
+    )
+    (printout ?*debug-print* "Valor dieta: " ?suma crlf)
+    (if (< ?suma -5) then (modify ?c (dieta mala))
+    else (if (> ?suma 5) then (modify ?c (dieta buena))
+    else (modify ?c (dieta correcta)))
+    )
     (assert (DIETA_done))
 )
 
@@ -304,6 +322,35 @@ más a tu estado fisico actual? "))
     (assert (PRESSION_done))
 )
 
+(defrule inferencia::habitos_alcanzan
+    (not (HABITOS_done))
+    (OBJETIVOS_done)
+    (object (is-a persona) (hace $?habitos))
+    =>
+    (foreach ?habito $?habitos
+        (send ?habito computa-alcanzado)
+    )
+    (if ?*debug* then
+        (bind $?list-obj (find-all-instances ((?inst objetivo)) TRUE))
+        (foreach ?hab ?list-obj
+            (bind ?nom (send ?hab get-nombre_objetivo))
+            (bind ?alcan (send ?hab get-alcanzado))
+            (printout t ?nom " -> " ?alcan crlf)
+        )
+    )
+    (assert (HABITOS_done))
+)
+
+(defrule inferencia::copia_objetivos
+    (not (OBJETIVOS_done))
+    (object (is-a persona) (quiere $?objetivos))
+    ?o <- (objetivos_usuario)
+    =>
+    (printout ?*debug-print* "lista: " $?objetivos crlf)
+    (modify ?o (lista-objetivos $?objetivos))
+    (assert (OBJETIVOS_done))
+)
+
 (defrule generar-resultado::skip
     => 
     (printout ?*debug-print* "generar-resultado -> print-resultado" crlf)
@@ -331,6 +378,15 @@ más a tu estado fisico actual? "))
     (foreach ?ej ?ejercicios
         (separador_corto)
         (send (instance-address ?ej) imprimir)
+    )
+)
+
+(defmessage-handler habito_personal computa-alcanzado ()
+    (bind ?alcanza (* ?self:frecuencia ?self:duracion_habito))
+    (foreach ?objetivo ?self:habito_cubre_un
+        (printout ?*debug-print* "MODIFICANDO " ?objetivo crlf)
+        (bind ?alcanzado (send ?objetivo get-alcanzado))
+        (send ?objetivo put-alcanzado (+ ?alcanzado ?alcanza))
     )
 )
 
