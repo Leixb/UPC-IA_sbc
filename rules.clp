@@ -440,7 +440,7 @@ más a tu estado fisico actual? "))
 
 (defrule refinamiento::init
     =>
-    (assert (programa_de_entrenamiento))
+    (make-instance of programa_de_entrenamiento)
 )
 
 (defrule refinamiento::descarta-problemas
@@ -456,11 +456,13 @@ más a tu estado fisico actual? "))
 (defrule refinamiento::seleccion-ejercicios
     (no-aptos-marcados)
     (object (is-a persona) (tiempo_disponible ?tiempo-diario))
-    ?programa <- (programa_de_entrenamiento)
+    ?programa <- (object (is-a programa_de_entrenamiento))
     (condicion_fisica (salud ?salud) (forma_fisica ?forma_fisica))
     =>
     ; 7 dias
     (loop-for-count (?cnt 1 7) do
+        (bind ?lista-ejercicios (create$))
+
         (printout ?*debug-print* "Dia " ?cnt crlf)
         (bind ?tiempo ?tiempo-diario)
         (bind ?continue TRUE)
@@ -511,11 +513,28 @@ más a tu estado fisico actual? "))
 	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
                 (ejercicio_a_repetir ?ej-sel)
                 (repeticiones ?repeticiones)
-                (dificultad_ejercicio ?dificultad)))
-                (if ?*debug* then
-                    (printout t "----------------------------" crlf)
-                    (send ?instancia imprimir)
-                )
+            (dificultad_ejercicio ?dificultad)))
+            (if ?*debug* then
+                (printout t "----------------------------" crlf)
+                (send ?instancia imprimir)
+            )
+            (bind $?lista-ejercicios (insert$ $?lista-ejercicios 1 ?instancia))
+            (printout ?*debug-print* "ejercicios: " $?lista-ejercicios crlf)
+        )
+        ; fin while dia
+        (send ?programa print)
+        (printout ?*debug-print* $?lista-ejercicios crlf)
+        (send ?programa 
+            (switch ?cnt
+                (case 1 then put-ej_lunes)
+                (case 2 then put-ej_martes)
+                (case 3 then put-ej_miercoles)
+                (case 4 then put-ej_jueves)
+                (case 5 then put-ej_viernes)
+                (case 6 then put-ej_sabado)
+                (case 7 then put-ej_domingo)
+            )
+            $?lista-ejercicios
         )
     )
 )
@@ -527,8 +546,10 @@ más a tu estado fisico actual? "))
 )
 
 (defrule salida::end
+    ?programa <- (object (is-a programa_de_entrenamiento))
     =>
-    (printout t "DONE" crlf)
+    (send ?programa imprimir)
+    (printout ?*debug* "DONE" crlf)
     (if (not ?*debug*) then (exit))
 )
 
@@ -583,6 +604,8 @@ más a tu estado fisico actual? "))
 )
 
 (defmessage-handler programa_de_entrenamiento imprimir()
+    (separador)
+    (printout t "│ Programa de entrenamiento" crlf)
     (print-ejercicios-dia "Lunes" ?self:ej_lunes)
     (print-ejercicios-dia "Martes" ?self:ej_martes)
     (print-ejercicios-dia "Miercoles" ?self:ej_miercoles)
@@ -590,6 +613,7 @@ más a tu estado fisico actual? "))
     (print-ejercicios-dia "Viernes" ?self:ej_viernes)
     (print-ejercicios-dia "Sabado" ?self:ej_sabado)
     (print-ejercicios-dia "Domingo" ?self:ej_domingo)
+    (separador)
 )
 
 (defmessage-handler ejercicio_con_repeticiones imprimir()
