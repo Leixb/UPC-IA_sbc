@@ -404,11 +404,57 @@ más a tu estado fisico actual? "))
     (focus refinamiento)
 )
 
+(defrule refinamiento::init
+    =>
+    (assert (programa_de_entrenamiento))
+)
+
 (defrule refinamiento::descarta-problemas
+    (not (no-aptos-marcados))
     (object (is-a persona) (tiene $?problemas))
     =>
     (foreach ?problema ?problemas
         (send ?problema marca-no-aptos)
+    )
+    (assert (no-aptos-marcados))
+)
+
+(defrule refinamiento::seleccion-ejercicios
+    (no-aptos-marcados)
+    (object (is-a persona) (tiempo_disponible ?tiempo-diario))
+    ?programa <- (programa_de_entrenamiento)
+    =>
+    ; 7 dias
+    (loop-for-count (?cnt 1 7) do
+        (bind ?tiempo ?tiempo-diario)
+        (bind ?continue TRUE)
+        (while (and (> ?tiempo 0) ?continue)
+            (bind ?max -1)
+            (bind ?ej-sel nil)
+            (bind ?continue (do-for-all-instances ((?ejercicio ejercicio))
+                    (and (< ?ejercicio:duracion_min ?tiempo) ?ejercicio:apto)
+                (bind ?punt (send ?ejercicio get-puntuacion))
+                (if (> ?punt ?max) then
+                    (bind ?max ?punt)
+                    (bind ?ej-sel ?ejercicio)
+                )
+                TRUE
+            ))
+            (printout ?*debug-print* "continue: " ?continue crlf)
+
+            (bind ?duracion (min (send ?ej-sel get-duracion_max) ?tiempo))
+            (bind ?tiempo (- ?tiempo ?duracion))
+            (bind ?repeticiones 10) ; TODO
+            (bind ?dificultad moderada) ; TODO
+
+            (send ?ej-sel multiplica 0.75) 
+	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
+                (ejercicio_a_repetir ?ej-sel)
+                (repeticiones ?repeticiones)
+                (dificultad_ejercicio ?dificultad)))
+            (printout ?*debug-print* "Dia " ?cnt crlf)
+            (send ?instancia imprimir)
+        )
     )
 )
 
