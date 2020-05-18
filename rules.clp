@@ -475,13 +475,14 @@ más a tu estado fisico actual? "))
                 )
                 TRUE
             ))
-            (printout ?*debug-print* "continue: " ?continue crlf)
 
-            (bind ?duracion (min (send ?ej-sel get-duracion_max) ?tiempo))
-            (bind ?tiempo (- ?tiempo ?duracion))
+            (if (eq nil ?ej-sel) then 
+                (printout ?*debug-print* "No ejercicios encontrados" crlf)
+                (break)
+            )
             
-            (bind ?min_rep (send ?ejercicio get-repeticiones_min))
-            (bind ?max_rep (send ?ejercicio get-repeticiones_max))
+            (bind ?min_rep (send ?ej-sel get-repeticiones_min))
+            (bind ?max_rep (send ?ej-sel get-repeticiones_max))
             (bind ?diff_rep (- ?max_rep ?min_rep))
             (switch ?forma_fisica
                 (case muy_mala	then (bind ?repeticiones ?min_rep))
@@ -491,7 +492,7 @@ más a tu estado fisico actual? "))
                 (default none)
             )
             
-            (bind ?dificultad_base (send ?ejercicio get-dificultad))
+            (bind ?dificultad_base (send ?ej-sel get-dificultad))
             (switch ?salud
                 (case mala		then (bind ?dificultad (+ ?dificultad_base 2)))
                 (case normal	then (bind ?dificultad (+ ?dificultad_base 1)))
@@ -499,6 +500,9 @@ más a tu estado fisico actual? "))
                 (default none)
             )
             (if (> ?dificultad 10) then (bind ?dificultad 10))
+
+            (bind ?duracion (min (* ?repeticiones (send ?ej-sel get-duracion_max)) ?tiempo))
+            (bind ?tiempo (- ?tiempo ?duracion))
 
             (send ?ej-sel multiplica 0.75) 
 	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
