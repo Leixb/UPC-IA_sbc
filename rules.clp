@@ -86,7 +86,7 @@ más a tu estado fisico actual? "))
 	=>
 	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esqueletico? "))
 	(if (eq ?probs TRUE) then
-        (bind $?list-problemas (find-all-instances ((?inst probelma_musculo-esqueletico)) TRUE))
+        (bind $?list-problemas (find-all-instances ((?inst problema_musculo-esqueletico)) TRUE))
         (bind $?nom-prob (create$ ))
         (foreach ?curr-prob ?list-problemas
             (bind ?curr-nom (send ?curr-prob get-nombre_problema))
@@ -404,32 +404,40 @@ más a tu estado fisico actual? "))
     (focus refinamiento)
 )
 
-(defrule refinamiento::refinar-ejercicio-max-puntuacion
-
-	=>
-	(bind ?max -1)
-	(bind ?ejercicio nil)
-	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
-		(bind ?curr-punt (send ?curr-ej get-puntuacion))
-		(if (> ?curr-punt ?max) then
-			(bind ?max ?curr-punt)
-			(bind ?ejercicio ?curr-ej)
-		)
-	)
-	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
-    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
-    (send ?ejercicio multiplica 0.75) 
-
-	(bind ?repeticiones (algotohchungo1))
-	(bind ?dificultad (algotohchungo2))
-
-	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
-    ; la instance esta se tiene que meter en algun sitio..
-	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
-	(bind ?duracion (algochunguillo1))
-	(bind ?alcanza (* ?repeticiones ?duracion))
-	(send ?objetivo modifica-alcazado (?alcanza))
+(defrule refinamiento::descarta-problemas
+    (object (is-a persona) (tiene $?problemas))
+    =>
+    (foreach ?problema ?problemas
+        (send ?problema marca-no-aptos)
+    )
 )
+
+;(defrule refinamiento::refinar-ejercicio-max-puntuacion
+;
+;	=>
+;	(bind ?max -1)
+;	(bind ?ejercicio nil)
+;	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
+;		(bind ?curr-punt (send ?curr-ej get-puntuacion))
+;		(if (> ?curr-punt ?max) then
+;			(bind ?max ?curr-punt)
+;			(bind ?ejercicio ?curr-ej)
+;		)
+;	)
+;	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
+;    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
+;    (send ?ejercicio multiplica 0.75) 
+;
+;	(bind ?repeticiones (algotohchungo1))
+;	(bind ?dificultad (algotohchungo2))
+;
+;	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
+;    ; la instance esta se tiene que meter en algun sitio..
+;	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
+;	(bind ?duracion (algochunguillo1))
+;	(bind ?alcanza (* ?repeticiones ?duracion))
+;	(send ?objetivo modifica-alcazado (?alcanza))
+;)
 
 (defrule refinamiento::next
     =>
@@ -441,6 +449,12 @@ más a tu estado fisico actual? "))
     =>
     (printout t "DONE" crlf)
     (if (not ?*debug*) then (exit))
+)
+
+(defmessage-handler problema_musculo-esqueletico marca-no-aptos()
+    (foreach ?ejercicio ?self:impide
+        (send ?ejercicio put-apto FALSE)
+    )
 )
 
 (defmessage-handler habito_personal computa-alcanzado ()
