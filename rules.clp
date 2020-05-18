@@ -302,32 +302,11 @@ más a tu estado fisico actual? "))
 
 (defrule inferencia::habitos_alcanzan
     (not (HABITOS_done))
-    (object (is-a persona) (hace $?habitos) (quiere $?objetivos))
+    (OBJETIVOS_done)
+    (object (is-a persona) (hace $?habitos))
     =>
     (foreach ?habito $?habitos
-        (bind ?frecuencia (send ?habito get-frecuencia))
-        (bind ?duracion_habito (send ?habito get-duracion_habito))
-        (bind ?alcanza (* ?frecuencia ?duracion_habito))
-        
-        (bind $?objetivos_cubiertos (send ?habito get-habito_cubre_un))
-        (foreach ?objetivo-cubierto $?objetivos_cubiertos
-            (printout ?*debug-print* "FOR cubierto " ?objetivo-cubierto crlf)
-            (printout ?*debug-print* ?objetivos crlf)
-            (printout ?*debug-print* (member$ ?objetivo-cubierto $?objetivos) crlf)
-            (foreach ?obj ?objetivos
-                (if (eq (send ?obj get-nombre_objetivo)
-                         (send ?objetivo-cubierto get-nombre_objetivo)) then
-                            (bind ?alcanzado (send ?objetivo-cubierto get-alcanzado))
-                            (printout ?*debug-print* "MODIFICANDO " ?objetivo-cubierto crlf)
-                            (send ?objetivo-cubierto put-alcanzado (+ ?alcanzado ?alcanza))
-                )
-            )
-            ;(if (member$ ?objetivo-cubierto $?objetivos) then
-            ;    (bind ?alcanzado (send ?objetivo-cubierto get-alcanzado))
-            ;    (printout ?*debug-print* "MODIFICANDO " ?objetivo-cubierto crlf)
-            ;    (send ?objetivo-cubierto put-alcanzado (+ ?alcanzado ?alcanza))
-            ;)
-        )
+        (send ?habito computa-alcanzado)
     )
     (if ?*debug* then
         (bind $?list-obj (find-all-instances ((?inst objetivo)) TRUE))
@@ -342,7 +321,6 @@ más a tu estado fisico actual? "))
 
 (defrule inferencia::copia_objetivos
     (not (OBJETIVOS_done))
-    (HABITOS_done)
     (object (is-a persona) (quiere $?objetivos))
     ?o <- (objetivos_usuario)
     =>
@@ -378,6 +356,15 @@ más a tu estado fisico actual? "))
     (foreach ?ej ?ejercicios
         (separador_corto)
         (send (instance-address ?ej) imprimir)
+    )
+)
+
+(defmessage-handler habito_personal computa-alcanzado ()
+    (bind ?alcanza (* ?self:frecuencia ?self:duracion_habito))
+    (foreach ?objetivo ?self:habito_cubre_un
+        (printout ?*debug-print* "MODIFICANDO " ?objetivo crlf)
+        (bind ?alcanzado (send ?objetivo get-alcanzado))
+        (send ?objetivo put-alcanzado (+ ?alcanzado ?alcanza))
     )
 )
 
