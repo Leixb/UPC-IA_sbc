@@ -361,19 +361,31 @@ más a tu estado fisico actual? "))
     )
 )
 
+(deffunction associacion::get-max-objetivo-alcanzado()
+    (bind ?max -1.0)
+    (do-for-all-instances ((?obj objetivo)) TRUE
+        (bind ?alcan (send ?obj get-alcanzado))
+        (bind ?max (max ?max ?alcan))
+    )
+    ?max
+)
+
 (defrule associacion::puntua-ej-objetivos
     (objetivos_usuario (lista-objetivos $?objetivos))
     =>
+    (bind ?max (get-max-objetivo-alcanzado))
     (foreach ?objetivo ?objetivos
+        (bind ?puntuacion (/ (send ?objetivo get-alcanzado) ?max))
         (do-for-all-instances ((?ejercicio ejercicio))
-            (send ?ejercicio cubre ?objetivo)
+                (send ?ejercicio cubre ?objetivo)
             (printout ?*debug-print* ?ejercicio " cubre objetivo " ?objetivo crlf)
-            (send ?ejercicio modifica-puntuacion 16)
+            (send ?ejercicio modifica-puntuacion ?puntuacion)
            
         )
     )
     (if ?*debug* then (muestra_ej_puntuacion))
 )
+
 
 (defmessage-handler ejercicio cubre (?objetivo)
     (bind ?nombre-objetivo (send ?objetivo get-nombre_objetivo))
