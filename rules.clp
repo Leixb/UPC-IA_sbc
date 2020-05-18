@@ -353,6 +353,41 @@ más a tu estado fisico actual? "))
     (assert (OBJETIVOS_done))
 )
 
+(deftemplate associacion::condicion_fisica
+    (slot salud
+			(type SYMBOL)
+			(allowed-values mala normal buena)
+    )
+    (slot forma_fisica
+			(type SYMBOL)
+			(allowed-values muy_mala mala buena muy_buena)
+    )
+)
+
+(defrule associacion::condicion_fisica
+	(not (CONDICION_FISICA_done))
+	?c <- (condiciones_fisicas (imc ?imc) (edad ?edad) (dieta ?dieta) (presion_sanguinea ?p_sang) (estamina ?estamina))
+	=>
+	(if (or (or (eq ?imc obesidad) (eq ?p_sang inestable)) (eq ?dieta mala))
+		then (bind ?salud mala)
+	else (if (or (or (or (eq ?imc sobrepeso) (eq ?imc peso_bajo)) (or (eq ?p_sang baja) (eq ?p_sang alta))) (eq ?dieta correcta))
+		then (bind ?salud normal)
+	else (bind ?salud buena)
+	))
+
+	(if (or (eq ?imc obesidad) (eq ?estamina muy_baja))
+		then (bind ?forma_fisica muy_mala)
+	else (if (or (or (eq ?imc sobrepeso) (eq ?imc peso_bajo)) (or (eq ?estamina baja) (eq ?edad adulto-mayor)))
+		then (bind ?forma_fisica mala)
+	else (if (or (eq ?edad adulto-medio) (eq ?estamina media))
+		then (bind ?forma_fisica buena)
+	else (bind ?forma_fisica muy_buena)
+	)))
+
+	(assert (condicion_fisica (salud ?salud) (forma_fisica ?forma_fisica)))
+	(assert (CONDICION_FISICA_done))
+)
+
 (deffunction associacion::muestra_ej_puntuacion ()
     (do-for-all-instances ((?ejercicio ejercicio)) TRUE
         (bind ?name (send ?ejercicio get-nombre_ejercicio))
@@ -386,7 +421,6 @@ más a tu estado fisico actual? "))
     (if ?*debug* then (muestra_ej_puntuacion))
 )
 
-
 (defmessage-handler ejercicio cubre (?objetivo)
     (bind ?nombre-objetivo (send ?objetivo get-nombre_objetivo))
     (foreach ?obj ?self:ejercicio_cubre_un
@@ -406,7 +440,7 @@ más a tu estado fisico actual? "))
 
 (defrule refinamiento::init
     =>
-    (assert (programa_de_entrenamiento))
+    (make-instance of programa_de_entrenamiento)
 )
 
 (defrule refinamiento::descarta-problemas
@@ -422,10 +456,14 @@ más a tu estado fisico actual? "))
 (defrule refinamiento::seleccion-ejercicios
     (no-aptos-marcados)
     (object (is-a persona) (tiempo_disponible ?tiempo-diario))
-    ?programa <- (programa_de_entrenamiento)
+    ?programa <- (object (is-a programa_de_entrenamiento))
+    (condicion_fisica (salud ?salud) (forma_fisica ?forma_fisica))
     =>
     ; 7 dias
     (loop-for-count (?cnt 1 7) do
+        (bind ?lista-ejercicios (create$))
+
+        (printout ?*debug-print* "Dia " ?cnt crlf)
         (bind ?tiempo ?tiempo-diario)
         (bind ?continue TRUE)
         (while (and (> ?tiempo 0) ?continue)
@@ -440,50 +478,66 @@ más a tu estado fisico actual? "))
                 )
                 TRUE
             ))
-            (printout ?*debug-print* "continue: " ?continue crlf)
 
-            (bind ?duracion (min (send ?ej-sel get-duracion_max) ?tiempo))
+            (if (eq nil ?ej-sel) then
+                (printout ?*debug-print* "No ejercicios encontrados" crlf)
+                (break)
+            )
+
+            (bind ?min_rep (send ?ej-sel get-repeticiones_min))
+            (bind ?max_rep (send ?ej-sel get-repeticiones_max))
+            (bind ?diff_rep (- ?max_rep ?min_rep))
+            (switch ?forma_fisica
+                (case muy_mala	then (bind ?repeticiones ?min_rep))
+                (case mala			then (bind ?repeticiones (+ ?min_rep (/ ?diff_rep 3))))
+                (case buena			then (bind ?repeticiones (+ ?min_rep (* (/ ?diff_rep 3) 2))))
+                (case muy_buena	then (bind ?repeticiones ?max_rep))
+                (default none)
+            )
+
+            (bind ?dificultad_base (send ?ej-sel get-dificultad))
+            (switch ?salud
+                (case mala		then (bind ?n_dificultad (+ ?dificultad_base 2)))
+                (case normal	then (bind ?n_dificultad (+ ?dificultad_base 1)))
+                (case buena		then (bind ?n_dificultad ?dificultad_base))
+                (default none)
+            )
+						(if (< ?n_dificultad 5) 			then 	(bind ?dificultad moderada)
+						else (if (< ?n_dificultad 8) 	then 	(bind ?dificultad normal)
+						else 																(bind ?dificultad dificil)))
+
+            (bind ?duracion (min (* ?repeticiones (send ?ej-sel get-duracion_max)) ?tiempo))
             (bind ?tiempo (- ?tiempo ?duracion))
-            (bind ?repeticiones 10) ; TODO
-            (bind ?dificultad moderada) ; TODO
 
-            (send ?ej-sel multiplica 0.75) 
+            (send ?ej-sel multiplica 0.75)
 	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
                 (ejercicio_a_repetir ?ej-sel)
                 (repeticiones ?repeticiones)
-                (dificultad_ejercicio ?dificultad)))
-            (printout ?*debug-print* "Dia " ?cnt crlf)
-            (send ?instancia imprimir)
+            (dificultad_ejercicio ?dificultad)))
+            (if ?*debug* then
+                (printout t "----------------------------" crlf)
+                (send ?instancia imprimir)
+            )
+            (bind $?lista-ejercicios (insert$ $?lista-ejercicios 1 ?instancia))
+            (printout ?*debug-print* "ejercicios: " $?lista-ejercicios crlf)
+        )
+        ; fin while dia
+        (if ?*debug* then (send ?programa print))
+        (printout ?*debug-print* $?lista-ejercicios crlf)
+        (send ?programa 
+            (switch ?cnt
+                (case 1 then put-ej_lunes)
+                (case 2 then put-ej_martes)
+                (case 3 then put-ej_miercoles)
+                (case 4 then put-ej_jueves)
+                (case 5 then put-ej_viernes)
+                (case 6 then put-ej_sabado)
+                (case 7 then put-ej_domingo)
+            )
+            $?lista-ejercicios
         )
     )
 )
-
-;(defrule refinamiento::refinar-ejercicio-max-puntuacion
-;
-;	=>
-;	(bind ?max -1)
-;	(bind ?ejercicio nil)
-;	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
-;		(bind ?curr-punt (send ?curr-ej get-puntuacion))
-;		(if (> ?curr-punt ?max) then
-;			(bind ?max ?curr-punt)
-;			(bind ?ejercicio ?curr-ej)
-;		)
-;	)
-;	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
-;    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
-;    (send ?ejercicio multiplica 0.75) 
-;
-;	(bind ?repeticiones (algotohchungo1))
-;	(bind ?dificultad (algotohchungo2))
-;
-;	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
-;    ; la instance esta se tiene que meter en algun sitio..
-;	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
-;	(bind ?duracion (algochunguillo1))
-;	(bind ?alcanza (* ?repeticiones ?duracion))
-;	(send ?objetivo modifica-alcazado (?alcanza))
-;)
 
 (defrule refinamiento::next
     =>
@@ -492,8 +546,10 @@ más a tu estado fisico actual? "))
 )
 
 (defrule salida::end
+    ?programa <- (object (is-a programa_de_entrenamiento))
     =>
-    (printout t "DONE" crlf)
+    (send ?programa imprimir)
+    (printout ?*debug* "DONE" crlf)
     (if (not ?*debug*) then (exit))
 )
 
@@ -548,6 +604,8 @@ más a tu estado fisico actual? "))
 )
 
 (defmessage-handler programa_de_entrenamiento imprimir()
+    (separador)
+    (printout t "│ Programa de entrenamiento" crlf)
     (print-ejercicios-dia "Lunes" ?self:ej_lunes)
     (print-ejercicios-dia "Martes" ?self:ej_martes)
     (print-ejercicios-dia "Miercoles" ?self:ej_miercoles)
@@ -555,6 +613,7 @@ más a tu estado fisico actual? "))
     (print-ejercicios-dia "Viernes" ?self:ej_viernes)
     (print-ejercicios-dia "Sabado" ?self:ej_sabado)
     (print-ejercicios-dia "Domingo" ?self:ej_domingo)
+    (separador)
 )
 
 (defmessage-handler ejercicio_con_repeticiones imprimir()
@@ -586,7 +645,7 @@ más a tu estado fisico actual? "))
     (separador)
     (printout t "│ Informacion entrada usuario" crlf)
     (separador)
-    (printout t 
+    (printout t
       "│ Peso: " ?self:peso crlf
       "│ Altura: " ?self:altura crlf
       "│ IMC: " ?self:imc crlf
