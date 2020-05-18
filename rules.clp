@@ -652,7 +652,7 @@ más a tu estado fisico actual? "))
       "│ Altura: " ?self:altura crlf
       "│ IMC: " ?self:imc crlf
       "│ Edad: " ?self:edad crlf
-      "│ Presión sanguínea: " ?self:presion_sanguinea_min "-" ?self:presion_sanguinea_min crlf
+      "│ Presión sanguínea: " ?self:presion_sanguinea_min "-" ?self:presion_sanguinea_max crlf
       "│ Tiempo disponible: " ?self:tiempo_disponible crlf
     )
     (separador_corto)
