@@ -461,6 +461,7 @@ más a tu estado fisico actual? "))
     =>
     ; 7 dias
     (loop-for-count (?cnt 1 7) do
+        (printout ?*debug-print* "Dia " ?cnt crlf)
         (bind ?tiempo ?tiempo-diario)
         (bind ?continue TRUE)
         (while (and (> ?tiempo 0) ?continue)
@@ -509,8 +510,10 @@ más a tu estado fisico actual? "))
                 (ejercicio_a_repetir ?ej-sel)
                 (repeticiones ?repeticiones)
                 (dificultad_ejercicio ?dificultad)))
-            (printout ?*debug-print* "Dia " ?cnt crlf)
-            (send ?instancia imprimir)
+                (if ?*debug* then 
+                    (printout t "----------------------------" crlf)
+                    (send ?instancia imprimir)
+                )
         )
     )
 )
