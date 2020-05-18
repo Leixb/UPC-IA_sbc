@@ -365,6 +365,24 @@ más a tu estado fisico actual? "))
     ;(exit)
 )
 
+(defmessage-handler habito_personal computa-alcanzado ()
+    (bind ?alcanza (* ?self:frecuencia ?self:duracion_habito))
+    (foreach ?objetivo ?self:habito_cubre_un
+        (printout ?*debug-print* "MODIFICANDO " ?objetivo crlf)
+        (bind ?alcanzado (send ?objetivo get-alcanzado))
+        (send ?objetivo put-alcanzado (+ ?alcanzado ?alcanza))
+    )
+)
+
+(defmessage-handler ejercicio modifica-puntuacion (?puntos)
+    (bind ?self:puntuacion (+ ?self:puntuacion ?puntos))
+    (bind ?puntos-combinacion (/ ?puntos 4))
+    (foreach ?ejercicio ?self:combina_con
+        (bind ?puntuacion (+ ?puntos-combinacion (send ?ejercicio get-puntuacion)))
+        (send ?ejercicio put-puntuacion ?puntuacion)
+    )
+)
+
 ;;; Muestra ejercicio
 (deffunction MAIN::separador ()
     (printout t "╞═══════════════════════════════════════════════════════════════════════════════" crlf)
@@ -380,15 +398,6 @@ más a tu estado fisico actual? "))
     (foreach ?ej ?ejercicios
         (separador_corto)
         (send (instance-address ?ej) imprimir)
-    )
-)
-
-(defmessage-handler habito_personal computa-alcanzado ()
-    (bind ?alcanza (* ?self:frecuencia ?self:duracion_habito))
-    (foreach ?objetivo ?self:habito_cubre_un
-        (printout ?*debug-print* "MODIFICANDO " ?objetivo crlf)
-        (bind ?alcanzado (send ?objetivo get-alcanzado))
-        (send ?objetivo put-alcanzado (+ ?alcanzado ?alcanza))
     )
 )
 
