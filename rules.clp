@@ -416,13 +416,15 @@ más a tu estado fisico actual? "))
 			(bind ?ejercicio ?curr-ej)
 		)
 	)
-	?ejercicio
+	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
+    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
+    (send ?ejercicio multiplica 0.75) 
 
 	(bind ?repeticiones (algotohchungo1))
 	(bind ?dificultad (algotohchungo2))
 
-	(make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
-
+	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
+    ; la instance esta se tiene que meter en algun sitio..
 	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
 	(bind ?duracion (algochunguillo1))
 	(bind ?alcanza (* ?repeticiones ?duracion))
@@ -461,6 +463,10 @@ más a tu estado fisico actual? "))
         (bind ?puntuacion (+ ?puntos-combinacion (send ?ejercicio get-puntuacion)))
         (send ?ejercicio put-puntuacion ?puntuacion)
     )
+)
+
+(defmessage-handler ejercicio multiplica (?puntos)
+    (bind ?self:puntuacion (* ?self:puntuacion ?puntos))
 )
 
 ;;; Muestra ejercicio
