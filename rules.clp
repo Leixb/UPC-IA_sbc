@@ -379,7 +379,7 @@ más a tu estado fisico actual? "))
         (do-for-all-instances ((?ejercicio ejercicio))
                 (send ?ejercicio cubre ?objetivo)
             (printout ?*debug-print* ?ejercicio " cubre objetivo " ?objetivo crlf)
-            (send ?ejercicio modifica-puntuacion ?puntuacion)
+            (send ?ejercicio modifica-puntuacion (- 2 ?puntuacion))
            
         )
     )
