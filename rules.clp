@@ -515,33 +515,6 @@ más a tu estado fisico actual? "))
     )
 )
 
-;(defrule refinamiento::refinar-ejercicio-max-puntuacion
-;
-;	=>
-;	(bind ?max -1)
-;	(bind ?ejercicio nil)
-;	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
-;		(bind ?curr-punt (send ?curr-ej get-puntuacion))
-;		(if (> ?curr-punt ?max) then
-;			(bind ?max ?curr-punt)
-;			(bind ?ejercicio ?curr-ej)
-;		)
-;	)
-;	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
-;    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
-;    (send ?ejercicio multiplica 0.75) 
-;
-;	(bind ?repeticiones (algotohchungo1))
-;	(bind ?dificultad (algotohchungo2))
-;
-;	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
-;    ; la instance esta se tiene que meter en algun sitio..
-;	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
-;	(bind ?duracion (algochunguillo1))
-;	(bind ?alcanza (* ?repeticiones ?duracion))
-;	(send ?objetivo modifica-alcazado (?alcanza))
-;)
-
 (defrule refinamiento::next
     =>
     (printout ?*debug-print* "refinamiento -> salida" crlf)
