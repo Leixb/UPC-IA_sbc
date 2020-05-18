@@ -18,7 +18,7 @@
 	(not (persona))
 	=>
 	(bind ?peso (pregunta-numerica "¿Cuánto pesas (en kilos)? " 20 300))
-	(bind ?altura (pregunta-numerica "¿Cuánto mides (en centimetros)? " 50 300))
+	(bind ?altura (pregunta-numerica "¿Cuánto mides (en centímetros)? " 50 300))
     (bind ?alturaMetros (/ ?altura 100.0))
 	(bind ?imc (/ ?peso (* ?alturaMetros ?alturaMetros)))
 	(bind ?edad (pregunta-numerica "¿Cuantos años tienes? " 14 110))
@@ -36,7 +36,7 @@
 (defrule entrada::establecer-info-extra "Establece la info extra de la persona"
     ?p <- (object (is-a persona))
     =>
-    (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendacion que se adapte
+    (bind ?ejercicio (pregunta-si-no "¿Quieres hacer un ejercicio simple para tener una recomendación que se adapte
 más a tu estado fisico actual? "))
 	(if (eq ?ejercicio TRUE) then
         (assert (extra))
@@ -80,11 +80,11 @@ más a tu estado fisico actual? "))
 	(assert (problemas ASK))
 )
 
-(defrule entrada::establecer-problemas "Establece los problemas musculo-esqueleticos de la persona"
+(defrule entrada::establecer-problemas "Establece los problemas musculo-esqueléticos de la persona"
 	?aux <- (problemas ASK)
 	?p <- (object (is-a persona))
 	=>
-	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esqueletico? "))
+	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esquelético? "))
 	(if (eq ?probs TRUE) then
         (bind $?list-problemas (find-all-instances ((?inst problema_musculo-esqueletico)) TRUE))
         (bind $?nom-prob (create$ ))
@@ -609,10 +609,10 @@ más a tu estado fisico actual? "))
     (printout t "│ Programa de entrenamiento" crlf)
     (print-ejercicios-dia "Lunes" ?self:ej_lunes)
     (print-ejercicios-dia "Martes" ?self:ej_martes)
-    (print-ejercicios-dia "Miercoles" ?self:ej_miercoles)
+    (print-ejercicios-dia "Miércoles" ?self:ej_miercoles)
     (print-ejercicios-dia "Jueves" ?self:ej_jueves)
     (print-ejercicios-dia "Viernes" ?self:ej_viernes)
-    (print-ejercicios-dia "Sabado" ?self:ej_sabado)
+    (print-ejercicios-dia "Sábado" ?self:ej_sabado)
     (print-ejercicios-dia "Domingo" ?self:ej_domingo)
     (separador)
 )
@@ -624,19 +624,19 @@ más a tu estado fisico actual? "))
         "│ Repeticiones: " ?self:repeticiones crlf
         "│ Dificultad: " ?self:dificultad_ejercicio crlf
     )
-    (send ?self:ejercicio_a_repetir imprimir)
+    (send ?self:ejercicio_a_repetir imprimir ?self:repeticiones)
 )
 
-(defmessage-handler ejercicio imprimir()
+(defmessage-handler ejercicio imprimir(?repeticiones)
     (printout t
-        "│ Calorias: " ?self:calorias crlf
-        "│ Duracion: de " ?self:duracion_min " a " ?self:duracion_max " minutos." crlf
+        "│ Calorías: " (* ?self:calorias ?repeticiones) crlf
+        "│ Duración: de " (* ?self:duracion_min ?repeticiones) " a " (* ?self:duracion_max ?repeticiones) " minutos." crlf
     )
     (printout t "│ Combina con: ")
     (foreach ?ej ?self:combina_con
         (printout t (send ?ej get-nombre_ejercicio) ", ")
     )
-    (printout t crlf "│ Categorias: ")
+    (printout t crlf "│ Categorías: ")
     (foreach ?obj ?self:ejercicio_cubre_un (printout t (send ?obj get-nombre_objetivo) ", "))
     (printout t crlf)
 )
@@ -644,7 +644,7 @@ más a tu estado fisico actual? "))
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] imprimir)
 (defmessage-handler persona imprimir()
     (separador)
-    (printout t "│ Informacion entrada usuario" crlf)
+    (printout t "│ Información entrada usuario" crlf)
     (separador)
     (printout t
       "│ Peso: " ?self:peso crlf
@@ -668,7 +668,7 @@ más a tu estado fisico actual? "))
     (foreach ?prob ?self:tiene (printout t (send ?prob get-nombre_problema) ", "))
     (printout t crlf "│ Dietas: ")
     (foreach ?dieta ?self:sigue_una (printout t (send ?dieta get-nombre_dieta) ", "))
-    (printout t crlf "│ Habitos: ")
+    (printout t crlf "│ Hábitos: ")
     (foreach ?hab ?self:hace (printout t (send ?hab get-nombre_habito) ", "))
     (printout t crlf)
     (separador)
