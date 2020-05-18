@@ -479,9 +479,9 @@ más a tu estado fisico actual? "))
 
             (bind ?duracion (min (send ?ej-sel get-duracion_max) ?tiempo))
             (bind ?tiempo (- ?tiempo ?duracion))
-            
-            (bind ?min_rep (send ?ejercicio get-repeticiones_min))
-            (bind ?max_rep (send ?ejercicio get-repeticiones_max))
+
+            (bind ?min_rep (send ?ej-sel get-repeticiones_min))
+            (bind ?max_rep (send ?ej-sel get-repeticiones_max))
             (bind ?diff_rep (- ?max_rep ?min_rep))
             (switch ?forma_fisica
                 (case muy_mala	then (bind ?repeticiones ?min_rep))
@@ -490,8 +490,8 @@ más a tu estado fisico actual? "))
                 (case muy_buena	then (bind ?repeticiones ?max_rep))
                 (default none)
             )
-            
-            (bind ?dificultad_base (send ?ejercicio get-dificultad))
+
+            (bind ?dificultad_base (send ?ej-sel get-dificultad))
             (switch ?salud
                 (case mala		then (bind ?dificultad (+ ?dificultad_base 2)))
                 (case normal	then (bind ?dificultad (+ ?dificultad_base 1)))
@@ -500,7 +500,7 @@ más a tu estado fisico actual? "))
             )
             (if (> ?dificultad 10) then (bind ?dificultad 10))
 
-            (send ?ej-sel multiplica 0.75) 
+            (send ?ej-sel multiplica 0.75)
 	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
                 (ejercicio_a_repetir ?ej-sel)
                 (repeticiones ?repeticiones)
@@ -525,7 +525,7 @@ más a tu estado fisico actual? "))
 ;	)
 ;	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
 ;    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
-;    (send ?ejercicio multiplica 0.75) 
+;    (send ?ejercicio multiplica 0.75)
 ;
 ;	(bind ?repeticiones (algotohchungo1))
 ;	(bind ?dificultad (algotohchungo2))
