@@ -206,6 +206,8 @@ más a tu estado fisico actual? "))
     (ESTAMINA_done)
     (PRESSION_done)
     (DIETA_done)
+    (HABITOS_done)
+    (OBJETIVOS_done)
     ?p <- (object (is-a persona))
     => 
 
