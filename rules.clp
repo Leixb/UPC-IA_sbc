@@ -506,35 +506,40 @@ más a tu estado fisico actual? "))
     (foreach ?ej ?self:combina_con
         (printout t (send ?ej get-nombre_ejercicio) ", ")
     )
+    (printout t crlf "│ Categorias: ")
+    (foreach ?obj ?self:ejercicio_cubre_un (printout t (send ?obj get-nombre_objetivo) ", "))
     (printout t crlf)
-;dificultad
-;ejercicio_cubre_un
-;nombre_ejercicio
-;repeticiones_max
-;repeticiones_min
 )
 
 ;;;Para comprobar que se ha guardado bien se ha de ejecutar:    (send [pers] imprimir)
 (defmessage-handler persona imprimir()
-    (printout t
-        "Peso: " ?self:peso crlf
-        "Altura: " ?self:altura crlf
-        "Imc: " ?self:imc crlf
-        "Edad: " ?self:edad crlf
-        "P_sang_min: " ?self:presion_sanguinea_min crlf
-        "P_sang_max: " ?self:presion_sanguinea_max crlf
-        "Tiempo disponible: " ?self:tiempo_disponible crlf
+    (separador)
+    (printout t "│ Informacion entrada usuario" crlf)
+    (separador)
+    (printout t 
+      "│ Peso: " ?self:peso crlf
+      "│ Altura: " ?self:altura crlf
+      "│ IMC: " ?self:imc crlf
+      "│ Edad: " ?self:edad crlf
+      "│ Presión sanguínea: " ?self:presion_sanguinea_min "-" ?self:presion_sanguinea_min crlf
+      "│ Tiempo disponible: " ?self:tiempo_disponible crlf
     )
+    (separador_corto)
     (printout t
-      "Pulsaciones por minuto: " ?self:pulsaciones_por_minuto crlf
-      "Mareo: " ?self:mareo crlf
-      "Cansancio: " ?self:cansancio crlf
-      "Tirantez muscular: " ?self:tirantez_muscular crlf
+      "│ Pulsaciones por minuto: " ?self:pulsaciones_por_minuto crlf
+      "│ Mareo: " ?self:mareo crlf
+      "│ Cansancio: " ?self:cansancio crlf
+      "│ Tirantez muscular: " ?self:tirantez_muscular crlf
     )
-    (printout t
-      "Objetivos: " $?self:quiere crlf
-      "Problemas: " $?self:tiene crlf
-      "Dietas: " $?self:sigue_una crlf
-      "Habitos: " $?self:hace crlf
-    )
+    (separador_corto)
+    (printout t "│ Objetivos: ")
+    (foreach ?obj ?self:quiere (printout t (send ?obj get-nombre_objetivo) ", "))
+    (printout t crlf "│ Problemas: ")
+    (foreach ?prob ?self:tiene (printout t (send ?prob get-nombre_problema) ", "))
+    (printout t crlf "│ Dietas: ")
+    (foreach ?dieta ?self:sigue_una (printout t (send ?dieta get-nombre_dieta) ", "))
+    (printout t crlf "│ Habitos: ")
+    (foreach ?hab ?self:hace (printout t (send ?hab get-nombre_habito) ", "))
+    (printout t crlf)
+    (separador)
 )
