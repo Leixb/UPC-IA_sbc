@@ -86,7 +86,7 @@ más a tu estado fisico actual? "))
 	=>
 	(bind ?probs (pregunta-si-no "¿Tienes algún problema musculo-esqueletico? "))
 	(if (eq ?probs TRUE) then
-        (bind $?list-problemas (find-all-instances ((?inst probelma_musculo-esqueletico)) TRUE))
+        (bind $?list-problemas (find-all-instances ((?inst problema_musculo-esqueletico)) TRUE))
         (bind $?nom-prob (create$ ))
         (foreach ?curr-prob ?list-problemas
             (bind ?curr-nom (send ?curr-prob get-nombre_problema))
@@ -438,46 +438,105 @@ más a tu estado fisico actual? "))
     (focus refinamiento)
 )
 
-(defrule refinamiento::refinar-ejercicio-max-puntuacion
-	(condicion_fisica (salud ?salud) (forma_fisica ?forma_fisica))
-	=>
-	(bind ?max -1)
-	(bind ?ejercicio nil)
-	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
-		(bind ?curr-punt (send ?curr-ej get-puntuacion))
-		(if (> ?curr-punt ?max) then
-			(bind ?max ?curr-punt)
-			(bind ?ejercicio ?curr-ej)
-		)
-	)
-	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
-    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
-    (send ?ejercicio multiplica 0.75)
-
-
-	(bind ?min_rep (send ?ejercicio get-repeticiones_min))
-	(bind ?max_rep (send ?ejercicio get-repeticiones_max))
-	(bind ?diff_rep (- ?max_rep ?min_rep))
-	(switch ?forma_fisica
-			(case muy_mala	then (bind ?repeticiones ?min_rep))
-			(case mala			then (bind ?repeticiones (+ ?min_rep (/ ?diff_rep 3))))
-			(case buena			then (bind ?repeticiones (+ ?min_rep (* (/ ?diff_rep 3) 2))))
-			(case muy_buena	then (bind ?repeticiones ?max_rep))
-			(default none)
-	)
-
-	(bind ?dificultad_base (send ?ejercicio get-dificultad))
-	(switch ?salud
-			(case mala		then (bind ?dificultad (+ ?dificultad_base 2)))
-			(case normal	then (bind ?dificultad (+ ?dificultad_base 1)))
-			(case buena		then (bind ?dificultad ?dificultad_base))
-			(default none)
-	)
-	(if (> ?dificultad 10) then (bind ?dificultad 10))
-
-	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
-    ; la instance esta se tiene que meter en algun sitio..
+(defrule refinamiento::init
+    =>
+    (assert (programa_de_entrenamiento))
 )
+
+(defrule refinamiento::descarta-problemas
+    (not (no-aptos-marcados))
+    (object (is-a persona) (tiene $?problemas))
+    =>
+    (foreach ?problema ?problemas
+        (send ?problema marca-no-aptos)
+    )
+    (assert (no-aptos-marcados))
+)
+
+(defrule refinamiento::seleccion-ejercicios
+    (no-aptos-marcados)
+    (object (is-a persona) (tiempo_disponible ?tiempo-diario))
+    ?programa <- (programa_de_entrenamiento)
+    (condicion_fisica (salud ?salud) (forma_fisica ?forma_fisica))
+    =>
+    ; 7 dias
+    (loop-for-count (?cnt 1 7) do
+        (bind ?tiempo ?tiempo-diario)
+        (bind ?continue TRUE)
+        (while (and (> ?tiempo 0) ?continue)
+            (bind ?max -1)
+            (bind ?ej-sel nil)
+            (bind ?continue (do-for-all-instances ((?ejercicio ejercicio))
+                    (and (< ?ejercicio:duracion_min ?tiempo) ?ejercicio:apto)
+                (bind ?punt (send ?ejercicio get-puntuacion))
+                (if (> ?punt ?max) then
+                    (bind ?max ?punt)
+                    (bind ?ej-sel ?ejercicio)
+                )
+                TRUE
+            ))
+            (printout ?*debug-print* "continue: " ?continue crlf)
+
+            (bind ?duracion (min (send ?ej-sel get-duracion_max) ?tiempo))
+            (bind ?tiempo (- ?tiempo ?duracion))
+            
+            (bind ?min_rep (send ?ejercicio get-repeticiones_min))
+            (bind ?max_rep (send ?ejercicio get-repeticiones_max))
+            (bind ?diff_rep (- ?max_rep ?min_rep))
+            (switch ?forma_fisica
+                (case muy_mala	then (bind ?repeticiones ?min_rep))
+                (case mala			then (bind ?repeticiones (+ ?min_rep (/ ?diff_rep 3))))
+                (case buena			then (bind ?repeticiones (+ ?min_rep (* (/ ?diff_rep 3) 2))))
+                (case muy_buena	then (bind ?repeticiones ?max_rep))
+                (default none)
+            )
+            
+            (bind ?dificultad_base (send ?ejercicio get-dificultad))
+            (switch ?salud
+                (case mala		then (bind ?dificultad (+ ?dificultad_base 2)))
+                (case normal	then (bind ?dificultad (+ ?dificultad_base 1)))
+                (case buena		then (bind ?dificultad ?dificultad_base))
+                (default none)
+            )
+            (if (> ?dificultad 10) then (bind ?dificultad 10))
+
+            (send ?ej-sel multiplica 0.75) 
+	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
+                (ejercicio_a_repetir ?ej-sel)
+                (repeticiones ?repeticiones)
+                (dificultad_ejercicio ?dificultad)))
+            (printout ?*debug-print* "Dia " ?cnt crlf)
+            (send ?instancia imprimir)
+        )
+    )
+)
+
+;(defrule refinamiento::refinar-ejercicio-max-puntuacion
+;
+;	=>
+;	(bind ?max -1)
+;	(bind ?ejercicio nil)
+;	(do-for-all-instances ((?curr-ej ejercicio)) TRUE
+;		(bind ?curr-punt (send ?curr-ej get-puntuacion))
+;		(if (> ?curr-punt ?max) then
+;			(bind ?max ?curr-punt)
+;			(bind ?ejercicio ?curr-ej)
+;		)
+;	)
+;	(printout ?*debug-print* "Seleccionado ejercicio: " ?ejercicio " puntos: " ?max crlf )
+;    ; restamos puntos al ejercicio porque ya lo hemos seleccionado
+;    (send ?ejercicio multiplica 0.75) 
+;
+;	(bind ?repeticiones (algotohchungo1))
+;	(bind ?dificultad (algotohchungo2))
+;
+;	?instance <- (make-instance of ejercicio_con_repeticiones (ejercicio_a_repetir ?ejercicio) (repeticiones ?repeticiones) (dificultad_ejercicio ?dificultad))
+;    ; la instance esta se tiene que meter en algun sitio..
+;	(bind ?objetivo (send get-ejercicio_cubre_un ?ejercicio))
+;	(bind ?duracion (algochunguillo1))
+;	(bind ?alcanza (* ?repeticiones ?duracion))
+;	(send ?objetivo modifica-alcazado (?alcanza))
+;)
 
 (defrule refinamiento::next
     =>
@@ -489,6 +548,12 @@ más a tu estado fisico actual? "))
     =>
     (printout t "DONE" crlf)
     (if (not ?*debug*) then (exit))
+)
+
+(defmessage-handler problema_musculo-esqueletico marca-no-aptos()
+    (foreach ?ejercicio ?self:impide
+        (send ?ejercicio put-apto FALSE)
+    )
 )
 
 (defmessage-handler habito_personal computa-alcanzado ()
