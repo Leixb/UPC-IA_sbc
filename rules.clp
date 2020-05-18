@@ -353,7 +353,40 @@ más a tu estado fisico actual? "))
     (assert (OBJETIVOS_done))
 )
 
+(deffunction associacion::muestra_ej_puntuacion ()
+    (do-for-all-instances ((?ejercicio ejercicio)) TRUE
+        (bind ?name (send ?ejercicio get-nombre_ejercicio))
+        (bind ?punt (send ?ejercicio get-puntuacion))
+        (printout t ?name " -> " ?punt crlf)
+    )
+)
+
+(defrule associacion::puntua-ej-objetivos
+    (objetivos_usuario (lista-objetivos $?objetivos))
+    =>
+    (foreach ?objetivo ?objetivos
+        (do-for-all-instances ((?ejercicio ejercicio))
+            (send ?ejercicio cubre ?objetivo)
+            (printout ?*debug-print* ?ejercicio " cubre objetivo " ?objetivo crlf)
+            (send ?ejercicio modifica-puntuacion 16)
+           
+        )
+    )
+    (if ?*debug* then (muestra_ej_puntuacion))
+)
+
+(defmessage-handler ejercicio cubre (?objetivo)
+    (bind ?nombre-objetivo (send ?objetivo get-nombre_objetivo))
+    (foreach ?obj ?self:ejercicio_cubre_un
+        (if (eq ?nombre-objetivo (send ?obj get-nombre_objetivo)) then
+            (return TRUE)
+        )
+    )
+    FALSE
+)
+
 (defrule associacion::next
+	(declare (salience -10))
     => 
     (printout ?*debug-print* "associacion -> refinamiento" crlf)
     (focus refinamiento)
