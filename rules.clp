@@ -464,6 +464,8 @@ más a tu estado fisico actual? "))
     (loop-for-count (?cnt 1 7) do
         (bind ?lista-ejercicios (create$))
 
+        (bind ?nombres-ejercicios (create$))
+
         (printout ?*debug-print* "Dia " ?cnt crlf)
         (bind ?tiempo ?tiempo-diario)
         (bind ?continue TRUE)
@@ -471,7 +473,11 @@ más a tu estado fisico actual? "))
             (bind ?max -1)
             (bind ?ej-sel nil)
             (bind ?continue (do-for-all-instances ((?ejercicio ejercicio))
-                    (and (< ?ejercicio:duracion_min ?tiempo) ?ejercicio:apto)
+                    (and 
+                        (< ?ejercicio:duracion_min ?tiempo)
+                        ?ejercicio:apto
+                        (not (member$ ?ejercicio:nombre_ejercicio $?nombres-ejercicios ))
+                        )
                 (bind ?punt (send ?ejercicio get-puntuacion))
                 (if (> ?punt ?max) then
                     (bind ?max ?punt)
@@ -511,6 +517,9 @@ más a tu estado fisico actual? "))
             (bind ?duracion (min (* ?repeticiones (send ?ej-sel get-duracion_max)) ?tiempo))
             (bind ?tiempo (- ?tiempo ?duracion))
 
+            (bind ?nombre-ej (send ?ej-sel get-nombre_ejercicio))
+            (bind $?nombres-ejercicios (insert$ $?nombres-ejercicios 1 ?nombre-ej))
+
             (send ?ej-sel multiplica 0.75)
 	        (bind ?instancia (make-instance of ejercicio_con_repeticiones
                 (ejercicio_a_repetir ?ej-sel)
@@ -521,6 +530,8 @@ más a tu estado fisico actual? "))
                 (send ?instancia imprimir)
             )
             (bind $?lista-ejercicios (insert$ $?lista-ejercicios 1 ?instancia))
+
+
             (printout ?*debug-print* "ejercicios: " $?lista-ejercicios crlf)
         )
         ; fin while dia
